@@ -119,7 +119,7 @@ void Restart()
 
 void user_main()
 {
-	//Test für Vodka Vranzi
+	// Testende
 	int ww,hh;
 	set_windowpos(0,0,600,400);
 	while (1) {								// Endlosschleife
