@@ -34,12 +34,23 @@ void user_main()
 	set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
 	clrscr();
 
+	//_________________________________________________________________________________________
 
 
-	
 
 
-	
+
+	vector <int> test(3);
+	test.at(0) = 1;
+	test.at(1) = 2;
+	test.at(2) = 3;
+	//test.at(3) = 4;
+
+	cout << test.at(0) << "\n" << test.at(1) << "\n" << test.at(2);
+
+
+
+	//_________________________________________________________________________________________
 	/* Schäfer Teil, meiste rausgeschmissen
 
 	int ww,hh;
