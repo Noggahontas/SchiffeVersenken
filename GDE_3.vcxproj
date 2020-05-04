@@ -118,10 +118,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AttackStrategy1.cpp" />
-    <ClCompile Include="AttackStrategy2.cpp" />
-    <ClCompile Include="AttackStrategy3.cpp" />
-    <ClCompile Include="DefenseStrategy1.cpp" />
     <ClCompile Include="DisplayOutput.cpp" />
     <ClCompile Include="GDE_3.cpp" />
     <ClCompile Include="GDE_3Doc.cpp" />
@@ -140,6 +136,10 @@
     <ClCompile Include="Console\Console.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackStrategy1.h" />
+    <ClInclude Include="AttackStrategy2.h" />
+    <ClInclude Include="AttackStrategy3.h" />
+    <ClInclude Include="DefenseStrategy1.h" />
     <ClInclude Include="GDE_3.h" />
     <ClInclude Include="GDE_3Doc.h" />
     <ClInclude Include="GDE_3View.h" />
