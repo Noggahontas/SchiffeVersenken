@@ -19,6 +19,7 @@ using namespace std;
 //#include <vector>
 #include "Ship.h"
 #include "Global_Definitions.h" // hier können alle Structs etc rein, die wir quer durch unsre Dateien brauchen; da einbinden, wo sie gebraucht werden!
+#include "Player.h"
 
 
 

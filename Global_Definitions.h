@@ -4,4 +4,6 @@ struct Position { int x; int y; };	//Position im Spielfeld mit x- und y-Koordina
 
 enum Direction { Right, Down };	// Richtung in die das Schiff von der Startposition aus ausgerichtet ist
 
-enum TurnDirection{ Left, Right };	// Richtung, in die ein Schiff gedrecht werden kann
+enum TurnDirection{ LeftTurn, RightTurn };	// Richtung, in die ein Schiff gedrecht werden kann
+
+enum MoveDirection{ LeftMove, RightMove, UpMove, DownMove};	// Richtung, ind ie ein Schiff bewegt werden kann

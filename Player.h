@@ -2,6 +2,8 @@
 #include "Ship.h"
 #include "Global_Definitions.h"
 #include <vector>
+using namespace std;
+
 
 class Player
 {
@@ -11,15 +13,24 @@ public:
 	int AttackStrategy;						// Hier wird ein Schlüssel entsprechend der gewählten Angriffsstrategie gespeichert
 	int DefenseStrategy;					// Hier wird ein Schlüssel entsprechend der gewählten Verteidigungsstrategie gespeichert
 
-public:
-	bool ShotOn(Position Shot);				// Schuss von Gegner auf Koordinaten Shot	
+// public:
+	//bool ShotOn(Position Shot);				// Schuss von Gegner auf Koordinaten Shot	
 											// ändert Last3ShotsOfOpponent
 											// Gibt zurück ob ein Schiff getroffen wurde: 1 = getroffen, 0= nicht getroffen
-	bool Turn(int ShipNumber, TurnDirection Direction); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
+
+	//bool Turn(int ShipNumber, TurnDirection Direction); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
 														// Übergabe Richtung, in die gedrecht werden soll. Left=1 oder Right=2
 														// Kollisionsabfrage ob Drehen möglich, wenn ja:
 														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
 														// Rückgabe ob Drehen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
+
+	//bool Move(int ShipNumber, MoveDirection Direction);	// Übergabe welches Schiff bewegt werden soll. Nummer Schiff = Index i aus Array Ships[i] 
+														// Übergabe Richtung, in die bewegt werden soll. LeftMove, RightMove, UpMove, DownMove
+														// Kollisionsabfrage ob Drehen möglich, wenn ja:
+														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
+														// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
+
+	
 														
 };
 
