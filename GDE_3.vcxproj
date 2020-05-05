@@ -140,6 +140,7 @@
     <ClInclude Include="AttackStrategy2.h" />
     <ClInclude Include="AttackStrategy3.h" />
     <ClInclude Include="DefenseStrategy1.h" />
+    <ClInclude Include="DisplayOutput.h" />
     <ClInclude Include="GDE_3.h" />
     <ClInclude Include="GDE_3Doc.h" />
     <ClInclude Include="GDE_3View.h" />

@@ -125,6 +125,9 @@
     <ClInclude Include="DefenseStrategy1.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="DisplayOutput.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\GDE_3.ico">
