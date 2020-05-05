@@ -8,7 +8,7 @@ bool Ship::IsHit(Position Shot)
 	// Aufruf Funktion StillAlive
 
 	bool Hit = 0; // Zwischenspeichern der Feststellung, dass Schiff getroffen wurde
-	if (Direction == Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
+	if (Orientation == Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
 	{
 		for (int i = 0; i < Length; i++)
 		{
@@ -19,7 +19,7 @@ bool Ship::IsHit(Position Shot)
 			}
 		}
 	}
-	else if (Direction == Down)
+	else if (Orientation == Down)
 	{
 		for (int i = 0; i < Length; i++)
 		{
@@ -44,9 +44,23 @@ void Ship::StillAlive()
 
 	for (int i = 0; i < Length; i++)
 	{
-		if (Status.at(i) == 0) { Sunk = 0; 	return; }	// Sobald ein Feld des Schiffes noch nicht getroffen wurde (=0), ist es noch nicht versenkt worden
+		if (Status.at(i) == 0) { Sunk = 0; 	return; }	// Sobald ein einziges Feld des Schiffes noch nicht getroffen wurde (=0), ist Schiff noch nicht versenkt worden
 	
 	}
 
 	Sunk = 1;	// Wenn die Schleife voll durchlaufen wird, ohne dass die Fkt. mit return vorzeitig beendet wird, ist das Schiff versenkt worden
+}
+
+
+Ship::Ship(int Len, Position& SPos, Direction Orient) 
+{
+	//Konstruktor
+	//initialsisiert ein Schiff mit übergebenen Werten: Length=Len, StartPos=SPos, Orientation=Orient
+
+	Length = Len;
+	StartPos = SPos;
+	Orientation = Orient;
+	Sunk = 0; 
+	Status.resize(Len, 0);    // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+
 }
