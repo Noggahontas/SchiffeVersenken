@@ -23,10 +23,9 @@ class Ship
 
 		Ship(int Len, Position &SPos, Direction Orient);		//Konstruktor
 																//initialsisiert ein Schiff mit übergebenen Werten: Length=Len, StartPos=SPos, Orientation=Orient
-	
-
 
 };
+
 
 
 
@@ -34,7 +33,7 @@ class Ship
 //
 //Position Koord{ 3,2 };
 //
-//Ship Ship(3, Koord, Down);
+//Ship Ship(3, Koord, Direction::Down);
 //
 //
 //cout << "Sunk =" << Ship.Sunk << "\n";
@@ -45,7 +44,7 @@ class Ship
 //
 //cout << "StartPosX =" << Ship.StartPos.x << "\n";
 //cout << "StartPosY =" << Ship.StartPos.y << "\n";
-//cout << "Orientation =" << Ship.Orientation << "\n\n";
+//cout << "Orientation =" << (int)Ship.Orientation << "\n\n";
 //
 //cout << "Is Hit bei 3,3? -> " << Ship.IsHit({ 3,3 }) << "\n";
 //cout << "Status[0] =" << Ship.Status.at(0) << "\n";
@@ -53,6 +52,7 @@ class Ship
 //cout << "Status[2] =" << Ship.Status.at(2) << "\n";
 //cout << "Sunk =" << Ship.Sunk << "\n";
 //
+
 
 
 /* Zum Testen: Ganz am Anfang

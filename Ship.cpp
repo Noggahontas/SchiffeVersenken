@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "Ship.h"
+using namespace std;
+
+
 
 bool Ship::IsHit(Position Shot)
 {	// Im Übergabeparameter Shot (Struct) werden die Koordinaten des Schusses (vom Gegner) übergeben
@@ -8,7 +11,7 @@ bool Ship::IsHit(Position Shot)
 	// Aufruf Funktion StillAlive
 
 	bool Hit = 0; // Zwischenspeichern der Feststellung, dass Schiff getroffen wurde
-	if (Orientation == Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
+	if (Orientation == Direction::Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
 	{
 		for (int i = 0; i < Length; i++)
 		{
@@ -19,7 +22,7 @@ bool Ship::IsHit(Position Shot)
 			}
 		}
 	}
-	else if (Orientation == Down)
+	else if (Orientation == Direction::Down)
 	{
 		for (int i = 0; i < Length; i++)
 		{
