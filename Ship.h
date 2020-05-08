@@ -16,13 +16,16 @@ class Ship
 
 
 	public:
-		bool IsHit(Position Shot);	// Rückgabe 1=Schiff wurde gehittet; 0=nicht geghittet
-								//ändert bei einem Hit Status-Vector
-								// Aufruf StillAlive
-		void StillAlive();		// ändert Variable Sunk wenn nötig
+		bool IsHit(Position Shot);	// Rückgabe: 1=Schiff wurde gehittet; 0=nicht geghittet
+									//ändert bei einem Hit Status-Vector
+									// Aufruf StillAlive
 
-		Ship(int Len, Position &SPos, Direction Orient);		//Konstruktor
+		void StillAlive();			// ändert Variable Sunk wenn nötig
+
+		Ship(int Len, Position &SPos, Direction Orient);		//Nur zum Testen //Konstruktor
 																//initialsisiert ein Schiff mit übergebenen Werten: Length=Len, StartPos=SPos, Orientation=Orient
+
+		Ship();					// Standardkonstruktor, weil es ohne eine Fehlermeldung gab
 
 };
 

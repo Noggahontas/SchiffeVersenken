@@ -54,11 +54,12 @@ void Ship::StillAlive()
 	Sunk = 1;	// Wenn die Schleife voll durchlaufen wird, ohne dass die Fkt. mit return vorzeitig beendet wird, ist das Schiff versenkt worden
 }
 
-
+//Nur zum Testen
 Ship::Ship(int Len, Position& SPos, Direction Orient) 
 {
 	//Konstruktor
 	//initialsisiert ein Schiff mit übergebenen Werten: Length=Len, StartPos=SPos, Orientation=Orient
+	//Nur zum Testen
 
 	Length = Len;
 	StartPos = SPos;
@@ -66,4 +67,13 @@ Ship::Ship(int Len, Position& SPos, Direction Orient)
 	Sunk = 0; 
 	Status.resize(Len, 0);    // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
 
+}
+
+Ship::Ship()
+{
+	Length = NULL;
+	StartPos = { NULL, NULL };
+	Orientation = Direction::Down;	// NULL nicht möglich, da enum class
+	Sunk = NULL;
+	Sunk = 0;	//// NULL nicht möglich, da bool
 }
