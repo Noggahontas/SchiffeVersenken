@@ -22,7 +22,7 @@ bool Ship::IsHit(Position Shot)
 			}
 		}
 	}
-	else if (Orientation == Direction::Down)
+	else if (Orientation == Direction::Down) //Schiff von Startposition aus gesehen nach unten ausgerichtet (y-Richtung)
 	{
 		for (int i = 0; i < Length; i++)
 		{
@@ -37,6 +37,12 @@ bool Ship::IsHit(Position Shot)
 	this->StillAlive(); // Aufruf der Funktion StillAlive für dieses Schiff
 	return Hit;	
 }
+
+
+
+
+
+
 
 void Ship::StillAlive()
 {
@@ -53,6 +59,47 @@ void Ship::StillAlive()
 
 	Sunk = 1;	// Wenn die Schleife voll durchlaufen wird, ohne dass die Fkt. mit return vorzeitig beendet wird, ist das Schiff versenkt worden
 }
+
+
+
+
+
+
+bool Ship::AreYouThere(Position CriticalCoordinates)
+{
+	// Übergabe: Koordinaten, von denen gecheckt werden soll ob Schiff darauf steht
+	// Rückgabe: Befindet sich an diesen Koordinaten das Schiff:  1=ja, 0=nein
+
+	bool Occupied = 0; // Zwischenspeichern der Feststellung, dass Schiff auf diesem Feld sitzt
+
+	if (Orientation == Direction::Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
+	{
+		for (int i = 0; i < Length; i++)
+		{
+			if ((StartPos.x + i == CriticalCoordinates.x) & (StartPos.y == CriticalCoordinates.y))	//Koordinaten stimmen mit der Position des Schiff-Feldes überein
+			{
+				Occupied = 1;			// Schiff sitzt auf Feld
+			}
+		}
+	}
+	else if (Orientation == Direction::Down) //Schiff von Startposition aus gesehen nach unten ausgerichtet (y-Richtung)
+	{
+		for (int i = 0; i < Length; i++)
+		{
+			if ((StartPos.x == CriticalCoordinates.x) & (StartPos.y + i == CriticalCoordinates.y))	//Koordinaten des Schusses stimmen mit der Position des Schiff-Feldes überein
+			{
+				Occupied = 1;			// Schiff sitzt auf Feld
+			}
+		}
+	}
+
+	return Occupied;	// Rückgabe ob übergebene Koordinaten von einem Schiff besetzt sind
+}
+
+
+
+
+
 
 //Nur zum Testen
 Ship::Ship(int Len, Position& SPos, Direction Orient) 

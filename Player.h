@@ -41,16 +41,100 @@ public:
 
 
 
-/*
-Zum Testen
 
 
-	vector <int> test(3);
-	test.at(0) = 1;
-	test.at(1) = 2;
-	test.at(2) = 3;
-	//test.at(3) = 4;
+//_________________________________________________________________________
 
-	cout << test.at(0) << "\n" << test.at(1) << "\n" << test.at(2);
+// Testen Funktion Move
 
-*/
+//Player P1;
+//
+//int i = 6; // Number of Ship to be moved
+//
+//MoveDirection Dir = MoveDirection::Forward;
+//
+//cout << "Orientation: " << static_cast <int> (P1.Ships[i].Orientation) << "\n";
+//cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
+//
+//cout << " Bewegen-Ergebnis: " << P1.Move(i, Dir) << "\n";
+//cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
+//cout << "-----------------------------\n";
+//cout << " Bewegen-Ergebnis: " << P1.Move(i, Dir) << "\n";
+//cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
+//cout << "-----------------------------\n";
+//cout << " Bewegen-Ergebnis: " << P1.Move(i, Dir) << "\n";
+//cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
+
+
+
+
+//______________________________________________________________________________
+
+
+
+
+
+// Lösung Problem enum -> Typumwandlung
+//
+//enum class Test { a, b, c };
+//
+//Test T;
+//
+//T = (Test)1;
+//
+//T = static_cast <Test> (2);
+
+
+
+
+
+//_______________________________________________________________________________________
+// Zum test ShotOn
+//Player P1;
+//
+//cout << P1.ShotOn({ 5,2 });
+//
+//cout << "Status getr. Schiff: " << P1.Ships[1].Status.at(0) << P1.Ships[1].Status.at(1) << P1.Ships[1].Status.at(2) << P1.Ships[1].Status.at(3);
+//
+//cout << "\n letzte 3 Schüsse: ";
+//for (int i = 0; i < 3; i++)
+//{
+//	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
+//}
+//
+//cout << "\n" << P1.ShotOn({ 1,0 });
+//cout << "\n letzte 3 Schüsse: ";
+//for (int i = 0; i < 3; i++)
+//{
+//	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
+//}
+//
+//cout << "\n" << P1.ShotOn({ 2,3 });
+//cout << "\n letzte 3 Schüsse: ";
+//for (int i = 0; i < 3; i++)
+//{
+//	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
+//}
+
+
+//______________________________________________________________________________________________________________
+
+// Zum Testen Konstruktor
+//
+//Player P1;
+//for (int i = 0; i < 10; i++)
+//{
+//	cout << "Ships[" << i << "]: " << P1.Ships[i].Length << "{" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "}" << P1.Ships[i].Sunk << "\n";
+//}
+//if (P1.Ships[0].Orientation == Direction::Down)
+//{
+//	cout << 1 << "\n";
+//}
+//else if (P1.Ships[0].Orientation == Direction::Right)
+//{
+//	cout << 0;
+//}
+//
+//P1.Ships[0].IsHit({ 0,3 });
+//cout << "Status: " << P1.Ships[0].Status.at(0) << P1.Ships[0].Status.at(1) << P1.Ships[0].Status.at(2) << P1.Ships[0].Status.at(3) << P1.Ships[0].Status.at(4) << "\n";
+//cout << P1.Ships[0].Sunk;

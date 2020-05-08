@@ -6,4 +6,4 @@ enum class Direction { Right  , Down };	// Richtung in die das Schiff von der St
 
 enum class TurnDirection{ LeftTurn, RightTurn };	// Richtung, in die ein Schiff gedrecht werden kann
 
-enum class MoveDirection{ LeftMove, RightMove, UpMove, DownMove};	// Richtung, ind ie ein Schiff bewegt werden kann
+enum class MoveDirection{ Forward, Backward};	// Richtung, ind ie ein Schiff bewegt werden kann

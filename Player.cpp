@@ -28,6 +28,215 @@ bool Player::ShotOn(Position Shot)
 
 
 
+
+
+
+
+bool Player::Move(int ShipNumber, MoveDirection Direction)
+{
+	// Übergabe welches Schiff bewegt werden soll. Nummer Schiff = Index i aus Array Ships[i] 
+	// Übergabe Richtung, in die bewegt werden soll: Forward oder Backward. ein Schiff kann nur in Längsrichtung bewegt werden
+	// Kollisionsabfrage ob Bewegen möglich, wenn ja:
+	// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
+	// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
+
+	bool MoveSuccess = 1;			// Angabe ob Bewegen möglich war
+
+	Position CriticalCoordinates;	// Koordinaten, die Schiff nach dem Bewegen belegen würde
+									// Für diese muss geprüft werden ob das möglich ist -> Kollision/ Außerhalb Spielfeld
+
+	bool Collision;					// Angabe ob es durch Bewegen eine Kollision mit einem Schiff gäbe
+
+	bool Hit;						// Angabe ob es durch Bewegen eine Kollision mit einem Feld geben würde, das in den letzten 3 Runden abgeschossen wurde
+		
+	bool InsideBattlefield;			//Angabe ob nach Bewegen noch innerhalb von Schlachtfeld wäre
+
+
+	if (Direction == MoveDirection::Forward)		// Wenn Schiff sich vorwärts bewegen soll 
+	{	
+		if (Ships[ShipNumber].Orientation == Direction::Right)	// Wenn Schiff nach rechts ausgerichtet ist (von StartPos aus)
+		{					
+			// x-Koordinate wird durch Bewegen um 1 erhöht -> Koordinaten, die geprüft werden müssen:
+			// aktuelle Startposition x-Koord. + (Länge Schiff-1) = x-Koordinate von aktuellem letzten Feld des Schiffs 
+			// aktuelles letztes Feld Schiff + um 1 Bewegen = neue x-Koordinate, die Schiff durch Bewegen belegen würde
+			// an y-Koordinate ändert sich nichts
+			CriticalCoordinates = { (Ships[ShipNumber].StartPos.x + (Ships[ShipNumber].Length - 1) + 1 ) , Ships[ShipNumber].StartPos.y };
+
+			// Check, ob das ganze Schiff nach dem Bewegen noch im Spielfeld
+			InsideBattlefield = ( CriticalCoordinates.x <= 9);	
+
+			// Check, ob auf neuen Koordinaten durch Bewegen schon ein Schiff sitzt
+			int i = 0;
+			do				// Ausführen für alle Schiffe, bis ein Schiff auf CriticalCoordinates gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
+			{
+				Collision = Ships[i].AreYouThere(CriticalCoordinates);	// AreYouThere() gibt zurück ob das Schiff auf diesem Feld sitzt
+				i++;
+			} while ((i < 10) & (Collision != 1));
+
+			//Check, ob auf neue Koordinaten durch Bewegen in den letzten 3 Runden ein Schuss gefallen ist
+			//-> Felder, die innerhalb der letzten 3 Runden vom Gegner abgeschossen wurden, dürfen von eigenen Schiffen nicht belegt werden
+			Hit = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				if ((Last3ShotsOfOpponent.at(i).x == CriticalCoordinates.x) & (Last3ShotsOfOpponent.at(i).y == CriticalCoordinates.y))
+				{
+					Hit = 1;
+				}
+			}
+
+			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
+			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
+			if (!Collision & !Hit & InsideBattlefield)
+			{
+				Ships[ShipNumber].StartPos.x++;
+				return 1;						// Bewegen erfolgreich
+			}
+			else
+			{
+				return 0;						// Bewegen nicht möglich
+			}
+
+		}
+		else if (Ships[ShipNumber].Orientation == Direction::Down)		// Wenn Schiff nach unten ausgerichtet ist (von StartPos aus)
+		{
+			// y-Koordinate wird durch Bewegen um 1 erhöht -> Koordinaten, die geprüft werden müssen:
+			// aktuelle Startposition y-Koord. + (Länge Schiff-1) = y-Koordinate von aktuellem letztes Feld des Schiff 
+			// aktuelle letzte y-Koordinate Schiff + um 1 Bewegen = neue y-Koordinate, die Schiff durch Bewegen belegen würde
+			// an x-Koordinate ändert sich nichts
+			CriticalCoordinates = {  Ships[ShipNumber].StartPos.x , Ships[ShipNumber].StartPos.y + (Ships[ShipNumber].Length - 1) + 1 };
+
+			// Check, ob das ganze Schiff nach dem Bewegen noch im Spielfeld
+			InsideBattlefield = (CriticalCoordinates.y <= 9);
+
+			// Check, ob auf neuen Koordinaten durch Bewegen schon ein Schiff sitzt
+			int i = 0;
+			do				// Ausführen für alle Schiffe, bis ein Schiff auf CriticalCoordinates gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
+			{
+				Collision = Ships[i].AreYouThere(CriticalCoordinates);	// AreYouThere() gibt zurück ob das Schiff auf diesem Feld sitzt
+				i++;
+			} while ((i < 10) & (Collision != 1));
+
+			//Check, ob auf neue Koordinaten durch Bewegen in den letzten 3 Runden ein Schuss gefallen ist
+			//-> Felder, die innerhalb der letzten 3 Runden vom Gegner abgeschossen wurden, dürfen von eigenen Schiffen nicht belegt werden
+			Hit = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				if ((Last3ShotsOfOpponent.at(i).x == CriticalCoordinates.x) & (Last3ShotsOfOpponent.at(i).y == CriticalCoordinates.y))
+				{
+					Hit = 1;
+				}
+			}
+
+			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
+			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
+			if (!Collision & !Hit & InsideBattlefield)
+			{
+				Ships[ShipNumber].StartPos.y++;
+				return 1;						// Bewegen erfolgreich
+			}
+			else
+			{
+				return 0;						// Bewegen nicht möglich
+			}
+		}	
+	}
+	else if (Direction == MoveDirection::Backward)	// Wenn Schiff sich rückwärts bewegen soll
+	{
+		if (Ships[ShipNumber].Orientation == Direction::Right)	// Wenn Schiff nach rechts ausgerichtet ist (von StartPos aus)
+		{
+			// x-Koordinate wird durch Bewegen um 1 erniedrigt -> Koordinaten, die geprüft werden müssen:
+			// x-Koordinate von aktuellem ersten Feld des Schiffs  - um 1 Bewegen = neue x-Koordinate, die Schiff durch Bewegen belegen würde
+			// an y-Koordinate ändert sich nichts
+			CriticalCoordinates = { Ships[ShipNumber].StartPos.x - 1 , Ships[ShipNumber].StartPos.y };
+
+			// Check, ob das ganze Schiff nach dem Bewegen noch im Spielfeld
+			InsideBattlefield = (CriticalCoordinates.x >= 0);
+
+			// Check, ob auf neuen Koordinaten durch Bewegen schon ein Schiff sitzt
+			int i = 0;
+			do				// Ausführen für alle Schiffe, bis ein Schiff auf CriticalCoordinates gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
+			{
+				Collision = Ships[i].AreYouThere(CriticalCoordinates);	// AreYouThere() gibt zurück ob das Schiff auf diesem Feld sitzt
+				i++;
+			} while ((i < 10) & (Collision != 1));
+
+			//Check, ob auf neue Koordinaten durch Bewegen in den letzten 3 Runden ein Schuss gefallen ist
+			//-> Felder, die innerhalb der letzten 3 Runden vom Gegner abgeschossen wurden, dürfen von eigenen Schiffen nicht belegt werden
+			Hit = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				if ((Last3ShotsOfOpponent.at(i).x == CriticalCoordinates.x) & (Last3ShotsOfOpponent.at(i).y == CriticalCoordinates.y))
+				{
+					Hit = 1;
+				}
+			}
+
+			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
+			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
+			if (!Collision & !Hit & InsideBattlefield)
+			{
+				Ships[ShipNumber].StartPos.x--;
+				return 1;						// Bewegen erfolgreich
+			}
+			else
+			{
+				return 0;						// Bewegen nicht möglich
+			}
+
+		}
+		else if (Ships[ShipNumber].Orientation == Direction::Down)		// Wenn Schiff nach unten ausgerichtet ist (von StartPos aus)
+		{
+			// y-Koordinate wird durch Bewegen um 1 erniedrigt -> Koordinaten, die geprüft werden müssen:
+			// aktuelle Startposition y-Koord. - 1 durch Bewegen = neue y-Koordinate, die Schiff durch Bewegen belegen würde
+			// an x-Koordinate ändert sich nichts
+			CriticalCoordinates = { Ships[ShipNumber].StartPos.x, Ships[ShipNumber].StartPos.y - 1 };
+
+			// Check, ob das ganze Schiff nach dem Bewegen noch im Spielfeld
+			InsideBattlefield = (CriticalCoordinates.y >= 0);
+
+			// Check, ob auf neuen Koordinaten durch Bewegen schon ein Schiff sitzt
+			int i = 0;
+			do				// Ausführen für alle Schiffe, bis ein Schiff auf CriticalCoordinates gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
+			{
+				Collision = Ships[i].AreYouThere(CriticalCoordinates);	// AreYouThere() gibt zurück ob das Schiff auf diesem Feld sitzt
+				i++;
+			} while ((i < 10) & (Collision != 1));
+
+			//Check, ob auf neue Koordinaten durch Bewegen in den letzten 3 Runden ein Schuss gefallen ist
+			//-> Felder, die innerhalb der letzten 3 Runden vom Gegner abgeschossen wurden, dürfen von eigenen Schiffen nicht belegt werden
+			Hit = 0;
+			for (int i = 0; i < 3; i++)
+			{
+				if ((Last3ShotsOfOpponent.at(i).x == CriticalCoordinates.x) & (Last3ShotsOfOpponent.at(i).y == CriticalCoordinates.y))
+				{
+					Hit = 1;
+				}
+			}
+
+			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
+			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
+			if (!Collision & !Hit & InsideBattlefield)
+			{
+				Ships[ShipNumber].StartPos.y--;
+				return 1;						// Bewegen erfolgreich
+			}
+			else
+			{
+				return 0;						// Bewegen nicht möglich
+			}
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
 Player::Player() {
 	 // Konstruktor 
 	 // Stößt Konstruktor für jedes Schiff an
@@ -163,72 +372,11 @@ Player::Player() {
 	//	ShipNumber++;	// nächste Zeile wird geholt, gilt für nächstes Schiff
 	//}
 
-
-
-
 }
 
-// Lösung Problem enum -> Typumwandlung
-//
-//enum class Test { a, b, c };
-//
-//Test T;
-//
-//T = (Test)1;
-//
-//T = static_cast <Test> (2);
 
 
 
 
 
-//_______________________________________________________________________________________
-// Zum test ShotOn
-//Player P1;
-//
-//cout << P1.ShotOn({ 5,2 });
-//
-//cout << "Status getr. Schiff: " << P1.Ships[1].Status.at(0) << P1.Ships[1].Status.at(1) << P1.Ships[1].Status.at(2) << P1.Ships[1].Status.at(3);
-//
-//cout << "\n letzte 3 Schüsse: ";
-//for (int i = 0; i < 3; i++)
-//{
-//	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
-//}
-//
-//cout << "\n" << P1.ShotOn({ 1,0 });
-//cout << "\n letzte 3 Schüsse: ";
-//for (int i = 0; i < 3; i++)
-//{
-//	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
-//}
-//
-//cout << "\n" << P1.ShotOn({ 2,3 });
-//cout << "\n letzte 3 Schüsse: ";
-//for (int i = 0; i < 3; i++)
-//{
-//	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
-//}
 
-
-//______________________________________________________________________________________________________________
-
-// Zum Testen Konstruktor
-//
-//Player P1;
-//for (int i = 0; i < 10; i++)
-//{
-//	cout << "Ships[" << i << "]: " << P1.Ships[i].Length << "{" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "}" << P1.Ships[i].Sunk << "\n";
-//}
-//if (P1.Ships[0].Orientation == Direction::Down)
-//{
-//	cout << 1 << "\n";
-//}
-//else if (P1.Ships[0].Orientation == Direction::Right)
-//{
-//	cout << 0;
-//}
-//
-//P1.Ships[0].IsHit({ 0,3 });
-//cout << "Status: " << P1.Ships[0].Status.at(0) << P1.Ships[0].Status.at(1) << P1.Ships[0].Status.at(2) << P1.Ships[0].Status.at(3) << P1.Ships[0].Status.at(4) << "\n";
-//cout << P1.Ships[0].Sunk;

@@ -22,6 +22,9 @@ class Ship
 
 		void StillAlive();			// ändert Variable Sunk wenn nötig
 
+		bool AreYouThere(Position CriticalCoordinates);	// Übergabe: Koórdinaten, von denen geckeckt werden soll ob Schiff darauf steht
+														// Rückgabe: Befindet sich an diesen Koordinaten ein Schiff:  1=ja, 0=nein
+
 		Ship(int Len, Position &SPos, Direction Orient);		//Nur zum Testen //Konstruktor
 																//initialsisiert ein Schiff mit übergebenen Werten: Length=Len, StartPos=SPos, Orientation=Orient
 
