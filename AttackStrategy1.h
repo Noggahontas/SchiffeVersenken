@@ -1,12 +1,12 @@
 #pragma once
-
 #include <iostream>
-#include <time.h>						// notwendig für die zeitabhängige Zufallszahl 
+#include <time.h>						// notwendig für die zeitabhängige Zufallszahl
+#include "Global_Definitions.h"
 
 using namespace std;
 
-void Angriffsstrategie1(int* x, int* y)
+void AttackStrategy1(struct Position* Position)
 {
-	*x = (rand() % 10) + 1;
-	*y = (rand() % 10) + 1;
+	Position->x = (rand() % 10);
+	Position->y = (rand() % 10);
 }
