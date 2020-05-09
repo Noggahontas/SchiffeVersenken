@@ -37,6 +37,7 @@ void moveto(int x, int y);				// Setzt die Position des virtuellen Grafikcursors
 void lineto(int x, int y, int color);	// Zieht eine Linie von den Koordinaten des Grafikcursors aus.
 void line(int x1, int y1, int x2, int y2, int color);	// Zeichnet eine Linie.
 
+
 // Rechtecke
 void rectangle(int x1, int y1, int x2, int y2, int cframe, int cfill = -1);
 	// Zeichnet ein Rechteck (optional deckend).
