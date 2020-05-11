@@ -27,10 +27,8 @@ int DisplayOutput::Initialisierung()
 }
 */
 
-Position DisplayOutput::SpielfeldErstellen(int x, int y, int Kaestchengroesse) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
+Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
-	// Graphikfenster am Punkt (x,y)
-
 	int const N = 4;
 	int const start = 50;
 	int const delta = Kaestchengroesse;		//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
@@ -74,7 +72,7 @@ Position DisplayOutput::SpielfeldErstellen(int x, int y, int Kaestchengroesse) /
 	int hoehe = (10 * delta) + (2 * start);
 
 	// Erstellen des Graphikfensters
-	set_windowpos(x, y, breite, hoehe); 
+	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe); 
 
 
 	// Speichern der 4 Eckpunkte des Spielfeldes
