@@ -1,8 +1,8 @@
 #pragma once
 
-struct Position { int x; int y; };	//Position im Spielfeld mit x- und y-Koordinate
+struct Position { int x; int y; };	// Position im Spielfeld mit x- und y-Koordinate
 
-enum AttackDirection { N, E, S, W };	// In Angriffsstrategie3 für den Richtungswechsel
+enum AttackDirection { N, E, S, W };	// Für den Richtungswechsel in AttackStrategy3 (Sprialform)
 
 enum Direction { Right, Down };	// Richtung in die das Schiff von der Startposition aus ausgerichtet ist
 
