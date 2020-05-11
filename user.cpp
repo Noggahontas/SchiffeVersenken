@@ -4,10 +4,10 @@
 
 #include "stdafx.h"
 #include "user.h"
-#include "graphics\graphicfunctions.h"
 
 #include <iostream>
 #include <fstream>
+
 
 #ifndef _USE_OLD_OSTREAMS
 using namespace std;
@@ -25,21 +25,25 @@ using namespace std;
 #include <time.h>
 #include "AttackStrategy1.h"
 
+// Include fuer Ausgabe des Graphikfensters
+#include "DisplayOutput.h"
+
+
 
 void user_main()
 {
 
-	// für die Ausgabe braucht man diese Sachen scheinabr -> nicht vergessen auf Run zu drücken!!
 
+	//clrscr();
+
+	//_________________________________________________________________________________________
+	/*
 	int ww, hh;
 	set_windowpos(0, 0, 600, 400);
 
 	get_windowsize(&ww, &hh);
 	set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
-	clrscr();
-
-	//_________________________________________________________________________________________
-
+	*/
 	srand(time(0)); // Startet den Pseudozufallszahlengenerator
 
 
