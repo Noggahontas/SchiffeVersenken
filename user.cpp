@@ -43,23 +43,11 @@ void user_main()
 	srand(time(0)); // Startet den Pseudozufallszahlengenerator
 
 
-	Player P1;
 
-	int i = 6; // Number of Ship to be moved
 
-	MoveDirection Dir = MoveDirection::Forward;
 
-	cout << "Orientation: " << static_cast <int> (P1.Ships[i].Orientation) << "\n";
-	cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
 
-	cout << " Bewegen-Ergebnis: " << P1.Move(i, Dir) << "\n";
-	cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
-	cout << "-----------------------------\n";
-	cout << " Bewegen-Ergebnis: " << P1.Move(i, Dir) << "\n";
-	cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
-	cout << "-----------------------------\n";
-	cout << " Bewegen-Ergebnis: " << P1.Move(i, Dir) << "\n";
-	cout << "StartPos: {" << P1.Ships[i].StartPos.x << P1.Ships[i].StartPos.y << "} \n";
+
 
 
 

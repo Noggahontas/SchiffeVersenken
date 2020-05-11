@@ -18,7 +18,7 @@ public:
 											// ändert Last3ShotsOfOpponent
 											// Gibt zurück ob ein Schiff getroffen wurde: 1 = getroffen, 0= nicht getroffen
 
-	bool Turn(int ShipNumber, TurnDirection Direction); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
+	//bool Turn(int ShipNumber, TurnDirection Direction); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
 														// Übergabe Richtung, in die gedrecht werden soll. Left=1 oder Right=2
 														// Kollisionsabfrage ob Drehen möglich, wenn ja:
 														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff

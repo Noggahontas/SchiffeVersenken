@@ -116,6 +116,8 @@ Ship::Ship(int Len, Position& SPos, Direction Orient)
 
 }
 
+
+
 Ship::Ship()
 {
 	Length = NULL;

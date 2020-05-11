@@ -226,7 +226,7 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 			}
 		}
 	}
-
+	return 0 ;	// Fehler ist aufgetreten
 }
 
 
