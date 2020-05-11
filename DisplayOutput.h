@@ -18,6 +18,9 @@ public:
 
 	map <string, int> schiffe; // map oder Cmap??
 
+	//Initialisierung
+	// int Initialisierung();
+
 	// Funktion zum erstellen eines Spielfeldes
 	// gibt linke obere Ecke zur Orientierung zurück
 	Position SpielfeldErstellen(int x, int y, int Kaestchengroesse);
@@ -28,5 +31,7 @@ public:
 	// Funktion zeichnet ein Schiff in das Spielfeld
 	void Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int Kaestchengroesse, int Schiffslaenge, string Spieler);
 
+	// kennzeichnet ein getroffenes Feld
+	void getroffenesFeld (Position EckpunktSpielfeld,Position Treffer, int Kaestchengroesse);
 };
 

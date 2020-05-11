@@ -16,6 +16,16 @@
 
 //#include "Global_Definitions.h";
 
+/*
+int DisplayOutput::Initialisierung()
+{
+	int Kaestchengroesse; // guter Wert ist 20
+	cout << " Eingabe Kaestchengroesse des Spielfeldes" << endl;
+	cin >> Kaestchengroesse;
+
+	return Kaestchengroesse;
+}
+*/
 
 Position DisplayOutput::SpielfeldErstellen(int x, int y, int Kaestchengroesse) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
@@ -178,4 +188,22 @@ void DisplayOutput::Schiff(Position EckpunktSpielfeld, Schiffsposition Lokalisie
 	rectangle(x1,y1, x2, y2, farbe, farbe);
 
 
+}
+
+void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer, int Kaestchengroesse)
+{
+	int x1, x2, xx1, xx2, y1, y2, yy1, yy2;
+	// Skalierung des Ausgangspunktes an das Spielfeld
+	x1 = EckpunktSpielfeld.x + Treffer.x*Kaestchengroesse; 
+	y1 = EckpunktSpielfeld.y + Treffer.y*Kaestchengroesse;
+
+	x2 = x1 + Kaestchengroesse; 
+	y2 = y1 + Kaestchengroesse;
+
+	xx1 = x1 + Kaestchengroesse; yy1 = y1;
+	xx2 = x1; yy2 = y1 + Kaestchengroesse;
+
+	// Zeichenen eines roten Kreuzes
+	line(x1, y1, x2, y2, ROT);
+	line(xx1, yy1, xx2, yy2, ROT);
 }

@@ -36,7 +36,7 @@ void user_main()
 	// für die Ausgabe braucht man diese Sachen scheinabr -> nicht vergessen auf Run zu drücken!!
 	DisplayOutput Ausgabe;
 	Schiffsposition schiff_spieler1_Schlachtschiff, schiff_spieler2_UBoot_1;
-	Position linkeEckeOben;
+	Position linkeEckeOben, Treffer;
 
 	// Beispielpositionschiff
 	schiff_spieler1_Schlachtschiff.linkeEckeOben.x = 1;
@@ -49,8 +49,8 @@ void user_main()
 
 	// Einlesen der Kaestchengroesse
 	int Kaestchengroesse = 20; // guter Wert ist 20
-	//cout << " Eingabe Kaestchengroesse des Spielfeldes" << endl;
-	// cin >> Kaestchengroesse;
+
+	Treffer = schiff_spieler1_Schlachtschiff.linkeEckeOben;
 
 	int Laenge_Schlachtschiff = 5;
 	int Laaenge_Kreuzer = 4;
@@ -65,6 +65,8 @@ void user_main()
 	Position Legende;
 
 	int bedingung = 1; // Bedingung das Spiel noch läuft;
+
+	//Kaestchengroesse = Ausgabe.Initialisierung();
 	linkeEckeOben = Ausgabe.SpielfeldErstellen(500,200, Kaestchengroesse);
 	Ausgabe.Legende(linkeEckeOben, Kaestchengroesse, BLAU, GRUEN);
 
@@ -72,6 +74,7 @@ void user_main()
 	{
 		Ausgabe.Schiff(linkeEckeOben, schiff_spieler1_Schlachtschiff, Kaestchengroesse, Laenge_Schlachtschiff, spieler1);
 		Ausgabe.Schiff(linkeEckeOben, schiff_spieler2_UBoot_1, Kaestchengroesse, Laenge_UBoot, spieler2);
+		Ausgabe.getroffenesFeld(linkeEckeOben,Treffer, Kaestchengroesse);
 		break;
 	}
 

@@ -16,3 +16,4 @@ struct Schiffsposition { Position linkeEckeOben; char ausrichtung; }; // Schiff 
 #define WEISS RGB(255,255,255)
 #define BLAU RGB(0,0,255)
 #define GRUEN RGB(0,255,0)
+#define ROT RGB(255,0,0)
