@@ -7,3 +7,5 @@ enum Direction { Right, Down };	// Richtung in die das Schiff von der Startposit
 enum TurnDirection{ LeftTurn, RightTurn };	// Richtung, in die ein Schiff gedrecht werden kann
 
 enum MoveDirection{ LeftMove, RightMove, UpMove, DownMove};	// Richtung, ind ie ein Schiff bewegt werden kann
+
+struct Schiffsposition { Position linkeEckeOben; char ausrichtung; }; // Schiff muss zum Lokalisieren linke obere Ecke und Ausrichtung besitzen

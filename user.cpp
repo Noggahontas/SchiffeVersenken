@@ -5,8 +5,6 @@
 #include "stdafx.h"
 #include "user.h"
 
-// #include "graphics\graphicfunctions.h"
-
 #include <iostream>
 #include <fstream>
 
@@ -31,10 +29,51 @@ using namespace std;
 #include "DisplayOutput.h"
 
 
+
 void user_main()
 {
 
 	// für die Ausgabe braucht man diese Sachen scheinabr -> nicht vergessen auf Run zu drücken!!
+	DisplayOutput Ausgabe;
+	Schiffsposition schiff_spieler1_Schlachtschiff, schiff_spieler2_UBoot_1;
+	Position linkeEckeOben;
+
+	// Beispielpositionschiff
+	schiff_spieler1_Schlachtschiff.linkeEckeOben.x = 1;
+	schiff_spieler1_Schlachtschiff.linkeEckeOben.y = 2;
+	schiff_spieler1_Schlachtschiff.ausrichtung = 'w'; // Schiff liegt waagrecht
+	
+	schiff_spieler2_UBoot_1.linkeEckeOben.x = 0;
+	schiff_spieler2_UBoot_1.linkeEckeOben.y = 8;
+	schiff_spieler2_UBoot_1.ausrichtung = 's';
+
+	// Einlesen der Kaestchengroesse
+	int Kaestchengroesse = 20; // guter Wert ist 20
+	//cout << " Eingabe Kaestchengroesse des Spielfeldes" << endl;
+	// cin >> Kaestchengroesse;
+
+	int Laenge_Schlachtschiff = 5;
+	int Laaenge_Kreuzer = 4;
+	int Laenge_Zerstoerer = 3;
+	int Laenge_UBoot = 2;
+
+	// statt der Strings könnte auch eine Kennung {1 = Spieler 1; 2= Spieler 2} übergeben werden
+	string spieler1 = "Spieler 1";
+	string spieler2 = "Spieler 2";
+
+	int bedingung = 1; // Bedingung das Spiel noch läuft;
+	linkeEckeOben = Ausgabe.SpielfeldErstellen(500,200, Kaestchengroesse);
+	while (bedingung != 0)
+	{
+		Ausgabe.Schiff(linkeEckeOben, schiff_spieler1_Schlachtschiff, Kaestchengroesse, Laenge_Schlachtschiff, spieler1);
+		Ausgabe.Schiff(linkeEckeOben, schiff_spieler2_UBoot_1, Kaestchengroesse, Laenge_UBoot, spieler2);
+		break;
+	}
+
+
+	//clrscr();
+
+	//_________________________________________________________________________________________
 	/*
 	int ww, hh;
 	set_windowpos(0, 0, 600, 400);
@@ -42,14 +81,6 @@ void user_main()
 	get_windowsize(&ww, &hh);
 	set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
 	*/
-
-	DisplayOutput Ausgabe;
-	Ausgabe.SpielfeldErstellen(500,200);
-
-	//clrscr();
-
-	//_________________________________________________________________________________________
-
 	srand(time(0)); // Startet den Pseudozufallszahlengenerator
 
 

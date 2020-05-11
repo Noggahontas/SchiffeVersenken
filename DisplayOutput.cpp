@@ -9,30 +9,28 @@
 #include "console\console.h"
 #include "graphics\graphicfunctions.h"
 
-#include <cstring>
 #include <iostream>
 #include <stdio.h>
 #include <afxtempl.h> // CMap etc.
 #include <string>
 
-// Farbe Schwarz in der RGB - Darstellung
+//#include "Global_Definitions.h";
+
+// Farben in der RGB - Darstellung
 #define SCHWARZ 0
 #define WEISS RGB(255,255,255)
-void DisplayOutput::Initialisierung()
-{
-	// Name des Schiffes (key) und Laenge des Schiffes (value)
-	schiffe["Schlachtschiff"] = 5;
-	schiffe["Kreuzer"] = 4;
-	schiffe["Zerstoerer"] = 3;
-	schiffe["UBoot"] = 2;
-}
-void DisplayOutput::SpielfeldErstellen(int x, int y) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
+#define BLAU RGB(0,0,255)
+#define GRUEN RGB(0,255,0)
+
+
+Position DisplayOutput::SpielfeldErstellen(int x, int y, int kaestchengroesse) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
 	// Graphikfenster am Punkt (x,y)
 
 	int const N = 4;
 	int const start = 50;
-	int const delta = 20;//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
+	int const delta = kaestchengroesse;		//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
+	
 	int i,j,k,m;
 	double dx, dy;
 	double differenz, schrittweite;;
@@ -40,11 +38,11 @@ void DisplayOutput::SpielfeldErstellen(int x, int y) // Spielfeld an der Stelle(
 
 	// Definition der verschiedenen Textfelder im Spielfeld
 	// alle Texte sollen dieselbe Schriftgroesse haben
-	int textgroesse = 12;
+	int textgroesse = kaestchengroesse/2 ;
 
 	// Ueberschrift
 	Position Textfeld;
-	Textfeld.x = start / 2; 
+	Textfeld.x = start / 2 + (kaestchengroesse*2); 
 	Textfeld.y = start / 2;
 
 	// Buchstabenreihe
@@ -66,12 +64,14 @@ void DisplayOutput::SpielfeldErstellen(int x, int y) // Spielfeld an der Stelle(
 	ZahlenArray[0] = "1"; ZahlenArray[1] = "2"; ZahlenArray[2] = "3"; ZahlenArray[3] = "4"; ZahlenArray[4] = "5";
 	ZahlenArray[5] = "6"; ZahlenArray[6] = "7"; ZahlenArray[7] = "8"; ZahlenArray[8] = "9"; ZahlenArray[9] = "10";
 
+
 	// Hoehe und Breite des Graphikfensters
-	int breite = (10*delta) + (2*start); 
-	int hoehe = (10*delta) + (2*start);
-	
+	int breite = (10 * delta) + (2 * start);
+	int hoehe = (10 * delta) + (2 * start);
+
 	// Erstellen des Graphikfensters
 	set_windowpos(x, y, breite, hoehe); 
+
 
 	// Speichern der 4 Eckpunkte des Spielfeldes
 	Position Spielfeld[N]; 
@@ -104,14 +104,49 @@ void DisplayOutput::SpielfeldErstellen(int x, int y) // Spielfeld an der Stelle(
 	char *ausgabe = "fancy Schiffe versenken von Norrer, Dommev & Vranzi";
 	text(Textfeld.x, Textfeld.y, textgroesse, WEISS, ausgabe);	
 	
+	// Rückgabe der linken oberen Ecke 
+	Position linkeEckeOben = Spielfeld[0];
+	return linkeEckeOben;
 };
 
-void DisplayOutput::Schiff(int x, int y, string Schiffsname)
-{
-	int schiffslaenge;
-	if (Schiffsname.compare("Schlachtschiff") == 0)
-	{
-		schiffslaenge = schiffe["Schlachtschiff"];
-	}
-}
 
+void DisplayOutput::Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int kaestchengroesse, int schiffslaenge, string spieler)
+{
+	int x1, x2, y1, y2, farbe;
+	char AusrichtungSchiff = LokalisierungSchiff.ausrichtung;
+	if (AusrichtungSchiff == 'w') // Schiff ist waagrecht zu zeichnen
+	{
+		// Schiffsposition muss mit Kaestchengroesse skaliert werden
+		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * kaestchengroesse);
+		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * kaestchengroesse);
+		x2 = x1 + (schiffslaenge * kaestchengroesse);
+		y2 = y1 + kaestchengroesse;
+	} 
+	else if (AusrichtungSchiff == 's') // Schiff ist senkrecht zu zeichen
+	{
+		// Schiffsposition muss mit Kaestchengroesse skaliert werden
+		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * kaestchengroesse);
+		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * kaestchengroesse);
+		x2 = x1 + kaestchengroesse;
+		y2 = y1 + (schiffslaenge * kaestchengroesse);
+	}
+	// Farben 
+	if (spieler.compare("Spieler 1") == 0)
+	{
+		// Spieler 1 : Blau
+		farbe = BLAU;
+	} 
+	else if(spieler.compare("Spieler 2") == 0)
+	{
+		// Spieler 2 : Gruen
+		farbe = GRUEN;
+	}
+	else 
+	{
+		farbe = WEISS;
+	}
+	rectangle(x1,y1, x2, y2, WEISS, farbe);
+
+	// Legende
+
+}
