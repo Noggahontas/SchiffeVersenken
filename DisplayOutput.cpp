@@ -147,18 +147,18 @@ void DisplayOutput::Schiff(Position EckpunktSpielfeld, Schiffsposition Lokalisie
 	if (AusrichtungSchiff == 'w') // Schiff ist waagrecht zu zeichnen
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
-		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse);
-		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse);
-		x2 = x1 + (Schiffslaenge * Kaestchengroesse);
-		y2 = y1 + Kaestchengroesse;
+		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse) + 1;
+		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse) + 1 ;
+		x2 = x1 + (Schiffslaenge * Kaestchengroesse) - 1;
+		y2 = y1 + Kaestchengroesse - 1;
 	} 
 	else if (AusrichtungSchiff == 's') // Schiff ist senkrecht zu zeichen
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
-		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse);
-		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse);
-		x2 = x1 + Kaestchengroesse;
-		y2 = y1 + (Schiffslaenge * Kaestchengroesse);
+		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse) + 1;
+		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse) + 1;
+		x2 = x1 + Kaestchengroesse - 1;
+		y2 = y1 + (Schiffslaenge * Kaestchengroesse)-1;
 	}
 	// Farben 
 	if (Spieler.compare("Spieler 1") == 0)
