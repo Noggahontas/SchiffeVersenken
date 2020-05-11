@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "user.h"
+#include "graphics\graphicfunctions.h"
 
 #include <iostream>
 #include <fstream>
@@ -24,6 +25,8 @@ using namespace std;
 // Includes für Strategien
 #include <time.h>
 #include "AttackStrategy1.h"
+#include "AttackStrategy2.h"
+#include "AttackStrategy3.h"
 
 // Include fuer Ausgabe des Graphikfensters
 #include "DisplayOutput.h"
@@ -32,26 +35,23 @@ using namespace std;
 
 void user_main()
 {
-
-
-	//clrscr();
-
-	//_________________________________________________________________________________________
-	/*
 	int ww, hh;
 	set_windowpos(0, 0, 600, 400);
 
 	get_windowsize(&ww, &hh);
 	set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
-	*/
+	clrscr();
+
+	//_________________________________________________________________________________________
 	srand(time(0)); // Startet den Pseudozufallszahlengenerator
 
 
+	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
 
+	
+	
 
-
-
-
+	
 
 
 
