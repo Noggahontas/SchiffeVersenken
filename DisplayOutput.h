@@ -20,10 +20,13 @@ public:
 
 	// Funktion zum erstellen eines Spielfeldes
 	// gibt linke obere Ecke zur Orientierung zurück
-	Position SpielfeldErstellen(int x, int y, int kaestchengroesse);
+	Position SpielfeldErstellen(int x, int y, int Kaestchengroesse);
+
+	// Legende Zeichen
+	void Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int FarbeSpieler1, int FarbeSpieler2);
 
 	// Funktion zeichnet ein Schiff in das Spielfeld
-	void Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int kaestchengroesse, int schiffslaenge, string spieler);
+	void Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int Kaestchengroesse, int Schiffslaenge, string Spieler);
 
 };
 

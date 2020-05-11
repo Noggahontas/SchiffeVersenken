@@ -16,20 +16,14 @@
 
 //#include "Global_Definitions.h";
 
-// Farben in der RGB - Darstellung
-#define SCHWARZ 0
-#define WEISS RGB(255,255,255)
-#define BLAU RGB(0,0,255)
-#define GRUEN RGB(0,255,0)
 
-
-Position DisplayOutput::SpielfeldErstellen(int x, int y, int kaestchengroesse) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
+Position DisplayOutput::SpielfeldErstellen(int x, int y, int Kaestchengroesse) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
 	// Graphikfenster am Punkt (x,y)
 
 	int const N = 4;
 	int const start = 50;
-	int const delta = kaestchengroesse;		//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
+	int const delta = Kaestchengroesse;		//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
 	
 	int i,j,k,m;
 	double dx, dy;
@@ -38,11 +32,11 @@ Position DisplayOutput::SpielfeldErstellen(int x, int y, int kaestchengroesse) /
 
 	// Definition der verschiedenen Textfelder im Spielfeld
 	// alle Texte sollen dieselbe Schriftgroesse haben
-	int textgroesse = kaestchengroesse/2 ;
+	int textgroesse = Kaestchengroesse/2 ;
 
 	// Ueberschrift
 	Position Textfeld;
-	Textfeld.x = start / 2 + (kaestchengroesse*2); 
+	Textfeld.x = start / 2 + (Kaestchengroesse*2); 
 	Textfeld.y = start / 2;
 
 	// Buchstabenreihe
@@ -66,7 +60,7 @@ Position DisplayOutput::SpielfeldErstellen(int x, int y, int kaestchengroesse) /
 
 
 	// Hoehe und Breite des Graphikfensters
-	int breite = (10 * delta) + (2 * start);
+	int breite = (10 * start);
 	int hoehe = (10 * delta) + (2 * start);
 
 	// Erstellen des Graphikfensters
@@ -109,34 +103,70 @@ Position DisplayOutput::SpielfeldErstellen(int x, int y, int kaestchengroesse) /
 	return linkeEckeOben;
 };
 
+void DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int FarbeSpieler1, int FarbeSpieler2)
+{
+	Position Legende;
+	Legende.x = 2 * EckpunktSpielfeld.x + (10 * Kaestchengroesse);
+	Legende.y = EckpunktSpielfeld.y;
 
-void DisplayOutput::Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int kaestchengroesse, int schiffslaenge, string spieler)
+	Position Farbkasten1, Farbkasten2;
+	Farbkasten1.x = Legende.x + 5 * Kaestchengroesse;
+	Farbkasten1.y = Legende.y;
+
+	Farbkasten2.x = Farbkasten1.x;
+	Farbkasten2.y = Legende.y + Kaestchengroesse;
+
+	int x1, x2, y1, y2;
+
+	// Kasten 1
+	x1 = Farbkasten1.x;
+	y1 = Farbkasten1.y;
+	x2 = x1 + 3 * Kaestchengroesse;
+	y2 = y1 + Kaestchengroesse - 2;
+
+	text(Legende.x, Legende.y, 15, WEISS, SCHWARZ, "Farbe Spieler 2:");
+	rectangle(x1, y1, x2, y2, WEISS, FarbeSpieler1);
+
+	// Kasten 2
+
+	x1 = Farbkasten2.x;
+	y1 = Farbkasten2.y;
+	x2 = x1 + 3 * Kaestchengroesse;
+	y2 = y1 + Kaestchengroesse - 2;
+
+	text(Legende.x, Legende.y + Kaestchengroesse, 15, WEISS, SCHWARZ, "Farbe Spieler 1:");
+	rectangle(x1, y1, x2, y2, WEISS, FarbeSpieler2);
+}
+
+void DisplayOutput::Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int Kaestchengroesse, int Schiffslaenge, string Spieler)
 {
 	int x1, x2, y1, y2, farbe;
 	char AusrichtungSchiff = LokalisierungSchiff.ausrichtung;
+
+
 	if (AusrichtungSchiff == 'w') // Schiff ist waagrecht zu zeichnen
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
-		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * kaestchengroesse);
-		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * kaestchengroesse);
-		x2 = x1 + (schiffslaenge * kaestchengroesse);
-		y2 = y1 + kaestchengroesse;
+		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse);
+		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse);
+		x2 = x1 + (Schiffslaenge * Kaestchengroesse);
+		y2 = y1 + Kaestchengroesse;
 	} 
 	else if (AusrichtungSchiff == 's') // Schiff ist senkrecht zu zeichen
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
-		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * kaestchengroesse);
-		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * kaestchengroesse);
-		x2 = x1 + kaestchengroesse;
-		y2 = y1 + (schiffslaenge * kaestchengroesse);
+		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse);
+		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse);
+		x2 = x1 + Kaestchengroesse;
+		y2 = y1 + (Schiffslaenge * Kaestchengroesse);
 	}
 	// Farben 
-	if (spieler.compare("Spieler 1") == 0)
+	if (Spieler.compare("Spieler 1") == 0)
 	{
 		// Spieler 1 : Blau
 		farbe = BLAU;
 	} 
-	else if(spieler.compare("Spieler 2") == 0)
+	else if(Spieler.compare("Spieler 2") == 0)
 	{
 		// Spieler 2 : Gruen
 		farbe = GRUEN;
@@ -145,8 +175,7 @@ void DisplayOutput::Schiff(Position EckpunktSpielfeld, Schiffsposition Lokalisie
 	{
 		farbe = WEISS;
 	}
-	rectangle(x1,y1, x2, y2, WEISS, farbe);
+	rectangle(x1,y1, x2, y2, farbe, farbe);
 
-	// Legende
 
 }

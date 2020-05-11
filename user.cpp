@@ -61,8 +61,13 @@ void user_main()
 	string spieler1 = "Spieler 1";
 	string spieler2 = "Spieler 2";
 
+	// Legende
+	Position Legende;
+
 	int bedingung = 1; // Bedingung das Spiel noch läuft;
 	linkeEckeOben = Ausgabe.SpielfeldErstellen(500,200, Kaestchengroesse);
+	Ausgabe.Legende(linkeEckeOben, Kaestchengroesse, BLAU, GRUEN);
+
 	while (bedingung != 0)
 	{
 		Ausgabe.Schiff(linkeEckeOben, schiff_spieler1_Schlachtschiff, Kaestchengroesse, Laenge_Schlachtschiff, spieler1);
