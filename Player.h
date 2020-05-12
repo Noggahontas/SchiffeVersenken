@@ -33,6 +33,13 @@ public:
 
 	void CheckIfLost();									// Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost
 
+	Position FindAttackShot();							// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
+														// auf die geschossen werden soll
+
+	void DefensiveAction();								// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
+														// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
+														// Ruft ggf. Funktion Turn oder Move auf 
+
 	Player();		// Konstruktor 
 					// Stößt Kontruktor für jedes Schiff an
 					//legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL

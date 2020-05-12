@@ -24,9 +24,9 @@ using namespace std;
 
 // Includes für Strategien
 #include <time.h>
-#include "AttackStrategy1.h"
-#include "AttackStrategy2.h"
-#include "AttackStrategy3.h"
+//#include "AttackStrategy1.h"
+//#include "AttackStrategy2.h"
+//#include "AttackStrategy3.h"
 
 // Include fuer Ausgabe des Graphikfensters
 #include "DisplayOutput.h"
@@ -48,6 +48,9 @@ void user_main()
 
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
 
-	
+	Player P1;
 
+	cout << P1.FindAttackShot().x << ","<< P1.FindAttackShot().y;
+
+	
 }

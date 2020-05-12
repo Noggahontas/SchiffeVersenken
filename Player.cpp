@@ -1,7 +1,11 @@
+#pragma once
 #include "stdafx.h"
 #include "Player.h"
 #include <iostream>
 #include <fstream>
+#include "AttackStrategy1.h"
+#include "AttackStrategy2.h"
+#include "AttackStrategy3.h"
 using namespace std;
 
 
@@ -251,6 +255,40 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 
 
 
+Position Player::FindAttackShot()
+{
+	// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück, auf die geschossen werden soll
+
+	switch (AttackStrategy)
+	{
+	case 1:
+		//return AttackStrategy1(&Last3ShotsOfOpponent);
+		return { 1,1 };
+
+	case 2:
+		//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden
+		return { 2,2 };
+
+	case 3:
+		//return AttackStrategy3(&Last3ShotsOfOpponent.at(0));
+		return { 3,3 };
+
+	default:
+		return { -1, -1 };
+	}
+
+}
+
+void Player::DefensiveAction()
+{
+	// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
+	// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
+	// Ruft ggf. Funktion Turn oder Move auf 
+
+
+}
+
+
 
 Player::Player() {
 	 // Konstruktor 
@@ -324,7 +362,10 @@ Player::Player() {
 	Ships[9].Status.resize(Ships[9].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
 	Ships[9].Sunk = 0;
 
-	// Dies soll später zufällig passieren
+	// Dies soll später zufällig passieren ODER vom Nutzer geählt werden
+
+	// Spieler 1 und Spieler 2 dürfen NICHT DIESELBE ANGRIFFSSTRAGTEGIE haben!!!!!!!  -> geht das wenn es zufällig ist?? -> testen vlt  mit festen Werten
+	// Lösungsansatz: Mit ermitteltem Zufallswert in "main", dann ´nicht mit Standartkonstruktorm sondern einem dem der Wert übergeben wird!
 	AttackStrategy = 1;
 	DefenseStrategy = 1;
 
