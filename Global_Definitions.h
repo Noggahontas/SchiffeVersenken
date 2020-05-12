@@ -20,3 +20,4 @@ struct Schiffsposition { Position linkeEckeOben; char ausrichtung; }; // Schiff 
 #define GRUEN RGB(0,255,0)
 #define ROT RGB(255,0,0)
 
+enum class DefendAction { Nothing, Move, Turn };	// Aktion, die für ein Schiff beim verteidigen ausgeführt werden soll: Bewegen oder Drehen

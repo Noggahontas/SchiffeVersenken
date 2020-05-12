@@ -6,6 +6,7 @@
 #include "AttackStrategy1.h"
 #include "AttackStrategy2.h"
 #include "AttackStrategy3.h"
+#include "DefenseStrategy1.h"
 using namespace std;
 
 
@@ -260,13 +261,13 @@ Position Player::FindAttackShot()
 	// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück, auf die geschossen werden soll
 
 	switch (AttackStrategy)
-	{
+	{											// hier müssen noch korrekte Aufrufe der Strategiefunktionen eingefügt werden!
 	case 1:
 		//return AttackStrategy1(&Last3ShotsOfOpponent);
 		return { 1,1 };
 
 	case 2:
-		//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden
+		//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden, net initialisiert
 		return { 2,2 };
 
 	case 3:
@@ -279,6 +280,10 @@ Position Player::FindAttackShot()
 
 }
 
+
+
+
+
 void Player::DefensiveAction()
 {
 	// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
@@ -286,7 +291,61 @@ void Player::DefensiveAction()
 	// Ruft ggf. Funktion Turn oder Move auf 
 
 
+		// was gemacht werden ,  welches schiff, welche richtungbewegen(drehehn geht nur in eine)
+
+	int ShipNumber;			// Nummer des Schiffes, das Bewegt/ Gedreht werden soll
+	DefendAction Action;	// Angabe ob gedreht oder Bewegt werden soll
+	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
+
+	// Prototyp Domme		void DefenseStrategy1(vector <position> &LetzteSchuesse, int &ShipNumber, MoveDirection &MoveDir);
+
+	bool ActionSuccessful;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
+
+	do
+	{
+		switch (DefenseStrategy)
+		{
+			// hier müssen noch korrekte Aufrufe der Strategiefunktionen eingefügt werden!
+
+		case 1:
+			ShipNumber = 0;
+			Action = DefendAction::Move;
+			MoveDir = MoveDirection::Forward;
+			//DefenseStrategy1(&Last3ShotsOfOpponent, &ShipNumber, &Action, &MoveDir );
+			break;
+
+		case 2:
+			ShipNumber = 0;
+			Action = DefendAction::Move;
+			MoveDir = MoveDirection::Forward;
+			//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden
+			break;
+
+		default:
+			cout << "Falsche Angabe bei DefenseStrategy";
+			return;
+			break;
+		}
+		
+		switch (Action)
+		{
+		case DefendAction::Nothing:
+			ActionSuccessful = 1;
+			break;
+		case DefendAction::Move:
+			ActionSuccessful = Move(ShipNumber, MoveDir);
+			break;
+		case DefendAction::Turn:
+			//ActionSuccessful = Turn(ShipNumber, MoveDir);
+			break;
+		}
+	
+	}while (ActionSuccessful == 0);			// Wenn das Bewegen/Drehen so nicht möglich war wie von Strategie vorgegeben, muss Strategie neue Aktion wählen
+
+
 }
+
+
 
 
 

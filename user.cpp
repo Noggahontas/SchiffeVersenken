@@ -48,9 +48,5 @@ void user_main()
 
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
 
-	Player P1;
 
-	cout << P1.FindAttackShot().x << ","<< P1.FindAttackShot().y;
-
-	
 }
