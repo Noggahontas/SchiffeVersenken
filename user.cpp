@@ -49,29 +49,5 @@ void user_main()
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
 
 	
-	
 
-	
-
-
-
-	//_________________________________________________________________________________________
-	/* Schäfer Teil, meiste rausgeschmissen
-
-	int ww,hh;
-	set_windowpos(0,0,600,400);
-	while (1) {								// Endlosschleife
-		get_windowsize(&ww, &hh);
-		set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
-		clrscr();
-		
-		//......
-
-
-		Restart();						// Den "Restart"-Button malen und auf eine Aktivierung warten.
-		if(StopProcess())break;
-		
-	}
-
-	*/
 }

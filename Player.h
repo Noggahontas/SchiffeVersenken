@@ -12,6 +12,7 @@ public:
 	vector<Position> Last3ShotsOfOpponent;	// Hier werden die letzten 3 Schüsse des Gegners gespeichert. [0]=aktuellster Schuss, [2]= Schuss vor 2 Runden.  Am Anfang alle Elemente = NULL
 	int AttackStrategy;						// Hier wird ein Schlüssel entsprechend der gewählten Angriffsstrategie gespeichert
 	int DefenseStrategy;					// Hier wird ein Schlüssel entsprechend der gewählten Verteidigungsstrategie gespeichert
+	bool Lost;								// Gibt an ob Spieler verloren hat. Verloren wenn alle seine Schiffe versenkt wurden. 1 = Verloren, 0 = nich nicht verloren
 
 public:
 	bool ShotOn(Position Shot);				// Schuss von Gegner auf Koordinaten Shot	
@@ -28,7 +29,9 @@ public:
 														// Übergabe Richtung, in die bewegt werden soll. LeftMove, RightMove, UpMove, DownMove
 														// Kollisionsabfrage ob Drehen möglich, wenn ja:
 														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
-														// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
+														// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0	
+
+	void CheckIfLost();									// Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost
 
 	Player();		// Konstruktor 
 					// Stößt Kontruktor für jedes Schiff an
@@ -39,6 +42,27 @@ public:
 														
 };
 
+
+
+
+//_________________________________________________________________________
+
+//Testen Funktion CheckIfLost
+
+//
+//Player P1;
+//cout << P1.Lost << "\n";
+//
+//P1.Ships[0].Sunk = 1;
+//P1.CheckIfLost();
+//cout << P1.Lost << "\n";
+//
+//for (int i = 0; i < 10; i++)
+//{
+//	P1.Ships[i].Sunk = 1;
+//}
+//P1.CheckIfLost();
+//cout << P1.Lost << "\n";
 
 
 

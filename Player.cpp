@@ -23,9 +23,27 @@ bool Player::ShotOn(Position Shot)
 		i++;
 	} while ( (i < 10) & (Hit != 1) );	
 
+	CheckIfLost();		// Ruft Funktion CheckIfLost() für diesen Spieler auf um die Variable Lost ggf. zu aktualisieren
 	return Hit;			// Rückgabe ob ein Schiff getroffen wurde
 }
 
+
+
+
+
+
+void Player::CheckIfLost()
+{
+	// Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (Ships[i].Sunk == 0) { return; }	// Sobald ein einziges Schiff noch nicht versenkt wurde (=0), hat Spieler noch nicht verloren
+
+	}
+
+	Lost = 1;	// Wenn die Schleife voll durchlaufen wird, ohne dass die Fkt. mit return vorzeitig beendet wird, hat Spieler verloren
+}
 
 
 
@@ -234,9 +252,6 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 
 
 
-
-
-
 Player::Player() {
 	 // Konstruktor 
 	 // Stößt Konstruktor für jedes Schiff an
@@ -314,6 +329,8 @@ Player::Player() {
 	DefenseStrategy = 1;
 
 	Last3ShotsOfOpponent.resize(3, { NULL, NULL });	// Noch keine Schüsse abgefeuert -> NULL
+
+	Lost = 0;
 
 
 

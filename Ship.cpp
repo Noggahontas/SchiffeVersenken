@@ -49,8 +49,6 @@ void Ship::StillAlive()
 	// Prüft anhand des Statusvektors Status ob das Schiff schon an allen Feldern getroffen wurde, also ob es schon versenkt wurde
 	// Wenn es versenkt wurde, ändert es die Klassenvariable Sunk zu 1
 
-	vector<bool> Check(Length); //um zu checken, ob alle Felder des Schiffs getroffen wurden
-
 	for (int i = 0; i < Length; i++)
 	{
 		if (Status.at(i) == 0) { Sunk = 0; 	return; }	// Sobald ein einziges Feld des Schiffes noch nicht getroffen wurde (=0), ist Schiff noch nicht versenkt worden

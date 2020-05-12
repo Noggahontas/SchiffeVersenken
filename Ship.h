@@ -9,8 +9,8 @@ class Ship
 
 	public:
 		int Length;									//Anzahl der Felder, die ein Schiff lang ist
-		Position StartPos;							// x,y Position an der Schiff startet
-		Direction Orientation;						// Richtung, in die Schiff von Startposition aus ausgerichtet ist; Es gibt nur nach rechts und nach unten
+		Position StartPos;							// Koordinate (1 Feld), an der sich Schiff aktuell befindet. Von dort aus belegt das Schiff (Length-1) Felder in Richtung Orientation
+		Direction Orientation;						// Richtung, in die Schiff von Startposition(StartPos) aus ausgerichtet ist; Es gibt nur nach rechts und nach unten
 		vector<bool> Status;						// Gibt an auf welchen Feldern des Schiffs das Schiff schon getroffen wurde; 0=kein Treffer; 1=Treffer
 		bool Sunk;									// =1 wenn Schiff versunken
 
