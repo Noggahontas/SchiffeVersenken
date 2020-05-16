@@ -24,9 +24,11 @@ using namespace std;
 
 // Includes für Strategien
 #include <time.h>
+#include "Global_Definitions_Strategies.h"
 #include "AttackStrategy1.h"
 #include "AttackStrategy2.h"
 #include "AttackStrategy3.h"
+#include "AttackStrategy4.h"
 
 // Include fuer Ausgabe des Graphikfensters
 #include "DisplayOutput.h"
@@ -43,15 +45,12 @@ void user_main()
 	clrscr();
 
 	//_________________________________________________________________________________________
-	srand(time(0)); // Startet den Pseudozufallszahlengenerator
-
 
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
 
 	
 	
 
-	
 
 
 
