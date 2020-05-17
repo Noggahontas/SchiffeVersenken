@@ -68,12 +68,24 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 	Position CriticalCoordinates;	// Koordinaten, die Schiff nach dem Bewegen belegen würde
 									// Für diese muss geprüft werden ob das möglich ist -> Kollision/ Außerhalb Spielfeld
 
+	bool IsShipHit = 0;				// Angabe ob das Schiff, das bewegt werden soll, schon einen Treffer kassiert hat -> getroffene Schiffe sind bewegungsunfähig
+
 	bool Collision;					// Angabe ob es durch Bewegen eine Kollision mit einem Schiff gäbe
 
 	bool Hit;						// Angabe ob es durch Bewegen eine Kollision mit einem Feld geben würde, das in den letzten 3 Runden abgeschossen wurde
 		
 	bool InsideBattlefield;			//Angabe ob nach Bewegen noch innerhalb von Schlachtfeld wäre
 
+	for (int i = 0; i < Ships[ShipNumber].Length; i++)
+	{
+		if (Ships[ShipNumber].Status.at(i) == true) 
+		{
+			IsShipHit = 1; 	
+			break; 
+		}
+		// Sobald ein einziges Feld des Schiffes getroffen wurde (=1), ist Schiff mind. 1x getroffen -> bewegungsunfähig 
+
+	}
 
 	if (Direction == MoveDirection::Forward)		// Wenn Schiff sich vorwärts bewegen soll 
 	{	
@@ -108,8 +120,8 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 			}
 
 			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
-			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
-			if (!Collision & !Hit & InsideBattlefield)
+			// Schiff nicht getroffen(0), keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
+			if (!IsShipHit & !Collision & !Hit & InsideBattlefield)
 			{
 				Ships[ShipNumber].StartPos.x++;
 				return 1;						// Bewegen erfolgreich
@@ -152,7 +164,7 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 
 			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
 			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
-			if (!Collision & !Hit & InsideBattlefield)
+			if (!IsShipHit & !Collision & !Hit & InsideBattlefield)
 			{
 				Ships[ShipNumber].StartPos.y++;
 				return 1;						// Bewegen erfolgreich
@@ -196,7 +208,7 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 
 			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
 			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
-			if (!Collision & !Hit & InsideBattlefield)
+			if (!IsShipHit & !Collision & !Hit & InsideBattlefield)
 			{
 				Ships[ShipNumber].StartPos.x--;
 				return 1;						// Bewegen erfolgreich
@@ -238,7 +250,7 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 
 			// Wenn bei Prüfung, Collision, Hit, InsideBattlefield alles in Ordnung, dann kann das Schiff tatsächlich bewegt werden
 			// keine Kollison(0), kein Schuss(0), im Spielfeld drin(1)
-			if (!Collision & !Hit & InsideBattlefield)
+			if (!IsShipHit & !Collision & !Hit & InsideBattlefield)
 			{
 				Ships[ShipNumber].StartPos.y--;
 				return 1;						// Bewegen erfolgreich
@@ -284,8 +296,9 @@ Position Player::FindAttackShot()
 
 
 
-void Player::DefensiveAction()
-{
+void Player::DefensiveAction(bool WasLastShotAHit)
+{	
+	// Üergabe ob der letzte Schuss des Gegeners ein Treffer war (WasLastShotAHit)
 	// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
 	// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
 	// Ruft ggf. Funktion Turn oder Move auf 
@@ -297,13 +310,14 @@ void Player::DefensiveAction()
 	DefendAction Action;	// Angabe ob gedreht oder Bewegt werden soll
 	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
 
-	// Prototyp Domme		void DefenseStrategy1(vector <position> &LetzteSchuesse, int &ShipNumber, MoveDirection &MoveDir);
+	// Prototyp Domme		void DefenseStrategy1(bool WarLetzterSchussEinTreffer, vector <position> &LetzteSchuesse, int &ShipNumber, MoveDirection &MoveDir);
+	// WarLetzterSchusseinTreffer = Angabe ob der letzte Schuss des Gegners ein Schiff dieses Spielers getroffen hat
 
 	bool ActionSuccessful;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
 
 	do
 	{
-		switch (DefenseStrategy)
+		switch (DefenseStrategy)		//je nach ausgewählter Vetreidigungsstrategie diese ausführen
 		{
 			// hier müssen noch korrekte Aufrufe der Strategiefunktionen eingefügt werden!
 
@@ -311,14 +325,13 @@ void Player::DefensiveAction()
 			ShipNumber = 0;
 			Action = DefendAction::Move;
 			MoveDir = MoveDirection::Forward;
-			//DefenseStrategy1(&Last3ShotsOfOpponent, &ShipNumber, &Action, &MoveDir );
+			//DefenseStrategy1(WasLastShotAHit, &Last3ShotsOfOpponent, &ShipNumber, &Action, &MoveDir );
 			break;
 
 		case 2:
-			ShipNumber = 0;
+			ShipNumber = 1;
 			Action = DefendAction::Move;
 			MoveDir = MoveDirection::Forward;
-			//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden
 			break;
 
 		default:
@@ -338,6 +351,8 @@ void Player::DefensiveAction()
 		case DefendAction::Turn:
 			//ActionSuccessful = Turn(ShipNumber, MoveDir);
 			break;
+		default:
+			cout << "Fehler bei ausgewählter Verteidigungs-Aktion";
 		}
 	
 	}while (ActionSuccessful == 0);			// Wenn das Bewegen/Drehen so nicht möglich war wie von Strategie vorgegeben, muss Strategie neue Aktion wählen

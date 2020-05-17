@@ -36,7 +36,7 @@ public:
 	Position FindAttackShot();							// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
 														// auf die geschossen werden soll
 
-	void DefensiveAction();								// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
+	void DefensiveAction(bool WasLastShotAHit);			// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
 														// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
 														// Ruft ggf. Funktion Turn oder Move auf 
 
@@ -50,6 +50,22 @@ public:
 };
 
 
+
+
+// Testen Funktion DefensiveAction
+
+//Player P1;
+//
+//P1.DefenseStrategy = 2;
+//
+//cout << P1.Ships[1].StartPos.x << P1.Ships[1].StartPos.y << "\n";
+//
+//bool Hit = 0;
+//
+//P1.DefensiveAction(Hit);
+//
+//cout << P1.Ships[1].StartPos.x << P1.Ships[1].StartPos.y << "\n";
+//
 
 
 //_________________________________________________________________________
@@ -81,6 +97,9 @@ public:
 //Player P1;
 //
 //int i = 6; // Number of Ship to be moved
+
+//P1.Ships[i].Status.at(0) = 1;	// Schiff wurde schon getroffen -> bewegungsunfähig
+
 //
 //MoveDirection Dir = MoveDirection::Forward;
 //

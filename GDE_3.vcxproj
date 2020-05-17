@@ -118,11 +118,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Alternate.cpp" />
     <ClCompile Include="DisplayOutput.cpp" />
     <ClCompile Include="GDE_3.cpp" />
     <ClCompile Include="GDE_3Doc.cpp" />
     <ClCompile Include="GDE_3View.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="OneGame.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -136,6 +138,7 @@
     <ClCompile Include="Console\Console.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alternate.h" />
     <ClInclude Include="AttackStrategy1.h" />
     <ClInclude Include="AttackStrategy2.h" />
     <ClInclude Include="AttackStrategy3.h" />
@@ -146,6 +149,7 @@
     <ClInclude Include="GDE_3View.h" />
     <ClInclude Include="Global_Definitions.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="OneGame.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Ship.h" />

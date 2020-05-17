@@ -21,7 +21,7 @@ using namespace std;
 #include "Ship.h"
 #include "Global_Definitions.h" // hier können alle Structs etc rein, die wir quer durch unsre Dateien brauchen; da einbinden, wo sie gebraucht werden!
 #include "Player.h"
-
+#include "OneGame.h"
 // Includes für Strategien
 #include <time.h>
 //#include "AttackStrategy1.h"
@@ -48,5 +48,5 @@ void user_main()
 
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
 
-
+	OneGame();
 }
