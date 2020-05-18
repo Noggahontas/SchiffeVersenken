@@ -13,17 +13,18 @@ using namespace std;
 class DisplayOutput
 {
 public:
-
-
+	// Funktion, um die Schiffe des Spielers und Treffer auf dem Spielfeld darzustellen
+	// Parameter:
+	// int Kaestchengroesse: Breite eines Kaestchens des dargestellten Spielfeldes
+	// Player Spieler: Objekt der Klasse Player, beinhaltet Informationen zu den Schiffen etc. des Spielers
+	// int Farbe : Farbe der Schiffe des Spielers
 	void Ausgabe(int Kaestchengroesse, Player Spieler, int Farbe);
 
 private:
-
-	//Initialisierung
-	// int Initialisierung();
+	// diese Funktionen werden in der Funktion Ausgabe(...) aufgerufen
 
 	//	Funktion zum Erstellen eines Spielfeldes linke obere Ecke zur Orientierung zurück
-	//	Parameter:
+	//	Parameter: 
 	//	Position Bildschirm : Koordinate der linken oberen Ecke des Grafikfensters
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
 	Position SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse);
@@ -38,16 +39,18 @@ private:
 	//  Funktion zeichnet ein Schiff in das Spielfeld (muss überarbeitet werden / im Bezug auf Klasse ship)
 	//	Parameter:
 	//	Position EckpunktSpielfeld : linke obere Ecke des Spielfeldes
-	//	Schiffsposition LokalisierungSchiff : beinhaltet Position (Koordinaten) des Schiffes und die Ausrichtung // muss noch angepasst werden
+	//	Position Schiffsposition: Koordinaten der linken oberen Ecke des darzustellenden Schiffs
+	//	int Farbe : Farbe der Schiffe des Spielers
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
-	//	int Schiffslaenge : Länge des Schiffes [zu Testzwecken. später Zugriff über player/ship ...]
-	//	string Spieler : Kennung Spieler [zu Testzwecken ]
-	void DarstellungSchiff(Position EckpunktSpielfeld, int Kaestchengroesse, int Farbe, Position Schiffsposition, int Schiffslaenge, Direction AusrichtungSchiff);
+	//	int Schiffslaenge : Länge des Schiffes 
+	//	Direction AusrichtungSchiff: Ausrichtung des darzustellenden Schiffs auf dem Spielfeld
+
+	void DarstellungSchiff(Position EckpunktSpielfeld, Position Schiffsposition, int Kaestchengroesse, int Farbe,  int Schiffslaenge, Direction AusrichtungSchiff);
 
 	// kennzeichnet ein getroffenes Feld
 	//	Parameter:
 	//	Position EckpunktSpielfeld : linke obere Ecke des Spielfeldes
-	//  Position Treffer : Koordinaten des Treffers
+	//  Position Treffer : Koordinaten des Treffers 
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
 	void getroffenesFeld (Position EckpunktSpielfeld, Position Treffer, int Kaestchengroesse);
 

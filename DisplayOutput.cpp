@@ -145,7 +145,7 @@ void DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, in
 	rectangle(x1, y1, x2, y2, WEISS, FarbeSpieler2);
 }
 
-void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld, int Kaestchengroesse, int Farbe, Position Schiffsposition, int Schiffslaenge, Direction AusrichtungSchiff)
+void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld, Position Schiffsposition, int Kaestchengroesse, int Farbe, int Schiffslaenge, Direction AusrichtungSchiff)
 {
 	int x1, x2, y1, y2;
 	if (AusrichtungSchiff == Direction::Right) // Schiffsausrichtung auf dem Spielfeld: waagrecht
