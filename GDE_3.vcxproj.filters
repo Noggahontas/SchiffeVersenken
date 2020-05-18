@@ -64,8 +64,20 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Alternate.cpp">
+
+    <ClCompile Include="AttackStrategy1.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="AttackStrategy2.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackStrategy3.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackStrategy4.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+	
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GDE_3.h">
@@ -134,12 +146,21 @@
     <ClInclude Include="DisplayOutput.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+
     <ClInclude Include="OneGame.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Alternate.h">
+	  <Filter>Headerdateien</Filter>
+    </ClInclude>
+	
+    <ClInclude Include="Global_Definitions_Strategies.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="AttackStrategy4.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+	
   </ItemGroup>
   <ItemGroup>
     <None Include="res\GDE_3.ico">

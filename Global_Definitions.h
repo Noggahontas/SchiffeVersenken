@@ -2,7 +2,7 @@
 
 struct Position { int x; int y; };	// Position im Spielfeld mit x- und y-Koordinate
 
-enum AttackDirection { N, E, S, W };	// Für den Richtungswechsel in AttackStrategy3 (Sprialform)
+ 
 
 enum class Direction { Right  , Down };	// Richtung in die das Schiff von der Startposition aus ausgerichtet ist (Orientation)
 
