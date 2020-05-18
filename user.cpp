@@ -48,7 +48,36 @@ void user_main()
 
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
 
-	
+	// Test Strat4:
+	Position Schuss = {};
+	bool das_war_ein_treffer = false;
+	for (int ii = 0; ii < 8; ii++)
+	{
+		Schuss = AttackStrategy4(&Schuss, &das_war_ein_treffer);
+		cout << "(" << (Schuss.x) << "," << (Schuss.y) << ")" << "  " << "Pew Pew" << endl;
+
+		if (ii == 0)
+		{
+			das_war_ein_treffer = true; cout << ii <<": Schuss hat getroffen." << endl;
+		}
+		else if (ii == 1)
+		{
+			das_war_ein_treffer = true; cout << ii << ": Schuss hat getroffen." << endl;
+		}
+		else if (ii == 3)
+		{
+			das_war_ein_treffer = true; cout << ii << ": Schuss hat getroffen." << endl;
+		}
+		else if (ii == 2)
+		{
+			das_war_ein_treffer = false; cout << ii << ": Schuss ging daneben." << endl;
+		}
+		else
+		{
+			das_war_ein_treffer = false; cout << ii << ": Schuss ging daneben." << endl;
+		}
+		;
+	}
 	
 
 
