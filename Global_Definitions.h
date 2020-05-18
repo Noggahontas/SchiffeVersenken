@@ -10,7 +10,7 @@ enum class TurnDirection{ LeftTurn, RightTurn };	// Richtung, in die ein Schiff 
 
 enum class MoveDirection{ Forward, Backward};	// Richtung, ind ie ein Schiff bewegt werden kann
 
-//struct Schiffsposition { Position linkeEckeOben; char ausrichtung; }; // Schiff muss zum Lokalisieren linke obere Ecke und Ausrichtung besitzen
+//struct Schiffsposition { Position linkeEckeOben; char ausrichtung; }; // Schiff muss zum Lokalisieren linke obere Ecke und Ausrichtung besitzen // kann gelöscht werden
 
 
 // Farben in der RGB - Darstellung
