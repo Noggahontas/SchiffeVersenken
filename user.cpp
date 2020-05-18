@@ -22,6 +22,9 @@ using namespace std;
 #include "Global_Definitions.h" // hier können alle Structs etc rein, die wir quer durch unsre Dateien brauchen; da einbinden, wo sie gebraucht werden!
 #include "Player.h"
 #include "OneGame.h"
+
+
+
 // Includes für Strategien
 #include <time.h>
 #include "Global_Definitions_Strategies.h"
@@ -30,8 +33,13 @@ using namespace std;
 #include "AttackStrategy3.h"
 #include "AttackStrategy4.h"
 
+
+
 // Include fuer Ausgabe des Graphikfensters
 #include "DisplayOutput.h"
+
+
+
 
 
 
@@ -44,10 +52,10 @@ void user_main()
 	get_windowsize(&ww, &hh);
 	set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
 	clrscr();
-
+	*/
 	//_________________________________________________________________________________________
 
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
-	*/
-	OneGame();
+	
+	OneGame();			// Ein Spiel wird ausgeführt
 }

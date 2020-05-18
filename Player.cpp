@@ -286,8 +286,7 @@ Position Player::FindAttackShot(AttackResult LastAttackResult)
 	switch (AttackStrategy)
 	{											// hier müssen noch korrekte Aufrufe der Strategiefunktionen eingefügt werden!
 	case 1:
-		//return AttackStrategy1(&Last3ShotsOfOpponent);
-		return { 1,1 };
+		return AttackStrategy1();
 
 	case 2:
 		//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden, net initialisiert
