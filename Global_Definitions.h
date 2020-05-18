@@ -21,3 +21,7 @@ struct Schiffsposition { Position linkeEckeOben; char ausrichtung; }; // Schiff 
 #define ROT RGB(255,0,0)
 
 enum class DefendAction { Nothing, Move, Turn };	// Aktion, die für ein Schiff beim verteidigen ausgeführt werden soll: Bewegen oder Drehen
+
+struct AttackResult { bool Sunk; bool Hit; };		// Resultate beim einem Schuss. 
+													// Hit: Wurde ein Schiff getroofen;   Sunk: Wurde ein Schiff versenkt
+											

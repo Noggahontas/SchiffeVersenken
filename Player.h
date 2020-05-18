@@ -15,9 +15,11 @@ public:
 	bool Lost;								// Gibt an ob Spieler verloren hat. Verloren wenn alle seine Schiffe versenkt wurden. 1 = Verloren, 0 = nich nicht verloren
 
 public:
-	bool ShotOn(Position Shot);				// Schuss von Gegner auf Koordinaten Shot	
+	AttackResult ShotOn(Position Shot);		// Schuss von Gegner auf Koordinaten Shot	
 											// ändert Last3ShotsOfOpponent
-											// Gibt zurück ob ein Schiff getroffen wurde: 1 = getroffen, 0= nicht getroffen
+											// Rückgabe als Strukt 
+											// Gibt zurück ob ein Schiff getroffen wurde: Hit=1= getroffen, Hit=0=nicht getroffen
+											// Gibt zurück ob ein Schiff versenkt wurde: Sunk=1=versenkt, Sunk=0=nicht versenkt
 
 	//bool Turn(int ShipNumber, TurnDirection Direction); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
 														// Übergabe Richtung, in die gedrecht werden soll. Left=1 oder Right=2
@@ -140,26 +142,42 @@ public:
 
 //_______________________________________________________________________________________
 // Zum test ShotOn
+
 //Player P1;
+//AttackResult Result;
 //
-//cout << P1.ShotOn({ 5,2 });
-//
-//cout << "Status getr. Schiff: " << P1.Ships[1].Status.at(0) << P1.Ships[1].Status.at(1) << P1.Ships[1].Status.at(2) << P1.Ships[1].Status.at(3);
-//
+//Result = P1.ShotOn({ 0,7 });
+//cout << "\n" << Result.Hit << "," << Result.Sunk << "\n";
+//cout << "Status getr. Schiff: " << P1.Ships[3].Status.at(0) << P1.Ships[3].Status.at(1) << P1.Ships[3].Status.at(2);
 //cout << "\n letzte 3 Schüsse: ";
 //for (int i = 0; i < 3; i++)
 //{
 //	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
 //}
 //
-//cout << "\n" << P1.ShotOn({ 1,0 });
+//Result = P1.ShotOn({ 1,7 });
+//cout << "\n" << Result.Hit << "," << Result.Sunk << "\n";
+//cout << "Status getr. Schiff: " << P1.Ships[3].Status.at(0) << P1.Ships[3].Status.at(1) << P1.Ships[3].Status.at(2);
 //cout << "\n letzte 3 Schüsse: ";
 //for (int i = 0; i < 3; i++)
 //{
 //	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
 //}
 //
-//cout << "\n" << P1.ShotOn({ 2,3 });
+//Result = P1.ShotOn({ 2,7 });
+//cout << "\n" << Result.Hit << "," << Result.Sunk << "\n";
+//cout << "Status getr. Schiff: " << P1.Ships[3].Status.at(0) << P1.Ships[3].Status.at(1) << P1.Ships[3].Status.at(2);
+//cout << "\n" << "Schiff-Variable Sunk:" << P1.Ships[3].Sunk;
+//cout << "\n letzte 3 Schüsse: ";
+//for (int i = 0; i < 3; i++)
+//{
+//	cout << "{" << P1.Last3ShotsOfOpponent.at(i).x << P1.Last3ShotsOfOpponent.at(i).y << "} ";
+//}
+//
+//Result = P1.ShotOn({ 2,7 });
+//cout << "\n" << Result.Hit << "," << Result.Sunk << "\n";
+//cout << "Status getr. Schiff: " << P1.Ships[3].Status.at(0) << P1.Ships[3].Status.at(1) << P1.Ships[3].Status.at(2);
+//cout << "\n" << "Schiff-Variable Sunk:" << P1.Ships[3].Sunk;
 //cout << "\n letzte 3 Schüsse: ";
 //for (int i = 0; i < 3; i++)
 //{

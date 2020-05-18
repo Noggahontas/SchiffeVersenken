@@ -10,26 +10,36 @@
 using namespace std;
 
 
-bool Player::ShotOn(Position Shot)
+AttackResult Player::ShotOn(Position Shot)
 {
 	// Schuss von Gegner auf Koordinaten Shot	
 	// ändert Last3ShotsOfOpponent
-	// Gibt zurück ob ein Schiff getroffen wurde: 1 = getroffen, 0= nicht getroffen
+	// Rückgabe als Strukt 
+	// Gibt zurück ob ein Schiff getroffen wurde: Hit=1= getroffen, Hit=0=nicht getroffen
+	// Gibt zurück ob ein Schiff versenkt wurde: Sunk=1=versenkt, Sunk=0=nicht versenkt
 
 	Last3ShotsOfOpponent.insert(Last3ShotsOfOpponent.begin(), Shot);	//An Position 0 neuen Schuss des Gegners einfügen (Iterator auf Position 0 wird übergeben)
 																		//Nun sind es 4 Element!
 	Last3ShotsOfOpponent.pop_back();									//Letztes Element löschen -> Es sind wieder die letzten 3 Schüsse gespeichert
 
-	bool Hit;							// Angabe ob ein Schiff getroffen wurde
+	AttackResult Result;				// Result.Hit: Angabe ob ein Schiff getroffen wurde
+	Result.Sunk = 0;					// Angabe ob ein Schiff versenkt wurde. Wenn kein Schiff getroffen wurde Sunk = 0
+	
 	int i = 0;
 	do									// Ausführen bis ein getroffenes Schiff gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
 	{
-		Hit = Ships[i].IsHit(Shot);		// Funktion ISHit gibt zurück ob dieses Schiff getroffen wurde
+		Result.Hit = Ships[i].IsHit(Shot);		// Funktion ISHit gibt zurück ob dieses Schiff getroffen wurde
 		i++;
-	} while ( (i < 10) & (Hit != 1) );	
+	} while ( (i < 10) & (Result.Hit != 1) );	// in i steht jetzt (Nummer des Schiffes +1), das getroffen wurde. Wenn kein Schiff getroffen wurde i=10
 
-	CheckIfLost();		// Ruft Funktion CheckIfLost() für diesen Spieler auf um die Variable Lost ggf. zu aktualisieren
-	return Hit;			// Rückgabe ob ein Schiff getroffen wurde
+	if (i < 10)
+	{
+		Result.Sunk = Ships[i-1].Sunk;
+	}
+
+
+	CheckIfLost();			// Ruft Funktion CheckIfLost() für diesen Spieler auf um die Variable Lost ggf. zu aktualisieren
+	return Result;			// Rückgabe ob ein Schiff getroffen wurde
 }
 
 
@@ -276,7 +286,7 @@ Position Player::FindAttackShot()
 	{											// hier müssen noch korrekte Aufrufe der Strategiefunktionen eingefügt werden!
 	case 1:
 		//return AttackStrategy1(&Last3ShotsOfOpponent);
-		return { 1,1 };
+		return { 0,0 };
 
 	case 2:
 		//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden, net initialisiert
