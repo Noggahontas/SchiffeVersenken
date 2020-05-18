@@ -35,8 +35,9 @@ public:
 
 	void CheckIfLost();									// Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost
 
-	Position FindAttackShot();							// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
+	Position FindAttackShot(AttackResult LastAttackResult);// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
 														// auf die geschossen werden soll
+														// Übergabe von Ergebnis dees letzten eigenen Schusses (Treffer, Versenkt)
 
 	void DefensiveAction(bool WasLastShotAHit);			// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
 														// Bewegen oder Drehen und welches Schiff, oder auch gar nichts

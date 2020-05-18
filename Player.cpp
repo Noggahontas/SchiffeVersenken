@@ -278,15 +278,16 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 
 
 
-Position Player::FindAttackShot()
+Position Player::FindAttackShot(AttackResult LastAttackResult)
 {
 	// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück, auf die geschossen werden soll
+	// Übergabe von Ergebnis dees letzten eigenen Schusses (Treffer, Versenkt)
 
 	switch (AttackStrategy)
 	{											// hier müssen noch korrekte Aufrufe der Strategiefunktionen eingefügt werden!
 	case 1:
 		//return AttackStrategy1(&Last3ShotsOfOpponent);
-		return { 0,0 };
+		return { 1,1 };
 
 	case 2:
 		//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden, net initialisiert
@@ -357,6 +358,7 @@ void Player::DefensiveAction(bool WasLastShotAHit)
 			break;
 		case DefendAction::Move:
 			ActionSuccessful = Move(ShipNumber, MoveDir);
+			//ActionSuccessful = 1;
 			break;
 		case DefendAction::Turn:
 			//ActionSuccessful = Turn(ShipNumber, MoveDir);
