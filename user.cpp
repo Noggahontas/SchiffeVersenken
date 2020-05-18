@@ -37,6 +37,7 @@ using namespace std;
 
 void user_main()
 {
+	/*
 	int ww, hh;
 	set_windowpos(0, 0, 600, 400);
 
@@ -47,6 +48,6 @@ void user_main()
 	//_________________________________________________________________________________________
 
 	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
-
+	*/
 	OneGame();
 }
