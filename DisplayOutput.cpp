@@ -1,6 +1,4 @@
 // WICHTIG: Ausgabe der Zahlenreihe nur provisorisch und sehr unhuebsch da sprintf nicht funktioniert hat
- // char* [xy] ist das ein pointer wennn ja: freigabe wie und wann?
-// Zeichenketten in cpp immer pointer?
 
 #include "stdafx.h"
 #include "DisplayOutput.h"
@@ -111,6 +109,7 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 	return linkeEckeOben;
 };
 
+// falls zur Kontrolle des Spielablaufes ein Übersichtsfenster genutzt werden muss, indem beide Schiffe dargestellt werden sollen
 void DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int FarbeSpieler1, int FarbeSpieler2)
 {
 	Position Legende;
@@ -146,44 +145,26 @@ void DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, in
 	rectangle(x1, y1, x2, y2, WEISS, FarbeSpieler2);
 }
 
-void DisplayOutput::Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int Kaestchengroesse, int Schiffslaenge, string Spieler)
+void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld, int Kaestchengroesse, int Farbe, Position Schiffsposition, int Schiffslaenge, Direction AusrichtungSchiff)
 {
-	int x1, x2, y1, y2, farbe;
-	char AusrichtungSchiff = LokalisierungSchiff.ausrichtung;
-
-
-	if (AusrichtungSchiff == 'w') // Schiff ist waagrecht zu zeichnen
+	int x1, x2, y1, y2;
+	if (AusrichtungSchiff == Direction::Right) // Schiffsausrichtung auf dem Spielfeld: waagrecht
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
-		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse) + 1;
-		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse) + 1 ;
+		x1 = EckpunktSpielfeld.x + (Schiffsposition.x * Kaestchengroesse) + 1;
+		y1 = EckpunktSpielfeld.y + (Schiffsposition.y * Kaestchengroesse) + 1 ;
 		x2 = x1 + (Schiffslaenge * Kaestchengroesse) - 1;
 		y2 = y1 + Kaestchengroesse - 1;
 	} 
-	else if (AusrichtungSchiff == 's') // Schiff ist senkrecht zu zeichen
+	else if (AusrichtungSchiff == Direction::Down) // Schiffsausrichtung auf dem Spielfeld: senkrecht
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
-		x1 = EckpunktSpielfeld.x + (LokalisierungSchiff.linkeEckeOben.x * Kaestchengroesse) + 1;
-		y1 = EckpunktSpielfeld.y + (LokalisierungSchiff.linkeEckeOben.y * Kaestchengroesse) + 1;
+		x1 = EckpunktSpielfeld.x + (Schiffsposition.x * Kaestchengroesse) + 1;
+		y1 = EckpunktSpielfeld.y + (Schiffsposition.y * Kaestchengroesse) + 1;
 		x2 = x1 + Kaestchengroesse - 1;
 		y2 = y1 + (Schiffslaenge * Kaestchengroesse)-1;
 	}
-	// Farben 
-	if (Spieler.compare("Spieler 1") == 0)
-	{
-		// Spieler 1 : Blau
-		farbe = BLAU;
-	} 
-	else if(Spieler.compare("Spieler 2") == 0)
-	{
-		// Spieler 2 : Gruen
-		farbe = GRUEN;
-	}
-	else 
-	{
-		farbe = WEISS;
-	}
-	rectangle(x1,y1, x2, y2, farbe, farbe);
+	rectangle(x1,y1, x2, y2, Farbe, Farbe);
 
 
 }
@@ -204,4 +185,36 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 	// Zeichenen eines roten Kreuzes
 	line(x1, y1, x2, y2, ROT);
 	line(xx1, yy1, xx2, yy2, ROT);
+}
+
+void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler, int Farbe)
+{
+	Position Ecke;					// Position der linken oberen Ecke des Spielfeldes, Rückgabewert beim Erstellen des Spielfeldes
+	Position Treffer;				// Schuss
+	int i,j;						// Zählvariablen für die for- Schleifen
+	Ship Schiff;					// Schiff des Spielers
+	Position Schiffsposition;		// aktuelle Koordinaten des Schiffes auf dem Spielfeld
+	Direction Ausrichtung;			// Ausrichtung des Schiffes auf dem Spielfeld
+	int Schiffslaenge;				// Schiffslaenge
+
+	Position Bildschirm;			// Position des Grafikfensters auf dem Bildschrirm
+	Bildschirm.x = 500;
+	Bildschirm.y = 250;
+
+	// Spielfeld zeichnen
+	Ecke = SpielfeldErstellen(Bildschirm, Kaestchengroesse);
+
+	// Schiffe zeichnen
+	for (i = 0; i < 10; i++)
+	{
+		Schiff = Spieler.Ships[i];					// aktuelles Schiff
+		Schiffsposition = Schiff.StartPos;			// Koordinaten des aktuellen Schiffes auf dem Spielfeld
+		Ausrichtung = Schiff.Orientation;			// Ausrichtung des aktuellen Schiffes auf dem Spielfeld
+		Schiffslaenge = Schiff.Length;
+		Treffer = Spieler.Last3ShotsOfOpponent[0];
+
+		DarstellungSchiff(Ecke, Kaestchengroesse, Farbe, Schiffsposition, Schiffslaenge, Ausrichtung);
+		getroffenesFeld(Ecke, Treffer, Kaestchengroesse);
+	}
+
 }

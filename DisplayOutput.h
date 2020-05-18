@@ -1,12 +1,10 @@
-// VERWENDUNG map und string statt Cmap und Cstring
+
 #pragma once
 
 #include "stdafx.h"
-//#include "K2mfcmap1.h"
-#include <map>
 #include <string>
-#include <afxtempl.h> // CMap etc.
 #include "Global_Definitions.h";
+#include "Player.h"
 
 using namespace std;
 
@@ -16,7 +14,11 @@ class DisplayOutput
 {
 public:
 
-	
+
+	void Ausgabe(int Kaestchengroesse, Player Spieler, int Farbe);
+
+private:
+
 	//Initialisierung
 	// int Initialisierung();
 
@@ -40,7 +42,7 @@ public:
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
 	//	int Schiffslaenge : Länge des Schiffes [zu Testzwecken. später Zugriff über player/ship ...]
 	//	string Spieler : Kennung Spieler [zu Testzwecken ]
-	void Schiff(Position EckpunktSpielfeld, Schiffsposition LokalisierungSchiff, int Kaestchengroesse, int Schiffslaenge, string Spieler);
+	void DarstellungSchiff(Position EckpunktSpielfeld, int Kaestchengroesse, int Farbe, Position Schiffsposition, int Schiffslaenge, Direction AusrichtungSchiff);
 
 	// kennzeichnet ein getroffenes Feld
 	//	Parameter:
@@ -48,5 +50,6 @@ public:
 	//  Position Treffer : Koordinaten des Treffers
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
 	void getroffenesFeld (Position EckpunktSpielfeld, Position Treffer, int Kaestchengroesse);
+
 };
 
