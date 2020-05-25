@@ -11,8 +11,9 @@ Zweiter Durchlauf: Abstand nur noch 2 Kästchen zur nächsten Linie.
 Dritter Durchlauf: Abstand nur noch 1 Kästchen zur nächsten Linie.
 
 
- -	previous_Position: Koordinaten (x,y) im Spiefeld des letzten Angriffs.
- -	new_Positioon: Berechnet die Koordinaten (x,y) für den nächsten Angriff, gibt diese zurück
+ -	Pos: als static struct -> kein Übergabeparameter mehr
+	-	beinhaltet die die Angriffskoordinaten (x,y) des vorherigen Angriffs
+		und anschliessend die neu berechneten, die zurückgegeben werden.
 
  -	Strategy_Rounds: 0,1,2 für die Rundenanzahl, wie oft die diagonale Abfolge
 	schon durchgeführt wurde.
@@ -24,171 +25,172 @@ Dritter Durchlauf: Abstand nur noch 1 Kästchen zur nächsten Linie.
 */
 
 
-Position AttackStrategy2(Position* previous_Position)
+Position AttackStrategy2()
 {
 	static int Strategy_Rounds = 0;
-	Position new_Position = { };
 
-	if ((previous_Position->x == NULL) && (previous_Position->y == NULL))
+	static Position Pos = { };
+
+	if ((Pos.x == NULL) && (Pos.y == NULL))
 	{
-		new_Position.x = 0;
-		new_Position.y = 3;
-		return new_Position;
+		Pos.x = 0;
+		Pos.y = 3;
+		return Pos;
 	}
 
 
 	switch (Strategy_Rounds)
 	{
 	case 0:
-		if ((previous_Position->x == 9) || (previous_Position->y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
-		{												// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
-			if (previous_Position->x == 3)
+		if ((Pos.x == 9) || (Pos.y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{																			// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
+			if (Pos.x == 3)
 			{
-				new_Position.x = 0;
-				new_Position.y = 7;
-				return new_Position;
+				Pos.x = 0;
+				Pos.y = 7;
+				return Pos;
 			}
-			else if (previous_Position->x == 7)
+			else if (Pos.x == 7)
 			{
-				new_Position.x = 2;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 2;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 2)
+			else if (Pos.y == 2)
 			{
-				new_Position.x = 6;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 6;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 6)
+			else if (Pos.y == 6)
 			{
-				new_Position.x = 0;
-				new_Position.y = 2;
+				Pos.x = 0;
+				Pos.y = 2;
 				Strategy_Rounds = 1;
-				return new_Position;
+				return Pos;
 			}
 		}
 		else
 		{
-			new_Position.x = previous_Position->x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
-			new_Position.y = previous_Position->y - 1;
-			return new_Position;
+			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
+			Pos.y = Pos.y - 1;
+			return Pos;
 		}
 	case 1:
-		if ((previous_Position->x == 9) || (previous_Position->y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		if ((Pos.x == 9) || (Pos.y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
 		{												// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
-			if (previous_Position->x == 2)
+			if (Pos.x == 2)
 			{
-				new_Position.x = 0;
-				new_Position.y = 5;
-				return new_Position;
+				Pos.x = 0;
+				Pos.y = 5;
+				return Pos;
 			}
-			else if (previous_Position->x == 5)
+			else if (Pos.x == 5)
 			{
-				new_Position.x = 0;
-				new_Position.y = 8;
-				return new_Position;
+				Pos.x = 0;
+				Pos.y = 8;
+				return Pos;
 			}
-			else if (previous_Position->x == 8)
+			else if (Pos.x == 8)
 			{
-				new_Position.x = 2;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 2;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 2)
+			else if (Pos.y == 2)
 			{
-				new_Position.x = 5;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 5;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 5)
+			else if (Pos.y == 5)
 			{
-				new_Position.x = 8;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 8;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 8)
+			else if (Pos.y == 8)
 			{
-				new_Position.x = 0;
-				new_Position.y = 1;
+				Pos.x = 0;
+				Pos.y = 1;
 				Strategy_Rounds = 2;
-				return new_Position;
+				return Pos;
 			}
 		}
 		else
 		{
-			new_Position.x = previous_Position->x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
-			new_Position.y = previous_Position->y - 1;
-			return new_Position;
+			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
+			Pos.y = Pos.y - 1;
+			return Pos;
 		}
 	case 2:
-		if ((previous_Position->x == 9) || (previous_Position->y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		if ((Pos.x == 9) || (Pos.y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
 		{												// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
-			if (previous_Position->x == 1)
+			if (Pos.x == 1)
 			{
-				new_Position.x = 0;
-				new_Position.y = 3;
-				return new_Position;
+				Pos.x = 0;
+				Pos.y = 3;
+				return Pos;
 			}
-			else if (previous_Position->x == 3)
+			else if (Pos.x == 3)
 			{
-				new_Position.x = 0;
-				new_Position.y = 5;
-				return new_Position;
+				Pos.x = 0;
+				Pos.y = 5;
+				return Pos;
 			}
-			else if (previous_Position->x == 5)
+			else if (Pos.x == 5)
 			{
-				new_Position.x = 0;
-				new_Position.y = 7;
-				return new_Position;
+				Pos.x = 0;
+				Pos.y = 7;
+				return Pos;
 			}
-			else if (previous_Position->x == 7)
+			else if (Pos.x == 7)
 			{
-				new_Position.x = 0;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 0;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 0)
+			else if (Pos.y == 0)
 			{
-				new_Position.x = 2;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 2;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 2)
+			else if (Pos.y == 2)
 			{
-				new_Position.x = 4;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 4;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 4)
+			else if (Pos.y == 4)
 			{
-				new_Position.x = 6;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 6;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 6)
+			else if (Pos.y == 6)
 			{
-				new_Position.x = 8;
-				new_Position.y = 9;
-				return new_Position;
+				Pos.x = 8;
+				Pos.y = 9;
+				return Pos;
 			}
-			else if (previous_Position->y == 8)
+			else if (Pos.y == 8)
 			{
-				new_Position.x = 0;
-				new_Position.y = 3;
+				Pos.x = 0;
+				Pos.y = 3;
 				Strategy_Rounds = 0;
-				return new_Position;
+				return Pos;
 			}
 		}
 		else
 		{
-			new_Position.x = previous_Position->x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
-			new_Position.y = previous_Position->y - 1;
-			return new_Position;
+			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
+			Pos.y = Pos.y - 1;
+			return Pos;
 		}
 	}
 
-	return new_Position;
+	return Pos;
 }
 
 
@@ -200,10 +202,11 @@ Position AttackStrategy2(Position* previous_Position)
 	int sum = 0;									// Nur zum checken
 	for (int ii = 0; ii < 106; ii++)
 	{
-		Schuss = AttackStrategy2(&Schuss);
+		Schuss = AttackStrategy2();
 		sum = sum + Schuss.x + Schuss.y;
 		cout << "(x,y): " << "(" << Schuss.x << "," << Schuss.y << ")" <<
 			"\t" << "CheckSum Strat2: " << sum << "/949" << endl;
 	}
+
 
 */
