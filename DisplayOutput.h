@@ -49,13 +49,11 @@ private:
 	//  Funktion zeichnet ein Schiff in das Spielfeld (muss überarbeitet werden / im Bezug auf Klasse ship)
 	//	Parameter:
 	//	Position EckpunktSpielfeld : linke obere Ecke des Spielfeldes
-	//	Position Schiffsposition: Koordinaten der linken oberen Ecke des darzustellenden Schiffs
+	//	Ship Schiff : darzustellendes Schiff
 	//	int Farbe : Farbe der Schiffe des Spielers
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
-	//	int Schiffslaenge : Länge des Schiffes 
-	//	Direction AusrichtungSchiff: Ausrichtung des darzustellenden Schiffs auf dem Spielfeld
 
-	void DarstellungSchiff(Position EckpunktSpielfeld, Position Schiffsposition, int Kaestchengroesse, int Farbe,  int Schiffslaenge, Direction AusrichtungSchiff);
+	void DarstellungSchiff(Position EckpunktSpielfeld, Ship Schiff, int Kaestchengroesse, int Farbe);
 
 	// kennzeichnet ein getroffenes Feld
 	//	Parameter:
