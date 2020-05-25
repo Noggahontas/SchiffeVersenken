@@ -22,7 +22,7 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 
 	int i;
 	int dx, dy;
-	int differenz, schrittweite;;
+	int differenz;
 	int faktor = (start / 10 );
 	int abstand = (index - 1) * 300;
 
@@ -56,8 +56,8 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 
 
 	// Hoehe und Breite des Graphikfensters
-	int breite = (10 * start);
-	int hoehe = (10 * delta) + (2 * start);
+	int breite = (10 * start) + 120;
+	int hoehe = (10 * delta) + (2 * start) + 50;
 
 	// Erstellen des Graphikfensters
 	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe); 
@@ -143,9 +143,19 @@ void DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, in
 	rectangle(x1, y1, x2, y2, WEISS, FarbeSpieler2);
 }
 
-void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld, Position Schiffsposition, int Kaestchengroesse, int Farbe, int Schiffslaenge, Direction AusrichtungSchiff)
+void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Kaestchengroesse, int Farbe)
 {
-	int x1, x2, y1, y2 = 0;
+	int Schiffslaenge = Schiff.Length;						// Schiffslaenge des darzustellenden Schiff
+	Direction AusrichtungSchiff = Schiff.Orientation;		// Ausrichtung des Schiffs auf dem Spielfeld
+	Position Schiffsposition = Schiff.StartPos;				// Position des darzustellenden Schifs auf dem Spielfeld
+
+	int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+
+	// Ueberpruefung, ob Schiff bereits getroffen wurde
+	vector<bool> StatusSchiff = Schiff.Status;
+	int Statusabfrage;										// zu überprüfende Stelle des Schiffes
+	Position Treffer = {};										// zur Ausgabe einer bereits getroffenen Stelle
+
 	if (AusrichtungSchiff == Direction::Right) // Schiffsausrichtung auf dem Spielfeld: waagrecht
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
@@ -162,7 +172,30 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld, Position Schif
 		x2 = x1 + Kaestchengroesse - 1;
 		y2 = y1 + (Schiffslaenge * Kaestchengroesse)-1;
 	}
-	rectangle(x1,y1, x2, y2, Farbe, Farbe);
+
+	for (int j = 0; j < Schiffslaenge; j++)
+	{
+		Statusabfrage = StatusSchiff.at(j);
+
+		if (Statusabfrage == 1)					// Stelle wurde bereits erfolgreich getroffen
+		{
+			// Lokalisierung des Treffers abhaengig von der Ausrichtung des Schiffes
+			if (AusrichtungSchiff == Direction::Right) // Schiffsausrichtung auf dem Spielfeld: waagrecht
+			{
+				Treffer.x = x1 + Kaestchengroesse * j;
+				Treffer.y = y1;
+			}
+			else if (AusrichtungSchiff == Direction::Down) // Schiffsausrichtung auf dem Spielfeld: senkrecht
+			{
+				Treffer.x = x1;
+				Treffer.y = y1 * Kaestchengroesse * j;
+			}
+
+			getroffenesFeld(EckpunktSpielfeld, Treffer, Kaestchengroesse, WEISS); // Ausgabe eine bisher getroffenen Stelle
+		}
+
+	}
+	rectangle(x1, y1, x2, y2, Farbe, Farbe);
 
 
 }
@@ -180,7 +213,7 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 	xx1 = x1 + Kaestchengroesse; yy1 = y1;
 	xx2 = x1; yy2 = y1 + Kaestchengroesse;
 
-	// Zeichenen eines roten Kreuzes
+	// Zeichenen eines Kreuzes
 	line(x1, y1, x2, y2, Farbe);
 	line(xx1, yy1, xx2, yy2, Farbe);
 }
@@ -196,14 +229,7 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 
 	Ship Schiff_1, Schiff_2;					// Schiff_1 : Schiff Spieler 1
 												// Schiff_2 : Schiff Spieler 2
-	Position Schiffsposition_1;					// aktuelle Koordinaten des Schiffes auf dem Spielfeld (Spieler 1)
-	Position Schiffsposition_2;					// aktuelle Koordinaten des Schiffes auf dem Spielfeld (Spieler 2)
 
-	Direction Ausrichtung_1;					// Ausrichtung des Schiffes auf dem Spielfeld (Spieler 1)
-	Direction Ausrichtung_2;					// Ausrichtung des Schiffes auf dem Spielfeld (Spieler 2)
-
-	int Schiffslaenge_1;						// Schiffslaenge (Spieler 1)
-	int Schiffslaenge_2;						// Schiffslaenge (Spieler 2)
 	int faktor = 0;
 
 	Position Bildschirm;						// Position des Grafikfensters auf dem Bildschirm
@@ -221,15 +247,6 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 		Schiff_1 = Spieler1.Ships[i];				// aktuelles Schiff
 		Schiff_2 = Spieler2.Ships[i];
 
-		Schiffsposition_1 = Schiff_1.StartPos;		// Koordinaten des aktuellen Schiffes auf dem Spielfeld
-		Schiffsposition_2 = Schiff_2.StartPos;
-
-		Ausrichtung_1 = Schiff_1.Orientation;		// Ausrichtung des aktuellen Schiffes auf dem Spielfeld
-		Ausrichtung_2 = Schiff_2.Orientation;
-
-		Schiffslaenge_1 = Schiff_1.Length;
-		Schiffslaenge_2 = Schiff_2.Length;
-
 		// Schuesse
 		// Spieler 1
 		Schuss1_1 = Spieler1.Last3ShotsOfOpponent[0];	// letzter Schuss des Gegners
@@ -242,13 +259,13 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 		Schuss3_2 = Spieler2.Last3ShotsOfOpponent[2];
 
 		// Spieler 1
-		DarstellungSchiff(Ecke_1, Schiffsposition_1, Kaestchengroesse, FarbeSpieler1, Schiffslaenge_1, Ausrichtung_1);
+		DarstellungSchiff(Ecke_1, Schiff_1, Kaestchengroesse, FarbeSpieler1);
 		getroffenesFeld(Ecke_1, Schuss1_1, Kaestchengroesse, ROT);		  // letzter Schuss des Gegeners wird in Rot angezeigt
 		getroffenesFeld(Ecke_1, Schuss2_1, Kaestchengroesse, WEISS);
 		getroffenesFeld(Ecke_1, Schuss3_1, Kaestchengroesse, WEISS);
 
 		// Spieler 2
-		DarstellungSchiff(Ecke_2, Schiffsposition_2, Kaestchengroesse, FarbeSpieler2, Schiffslaenge_2, Ausrichtung_2);
+		DarstellungSchiff(Ecke_2, Schiff_2, Kaestchengroesse, FarbeSpieler2);
 		getroffenesFeld(Ecke_2, Schuss1_2, Kaestchengroesse, ROT);		  // letzter Schuss des Gegeners wird in Rot angezeigt
 		getroffenesFeld(Ecke_2, Schuss2_2, Kaestchengroesse, WEISS);
 		getroffenesFeld(Ecke_2, Schuss3_2, Kaestchengroesse, WEISS);
