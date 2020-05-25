@@ -63,8 +63,8 @@ void OneGame()			// Momentan Endlosschleife und noch ohne Vetreidigungsstrategie
 
 		// Verteidigung von Spieler i
 		cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
-		//P[i].DefensiveAction(Result[Alternate(i)].Hit);				// Durch gewählte Versteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
-																	// Übergabe, ob letzter Schuss des Gegners Treffer war
+		//P[i].DefensiveAction(Result[Alternate(i)].Hit);				// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
+																		// Übergabe, ob letzter Schuss des Gegners Treffer war
 
 		Sleep(WaitTime);												// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
 
