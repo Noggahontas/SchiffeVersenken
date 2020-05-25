@@ -6,6 +6,7 @@
 #include "AttackStrategy1.h"
 #include "AttackStrategy2.h"
 #include "AttackStrategy3.h"
+#include "AttackStrategy4.h"
 #include "DefenseStrategy1.h"
 using namespace std;
 
@@ -289,12 +290,13 @@ Position Player::FindAttackShot(AttackResult LastAttackResult)
 		return AttackStrategy1();
 
 	case 2:
-		//return AttackStrategy2(&Shot);		//zweiter Übergabeparameter muss nur mit übergeben werden, net initialisiert
-		return { 2,2 };
+		return AttackStrategy2();
 
 	case 3:
-		//return AttackStrategy3(&Last3ShotsOfOpponent.at(0));
-		return { 3,3 };
+		return AttackStrategy3();
+
+	case 4:
+		return AttackStrategy4(&LastAttackResult.Hit, &LastAttackResult.Sunk);
 
 	default:
 		return { -1, -1 };

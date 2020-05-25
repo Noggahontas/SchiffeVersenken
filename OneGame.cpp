@@ -11,13 +11,16 @@ void OneGame()			// Momentan Endlosschleife und noch ohne Vetreidigungsstrategie
 {
 	Player P[2];			// Spieler werden erstellt -> Standartkonstruktor
 
+	P[0].AttackStrategy = 3;	// Zum Testen: Spielr 1 hat random Schießen
+	P[1].AttackStrategy = 2;	// Spieler 2 hat Spiralschießen
+
 	//Für die graphische Ausgabe
 	DisplayOutput Graphics;	
 	int Kaestchengroesse = 20;
-	int FarbeSchiffe = WEISS;
+	int FarbeSchiffe = BLAU;
 
 	// Für die zeitliche Verzögerung
-	int WaitTime = 4000;
+	int WaitTime = 3000;
 
 	Position AttackShot ;	// Koordinaten für Schuss beim Angreifen werden hier gespeichert
 	AttackResult Result[2] = {0,0};	// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
@@ -28,7 +31,7 @@ void OneGame()			// Momentan Endlosschleife und noch ohne Vetreidigungsstrategie
 	//int count = 0;		// Zum Testen
 
 	Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
-	Sleep(WaitTime);										// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
+	Sleep(WaitTime);										// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
 
 	//Angriff erster Spieler
@@ -53,7 +56,7 @@ void OneGame()			// Momentan Endlosschleife und noch ohne Vetreidigungsstrategie
 		cout << "Kein Treffer \n";
 	}
 
-	Sleep(WaitTime);						// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
+	Sleep(WaitTime);						// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
 
 	while (!P[0].Lost & !P[1].Lost)	// Solange noch kein Spieler verloren hat, wird weitergespielt
@@ -66,11 +69,11 @@ void OneGame()			// Momentan Endlosschleife und noch ohne Vetreidigungsstrategie
 		//P[i].DefensiveAction(Result[Alternate(i)].Hit);				// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
 																		// Übergabe, ob letzter Schuss des Gegners Treffer war
 
-		Sleep(WaitTime);												// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
+		Sleep(WaitTime);												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
 		Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 
-		Sleep(WaitTime);												// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
+		Sleep(WaitTime);												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
 
 		// Angriff von Spieler i
@@ -78,7 +81,7 @@ void OneGame()			// Momentan Endlosschleife und noch ohne Vetreidigungsstrategie
 		AttackShot = P[i].FindAttackShot(Result[Alternate(i)]);							// Durch ausgewählte Strategie des Spielers werden Koordinaten ausgewählt, auf die geschossen werden soll
 		Result[i] = P[Alternate(i)].ShotOn(AttackShot);				// Auf ausgewählte Koordinaten wird geschossen (auf Spielfeld von zweitem Spieler )
 
-		Sleep(2000);												// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
+		Sleep(2000);												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 		Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 
 		if (Result[i].Hit == 1)
@@ -94,7 +97,7 @@ void OneGame()			// Momentan Endlosschleife und noch ohne Vetreidigungsstrategie
 			cout << "Kein Treffer \n";
 		}
 
-		Sleep(WaitTime);									// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
+		Sleep(WaitTime);									// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
 		/*count++;
 
