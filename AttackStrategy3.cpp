@@ -10,32 +10,31 @@ using namespace std;
 Spiralförmige Angriffsstrategie, Start bei (0,0), gegen den Uhrzeigersinn,
 in den Ecken Richtungswechsel, Ende bei (5,4) und wieder von vorne (0,0).
 
- -	previous_Position: Koordinaten (x,y) im Spielfeld des letzten Angriffs.
-
- -	new_Position: berechnete Koordinaten (x,y) für den nächsten Angriff
+-	Pos: als static struct -> kein Übergabeparameter mehr
+		-	beinhaltet die die Angriffskoordinaten (x,y) des vorherigen Angriffs
+			und anschliessend die neu berechneten, die zurückgegeben werden.
 
  -	AttackDirection: in Norden/Osten/Süden/Westen eingeteilt, 
 	für den Richtungswechsel in den Ecken,
 	z.B.: bei (x,y) = (0,9) ändert sich AttackDirection von "S" zu "E",
 	da es ab diesem Punkt entlang der x-Achse nach "Osten" geht.
-	Vermutlich hätte da einach nur ein int 0,1,2,3 gereicht.
 
 */
 
 
 
-Position AttackStrategy3(Position *previous_Position)
+Position AttackStrategy3()
 {
 	static AttackDirection Richtung;
 
-	Position new_Position = {};
+	static Position Pos = { };
 
-	if (((previous_Position->x == NULL) && (previous_Position->y == NULL) && (Richtung != AttackDirection::S)))
+	if (((Pos.x == NULL) && (Pos.y == NULL) && (Richtung != AttackDirection::S)))
 	{
-		new_Position.x = 0;
-		new_Position.y = 0;
+		Pos.x = 0;
+		Pos.y = 0;
 		Richtung = AttackDirection::S;
-		return new_Position;
+		return Pos;
 	}
 
 
@@ -48,18 +47,18 @@ Position AttackStrategy3(Position *previous_Position)
 	// Positionen prüfen für den Richtungswechsel:
 	for (int ii = 0; ii < 5; ii++)
 	{
-		if ((previous_Position->x == S_to_E[ii].x) && (previous_Position->y == S_to_E[ii].y)) { Richtung = AttackDirection::E; break; }
-		else if ((previous_Position->x == E_to_N[ii].x) && (previous_Position->y == E_to_N[ii].y)) { Richtung = AttackDirection::N; break; }
+		if ((Pos.x == S_to_E[ii].x) && (Pos.y == S_to_E[ii].y)) { Richtung = AttackDirection::E; break; }
+		else if ((Pos.x == E_to_N[ii].x) && (Pos.y == E_to_N[ii].y)) { Richtung = AttackDirection::N; break; }
 	}
 
 	for (int ii = 0; ii < 4; ii++)
 	{
-		if ((previous_Position->x == N_to_W[ii].x) && (previous_Position->y == N_to_W[ii].y)) { Richtung = AttackDirection::W; break; }
-		else if ((previous_Position->x == W_to_S[ii].x) && (previous_Position->y == W_to_S[ii].y)) { Richtung = AttackDirection::S; break; }
+		if ((Pos.x == N_to_W[ii].x) && (Pos.y == N_to_W[ii].y)) { Richtung = AttackDirection::W; break; }
+		else if ((Pos.x == W_to_S[ii].x) && (Pos.y == W_to_S[ii].y)) { Richtung = AttackDirection::S; break; }
 	}
 
 	// Am Ende der Spirale angekommen -> zurück zu (0,0)
-	if ((previous_Position->x == 5) && (previous_Position->y == 4)) { new_Position.x = 0; new_Position.y = 0; return new_Position; }
+	if ((Pos.x == 5) && (Pos.y == 4)) { Pos.x = 0; Pos.y = 0; return Pos; }
 
 	// Entsprechend der Angriffsrichtung wird x oder y inkrementiert oder dekrementiert (heißt das so?)
 
@@ -67,30 +66,30 @@ Position AttackStrategy3(Position *previous_Position)
 	{
 		case AttackDirection::S:
 		{
-			new_Position.x = previous_Position->x;
-			new_Position.y = previous_Position->y + 1;
-			return new_Position;
+			Pos.x = Pos.x;
+			Pos.y = Pos.y + 1;
+			return Pos;
 			break;
 		}
 		case AttackDirection::E:
 		{
-			new_Position.x = previous_Position->x + 1;
-			new_Position.y = previous_Position->y;
-			return new_Position;
+			Pos.x = Pos.x + 1;
+			Pos.y = Pos.y;
+			return Pos;
 			break;
 		}
 		case AttackDirection::N:
 		{
-			new_Position.x = previous_Position->x;
-			new_Position.y = previous_Position->y - 1;
-			return new_Position;
+			Pos.x = Pos.x;
+			Pos.y = Pos.y - 1;
+			return Pos;
 			break;
 		}
 		case AttackDirection::W:
 		{
-			new_Position.x = previous_Position->x - 1;
-			new_Position.y = previous_Position->y;
-			return new_Position;
+			Pos.x = Pos.x - 1;
+			Pos.y = Pos.y;
+			return Pos;
 			break;
 		}
 		default:
@@ -98,7 +97,7 @@ Position AttackStrategy3(Position *previous_Position)
 			cout << "Selbstzerstörung aktiviert!" << endl;
 		}
 	}
-	return new_Position;
+	return Pos;
 }
 
 
@@ -112,7 +111,7 @@ Position AttackStrategy3(Position *previous_Position)
 	for (int ii = 0; ii < 100; ii++)
 	{
 		cout << "(x,y): " << "(" << Schuss.x << "," << Schuss.y << ")" << "\t" << "CheckSum Strat3: " << sum << "/900" << endl;
-		Schuss = AttackStrategy3(&Schuss);
+		Schuss = AttackStrategy3();
 		sum = sum + Schuss.x + Schuss.y;
 
 	}
