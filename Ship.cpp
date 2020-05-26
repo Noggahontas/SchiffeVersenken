@@ -7,18 +7,22 @@ using namespace std;
 bool Ship::IsHit(Position Shot)
 {	// Im Übergabeparameter Shot (Struct) werden die Koordinaten des Schusses (vom Gegner) übergeben
 	// Gibt an ob Schiff getroffen wurde: Rückgabe 1=Schiff wurde gehittet; 0=nicht geghittet
-	//ändert bei einem Hit Status-Vector
+	// ändert bei einem Hit Status-Vector
 	// Aufruf Funktion StillAlive
 
-	bool Hit = 0; // Zwischenspeichern der Feststellung, dass Schiff getroffen wurde
+	bool Hit = 0;		// Zwischenspeichern der Feststellung, dass Schiff getroffen wurde
+
 	if (Orientation == Direction::Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
 	{
 		for (int i = 0; i < Length; i++)
 		{
 			if ((StartPos.x + i == Shot.x) & (StartPos.y == Shot.y))	//Koordinaten des Schusses stimmen mit der Position des Schiff-Feldes überein
 			{
-				Status.at(i) = 1;	//Feld des Schiffes wird als getroffen markiert: 1=getroffen
-				Hit = 1;			// Schiff wurde getroffen
+				if (Status.at(i) == 0)	// Nur wenn dieses Schiffsfeld noch nie getroffen wurde zählt der Schuss als Treffer
+				{
+					Status.at(i) = 1;	//Feld des Schiffes wird als getroffen markiert: 1=getroffen
+					Hit = 1;			// Schiff wurde getroffen
+				}
 			}
 		}
 	}
@@ -28,8 +32,11 @@ bool Ship::IsHit(Position Shot)
 		{
 			if ((StartPos.x == Shot.x) & (StartPos.y + i == Shot.y))	//Koordinaten des Schusses stimmen mit der Position des Schiff-Feldes überein
 			{
-				Status.at(i) = 1;	//Feld des Schiffes wird als getroffen markiert: 1=getroffen
-				Hit = 1;			// Schiff wurde getroffen
+				if (Status.at(i) == 0)	// Nur wenn dieses Schiffsfeld noch nie getroffen wurde zählt der Schuss als Treffer
+				{
+					Status.at(i) = 1;	//Feld des Schiffes wird als getroffen markiert: 1=getroffen
+					Hit = 1;			// Schiff wurde getroffen
+				}
 			}
 		}
 	}

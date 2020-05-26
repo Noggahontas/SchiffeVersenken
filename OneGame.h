@@ -1,4 +1,5 @@
 #pragma once
 #include "Player.h"
+#include "PlayerHistory.h"
 
-void OneGame();			// Spielablauf für 1 Spiel
+void OneGame(PlayerHistory(&GameResult)[2]);			// Spielablauf für 1 Spiel

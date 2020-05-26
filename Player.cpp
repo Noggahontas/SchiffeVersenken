@@ -24,18 +24,32 @@ AttackResult Player::ShotOn(Position Shot)
 	Last3ShotsOfOpponent.pop_back();									//Letztes Element löschen -> Es sind wieder die letzten 3 Schüsse gespeichert
 
 	AttackResult Result;				// Result.Hit: Angabe ob ein Schiff getroffen wurde
-	Result.Sunk = 0;					// Angabe ob ein Schiff versenkt wurde. Wenn kein Schiff getroffen wurde Sunk = 0
+	Result.Sunk = false;					// Angabe ob ein Schiff versenkt wurde. Wenn kein Schiff getroffen wurde Sunk = 0
 	
 	int i = 0;
 	do									// Ausführen bis ein getroffenes Schiff gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
 	{
 		Result.Hit = Ships[i].IsHit(Shot);		// Funktion ISHit gibt zurück ob dieses Schiff getroffen wurde
 		i++;
-	} while ( (i < 10) & (Result.Hit != 1) );	// in i steht jetzt (Nummer des Schiffes +1), das getroffen wurde. Wenn kein Schiff getroffen wurde i=10
+	} while ( (i < 10) & (Result.Hit != true) );	// in i steht jetzt (Nummer des Schiffes +1), das getroffen wurde. Wenn kein Schiff getroffen wurde i=10
 
-	if (i < 10)
+	if (Result.Hit == true)
 	{
 		Result.Sunk = Ships[i-1].Sunk;
+	}
+
+	// Aktualisieren der "Mitzählvariablen" für einen Vergleich der Strategien
+	if (Result.Hit == true)
+	{
+		HitShotsOfOpponent++;
+	}
+	else
+	{
+		MissedShotsOfOpponent++;
+	}
+	if (Result.Sunk == true)
+	{
+		SunkShipsByOpponent++;
 	}
 
 
@@ -60,9 +74,6 @@ void Player::CheckIfLost()
 
 	Lost = 1;	// Wenn die Schleife voll durchlaufen wird, ohne dass die Fkt. mit return vorzeitig beendet wird, hat Spieler verloren
 }
-
-
-
 
 
 
@@ -459,6 +470,10 @@ Player::Player() {
 	Last3ShotsOfOpponent.resize(3, { NULL, NULL });	// Noch keine Schüsse abgefeuert -> NULL
 
 	Lost = 0;
+
+	HitShotsOfOpponent = 0;
+	MissedShotsOfOpponent = 0;
+	SunkShipsByOpponent = 0;
 
 
 

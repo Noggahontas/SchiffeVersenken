@@ -1,189 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Quelldateien">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Headerdateien">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Ressourcendateien">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx</Extensions>
-    </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{f1e65641-07bb-430c-bf53-5712640ec111}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Console">
-      <UniqueIdentifier>{71a623c3-e555-4cc8-821b-952dba76b89d}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Alternate.cpp" />
+    <ClCompile Include="AttackStrategy1.cpp" />
+    <ClCompile Include="AttackStrategy2.cpp" />
+    <ClCompile Include="AttackStrategy3.cpp" />
+    <ClCompile Include="AttackStrategy4.cpp" />
+    <ClCompile Include="DisplayOutput.cpp" />
+    <ClCompile Include="GDE_3.cpp" />
+    <ClCompile Include="GDE_3Doc.cpp" />
+    <ClCompile Include="GDE_3View.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="OneGame.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="user.cpp" />
+    <ClCompile Include="Graphics\Dib.cpp" />
+    <ClCompile Include="Graphics\Graphicfunctions.cpp" />
+    <ClCompile Include="Graphics\Shape.cpp" />
+    <ClCompile Include="Console\Console.cpp" />
+    <ClCompile Include="PlayerHistory.cpp" />
+    <ClCompile Include="NGames.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GDE_3.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="GDE_3Doc.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="GDE_3View.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="MainFrm.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="user.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Dib.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Graphicfunctions.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Shape.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Console\Console.cpp">
-      <Filter>Console</Filter>
-    </ClCompile>
-    <ClCompile Include="DisplayOutput.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Ship.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="OneGame.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Alternate.cpp">
-
-    <ClCompile Include="AttackStrategy1.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackStrategy2.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackStrategy3.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="AttackStrategy4.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-	
+    <ClInclude Include="Alternate.h" />
+    <ClInclude Include="AttackStrategy1.h" />
+    <ClInclude Include="AttackStrategy2.h" />
+    <ClInclude Include="AttackStrategy3.h" />
+    <ClInclude Include="AttackStrategy4.h" />
+    <ClInclude Include="DefenseStrategy1.h" />
+    <ClInclude Include="DisplayOutput.h" />
+    <ClInclude Include="GDE_3.h" />
+    <ClInclude Include="GDE_3Doc.h" />
+    <ClInclude Include="GDE_3View.h" />
+    <ClInclude Include="Global_Definitions.h" />
+    <ClInclude Include="Global_Definitions_Strategies.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="OneGame.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="Graphics\BaseException.h" />
+    <ClInclude Include="Graphics\Dib.h" />
+    <ClInclude Include="Graphics\Graphicfunctions.h" />
+    <ClInclude Include="Graphics\Image.h" />
+    <ClInclude Include="Graphics\PointerArray.h" />
+    <ClInclude Include="Graphics\Shape.h" />
+    <ClInclude Include="Console\Console.h" />
+    <ClInclude Include="PlayerHistory.h" />
+    <ClInclude Include="NGames.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GDE_3.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="GDE_3Doc.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="GDE_3View.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="MainFrm.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\BaseException.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Dib.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Graphicfunctions.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Image.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\PointerArray.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Shape.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Console\Console.h">
-      <Filter>Console</Filter>
-    </ClInclude>
-    <ClInclude Include="Global_Definitions.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackStrategy1.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackStrategy2.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackStrategy3.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="DefenseStrategy1.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="DisplayOutput.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-
-    <ClInclude Include="OneGame.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Alternate.h">
-	  <Filter>Headerdateien</Filter>
-    </ClInclude>
-	
-    <ClInclude Include="Global_Definitions_Strategies.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="AttackStrategy4.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-	
+    <ResourceCompile Include="GDE_3.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\GDE_3.ico">
-      <Filter>Ressourcendateien</Filter>
-    </None>
-    <None Include="res\GDE_3.rc2">
-      <Filter>Ressourcendateien</Filter>
-    </None>
-    <None Include="res\GDE_3Doc.ico">
-      <Filter>Ressourcendateien</Filter>
-    </None>
-    <None Include="res\Toolbar.bmp">
-      <Filter>Ressourcendateien</Filter>
-    </None>
-    <None Include="ReadMe.txt" />
     <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GDE_3.rc">
-      <Filter>Ressourcendateien</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuildStep Include="res\GDE_3.manifest" />
+    <None Include="res\GDE_3.ico" />
+    <None Include="res\GDE_3.rc2" />
+    <None Include="res\GDE_3Doc.ico" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

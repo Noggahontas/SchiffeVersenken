@@ -8,11 +8,17 @@ using namespace std;
 class Player
 {
 public:
-	Ship Ships[10];							//Array vom Typ/Klasse Ships; alle 10 Schiffe, die ein Spieler besitzt
+	Ship Ships[10];							// Array vom Typ/Klasse Ships; alle 10 Schiffe, die ein Spieler besitzt
 	vector<Position> Last3ShotsOfOpponent;	// Hier werden die letzten 3 Schüsse des Gegners gespeichert. [0]=aktuellster Schuss, [2]= Schuss vor 2 Runden.  Am Anfang alle Elemente = NULL
 	int AttackStrategy;						// Hier wird ein Schlüssel entsprechend der gewählten Angriffsstrategie gespeichert
 	int DefenseStrategy;					// Hier wird ein Schlüssel entsprechend der gewählten Verteidigungsstrategie gespeichert
 	bool Lost;								// Gibt an ob Spieler verloren hat. Verloren wenn alle seine Schiffe versenkt wurden. 1 = Verloren, 0 = nich nicht verloren
+
+	int MissedShotsOfOpponent;				// Hier wird während eines Spiels mitgezählt wie viele Schüsse der Gegner schon ins Leere geschossen hat
+	int HitShotsOfOpponent;					// Hier wird während eines Spiels mitgezählt wie viele Schüsse der Gegner schon getroffen hat
+	int SunkShipsByOpponent;				// Hier wird gezählt wie viele Schiffe der Gegner bei diesem Spielr versenkt hat
+
+
 
 public:
 	AttackResult ShotOn(Position Shot);		// Schuss von Gegner auf Koordinaten Shot	
@@ -33,7 +39,9 @@ public:
 														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
 														// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0	
 
-	void CheckIfLost();									// Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost
+	void CheckIfLost();									// Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost		
+
+
 
 	Position FindAttackShot(AttackResult LastAttackResult);// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
 														// auf die geschossen werden soll

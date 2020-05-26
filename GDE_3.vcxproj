@@ -119,12 +119,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Alternate.cpp" />
-
     <ClCompile Include="AttackStrategy1.cpp" />
     <ClCompile Include="AttackStrategy2.cpp" />
     <ClCompile Include="AttackStrategy3.cpp" />
     <ClCompile Include="AttackStrategy4.cpp" />
-	
     <ClCompile Include="DisplayOutput.cpp" />
     <ClCompile Include="GDE_3.cpp" />
     <ClCompile Include="GDE_3Doc.cpp" />
@@ -132,6 +130,8 @@
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OneGame.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerHistory.cpp" />
+    <ClCompile Include="NGames.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -157,8 +157,10 @@
     <ClInclude Include="Global_Definitions.h" />
     <ClInclude Include="Global_Definitions_Strategies.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="NGames.h" />
     <ClInclude Include="OneGame.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerHistory.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="stdafx.h" />
