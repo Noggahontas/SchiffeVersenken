@@ -119,12 +119,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Alternate.cpp" />
-
     <ClCompile Include="AttackStrategy1.cpp" />
     <ClCompile Include="AttackStrategy2.cpp" />
     <ClCompile Include="AttackStrategy3.cpp" />
     <ClCompile Include="AttackStrategy4.cpp" />
-	
+    <ClCompile Include="DefenseStrategy1.cpp" />
     <ClCompile Include="DisplayOutput.cpp" />
     <ClCompile Include="GDE_3.cpp" />
     <ClCompile Include="GDE_3Doc.cpp" />
