@@ -26,14 +26,16 @@ in den Ecken Richtungswechsel, Ende bei (5,4) und wieder von vorne (0,0).
 Position AttackStrategy3()
 {
 	static AttackDirection Richtung;
+	static bool Direction = false;		// notwendig zum unterscheiden zwischen Situation {NULL,NULL} und {0,0}
 
 	static Position Pos = { };
 
-	if (((Pos.x == NULL) && (Pos.y == NULL) && (Richtung != AttackDirection::S)))
+	if (((Pos.x == NULL) && (Pos.y == NULL) && (Direction == false)) || ((Pos.x == 5) && (Pos.y == 4)))
 	{
 		Pos.x = 0;
 		Pos.y = 0;
 		Richtung = AttackDirection::S;
+		Direction = true;
 		return Pos;
 	}
 
@@ -57,8 +59,6 @@ Position AttackStrategy3()
 		else if ((Pos.x == W_to_S[ii].x) && (Pos.y == W_to_S[ii].y)) { Richtung = AttackDirection::S; break; }
 	}
 
-	// Am Ende der Spirale angekommen -> zurück zu (0,0)
-	if ((Pos.x == 5) && (Pos.y == 4)) { Pos.x = 0; Pos.y = 0; return Pos; }
 
 	// Entsprechend der Angriffsrichtung wird x oder y inkrementiert oder dekrementiert (heißt das so?)
 
@@ -108,12 +108,11 @@ Position AttackStrategy3()
 
 	Position Schuss = { };
 	int sum = 0;
-	for (int ii = 0; ii < 100; ii++)
+	for (int ii = 0; ii < 200; ii++)
 	{
-		cout << "(x,y): " << "(" << Schuss.x << "," << Schuss.y << ")" << "\t" << "CheckSum Strat3: " << sum << "/900" << endl;
 		Schuss = AttackStrategy3();
 		sum = sum + Schuss.x + Schuss.y;
-
+		cout << "(x,y): " << "(" << Schuss.x << "," << Schuss.y << ")" << "\t" << "CheckSum Strat3: " << sum << "/900" << endl;
 	}
 
 	*/

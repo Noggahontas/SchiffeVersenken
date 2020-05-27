@@ -8,8 +8,7 @@
 using namespace std;
 
 /*
-TODO:	- macht noch Probleme, wenn Koordinaten in den Eckpunkten liegen oder am Rand der aktuellen Richtung 
-		  (zB erster Schuss auf y=0 und nördliche Richtung -> doofe Dinge passieren)
+TODO:	- könnte Probleme in den Eckpunkten machen
 		
 
 -----------------------------------------------------------------------------------------------------------------------
@@ -79,7 +78,7 @@ Position rndCoordinates()
 	return new_pos;
 }
 
-Position AttackStrategy4(bool* LastShotHit, bool *blubb)
+Position AttackStrategy4(bool* LastShotHit, bool *sunk)
 {
 	// bool LastShotHit -> Information, ob etwas getroffen wurde mit dem letzte Schuss
 	static Position Pos = { };
@@ -88,30 +87,31 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 	static AttackDirection Direction;			// zeigt die Angriffsrichtung an für die nächsten Koordinaten
 	static bool DirectionChoice = false;		// zum Unterscheiden zwischen neuen rnd-Koords und Richtungswechselabfrage
 
-	bool FieldBorder = false;					// Spielfeldrandabfrage
+	static bool FieldBorder = false;			// Spielfeldrand Kollision
 	
 	static Position first_hit = {};				// merken des ersten Schusses (die ersten rnd-Koordinaten jedes Durchlaufes)
 	
-	if (*blubb == true) 
-	{ 
-		cout << "Versenkt." << endl; 
-		alreadyShot = false;						
-		Direction = AttackDirection::N;
-		DirectionChoice = false;
-	}
 	
-
-	// Erster Schuss (Bedingungen: x und y = NULL) -> Random-Koordinaten
-	// vorheriger Schuss ging daneben + es wurde schon geschossen + Richtung noch nicht gewählt -> neue Random-Koordinaten 
-	if (((Pos.x == NULL) && (Pos.y == NULL)) || ((*LastShotHit == false) && (alreadyShot == true) && (!DirectionChoice)) || (*blubb == true))
+	// Erster Schuss (Bedingungen: x und y = NULL) -> rnd-Koordinaten
+	// oder vorheriger Schuss ging daneben + es wurde schon geschossen + Richtung noch nicht gewählt -> neue rnd-Koordinaten 
+	// oder vorherhiger Schuss hat ein Schiff versenkt -> neue rnd-Koordinaten
+	if (((Pos.x == NULL) && (Pos.y == NULL)) || ((*LastShotHit == false) && (alreadyShot == true) && (!DirectionChoice)) || (*sunk == true))
 	{
+		if (*sunk == true)
+		{
+			cout << "Versenkt." << endl;
+			alreadyShot = false;
+			Direction = AttackDirection::N;
+			DirectionChoice = false;
+		}
+		Direction = AttackDirection::N;
 		Pos = rndCoordinates();
 		alreadyShot = true;
 		first_hit = Pos;
 		return Pos;
 	}
 
-	// Random-Koordinaten waren ein Treffer, dann kann die "Schiffsuche" starten (zuerst Richtung Norden bis daneben etc.)
+	// rnd-Koordinaten waren ein Treffer, dann kann die "Schiffsuche" starten (zuerst Richtung Norden)
 	if ((*LastShotHit == true) && (alreadyShot == true) && (!DirectionChoice))
 	{
 		Direction = AttackDirection::N;
@@ -124,8 +124,14 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 	if (((*LastShotHit == false) && (alreadyShot)))
 	{	// Richtung war bisher Norden oder Koordinaten auf dem nördlichen Rand (y=0) -> Richtung wechselt jetzt nach Süden
 		if ((Direction == AttackDirection::N) || ((Direction == AttackDirection::N) && ((Pos.y - 1) < 0)))	
-		{	// Kollision unterhalb der Startkoordinaten mit südlichem Rand prüfen																				
-			if (first_hit.y + 1 <= 9)
+		{	
+			if (FieldBorder)		// vorheriger Schuss war ... glaube den Teil brauche ich gar nicht LUL
+			{
+				FieldBorder = false;
+				Pos = ShootNorth(&first_hit);
+				return Pos;
+			}
+			else if ((first_hit.y + 1) <= 9)		// Kollision mit südlichem Rand prüfen weil Richtungswechsel nach Süden
 			{
 				cout << "Richtung von Norden nach Sueden aendern." << endl;
 				Direction = AttackDirection::S;
@@ -141,8 +147,14 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 		}
 		// Richtung war bisher Süden oder Koordinaten auf dem südlichen Rand (y=9) -> Richtung wechselt jetzt nach Osten
 		else if ((Direction == AttackDirection::S) || ((Direction == AttackDirection::S) && ((Pos.y + 1) > 9)))	
-		{	// Kollision rechts von Startkoordinaten mit östlichem Rand prüfen										
-			if (first_hit.x + 1 <= 9)
+		{	
+			if (FieldBorder)		// vorheriger Schuss war vorher im Norden und ging daneben
+			{
+				FieldBorder = false;
+				Pos = ShootSouth(&first_hit);
+				return Pos;
+			}
+			else if (first_hit.x + 1 <= 9)		// Kollision mit östlichem Rand prüfen weil Richtungswechsel nach Osten
 			{
 				cout << "Richtung von Sueden nach Osten aendern." << endl;
 				Direction = AttackDirection::E;
@@ -158,8 +170,14 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 		}
 		// Richtung war bisher Osten oder Koordinaten auf dem östlichen Rand (x=9) -> Richtung wechselt jetzt nach Westen
 		else if ((Direction == AttackDirection::E)	|| ((Direction == AttackDirection::E) && ((Pos.x + 1) > 9)))	
-		{	// Kollision lunks von Startkoordinaten mit westlichem Rand prüfen											
-			if (first_hit.x - 1 >= 0)
+		{											
+			if (FieldBorder)	// vorheriger Schuss war vorher im Süden und ging daneben
+			{
+				FieldBorder = false;
+				Pos = ShootEast(&first_hit);
+				return Pos;
+			}
+			else if (first_hit.x - 1 >= 0)		// Kollision mit westlichem Rand prüfen weil Richtungswechsel nach Westen
 			{
 				cout << "Richtung von Osten nach Westen aendern." << endl;
 				Direction = AttackDirection::W;
@@ -180,16 +198,24 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 		}// Richtung war bisher Westen oder Koordinaten auf dem westlichen Rand (x=0) -> neue rnd-Koordinaten
 		else if ((Direction == AttackDirection::W) || ((Direction == AttackDirection::W) && ((Pos.x - 1) < 0)))
 		{
+			if (FieldBorder)			// vorheriger Schuss war im Osten und ging daneben
+			{
+				FieldBorder = false;
+				Pos = ShootWest(&first_hit);
+				return Pos;
+			}
+			else
+			{
+				cout << "Richtung von Westen nach Neustart aendern." << endl;
+				alreadyShot = false;						// nachdem West-Richtung fertig abgearbeitet, wieder alles zurücksetzen -> neue rnd Koords
+				Direction = AttackDirection::N;
+				DirectionChoice = false;
 
-			cout << "Richtung von Westen nach Neustart aendern." << endl;
-			alreadyShot = false;						// nachdem West-Richtung fertig abgearbeitet, wieder alles zurücksetzen -> neue rnd Koords
-			Direction = AttackDirection::N;
-			DirectionChoice = false;
-
-			Pos = rndCoordinates();
-			alreadyShot = true;
-			first_hit = Pos;
-			return Pos;
+				Pos = rndCoordinates();
+				alreadyShot = true;
+				first_hit = Pos;
+				return Pos;
+			}
 		}
 	}
 
@@ -206,21 +232,24 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 				FieldBorder = false; 
 				return Pos; 
 			}
-			else if (Pos.y - 1 > 0)					// Kollision mit nördlichem Rand prüfen
+			else if ((Pos.y - 1) > 0)				// Kollision mit nördlichem Rand prüfen
 			{
 				Pos = ShootNorth(&Pos);
 				return Pos;
 			}
-			else if ((Pos.y - 1) == 0)				// nördlicher Rand -> Richtungswechsel notwendig -> Süden
+			else if ((Pos.y - 1) == 0)				// nördlicher Rand kommt -> Richtungswechsel notwendig -> Süden
 			{
 				Pos = ShootNorth(&Pos);
 				Direction = AttackDirection::S;
 				FieldBorder = true;
 				return Pos;
 			}
-			else if (Pos.y == 0)					// wenn schon am Rand, muss hier der Richtungswechsel her
+			else if (Pos.y == 0)					// nördlicher Rand schon da -> Richtungswechsel Süden
 			{
 				cout << "1. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
+				Pos = ShootSouth(&first_hit);
+				Direction = AttackDirection::S;
+				return Pos;
 			}
 		}
 		// zweite Bedingung: aktuelle Richtung ist Süden -> Schuss auf das Feld südlich
@@ -232,21 +261,33 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 				FieldBorder = false; 
 				return Pos; 
 			}
-			else if (Pos.y + 1 < 9)					// Kollision mit südlichem Feldrand prüfen
+			else if ((Pos.y + 1) < 9)				// Kollision mit südlichem Feldrand prüfen
 			{
 				Pos = ShootSouth(&Pos);
 				return Pos;
 			}
-			else if ((Pos.y + 1) == 9)				// südlicher Rand -> Richtungswechsel -> Osten
+			else if ((Pos.y + 1) == 9)				// südlicher Rand kommt -> Richtungswechsel -> Osten
 			{
 				Pos = ShootSouth(&Pos);
 				Direction = AttackDirection::E;
 				FieldBorder = true;
 				return Pos;
 			}
-			else if (Pos.y == 9)					// wenn schon am Rand, muss hier der Richtungswechsel her
+			else if (Pos.y == 9)					// südlicher Rand schon da -> Richtungswechsel ... 
 			{
 				cout << "2. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
+				if (Pos.x < 9)						// ... wenn noch nicht am östlichen Rand angekommen, nach Osten
+				{
+					Pos = ShootEast(&first_hit);
+					Direction = AttackDirection::E;
+					return Pos;
+				}
+				else if (Pos.x == 9)				// ... wenn schon am östlichen Rand angekommen, nach Westen
+				{
+					Pos = ShootWest(&first_hit);
+					Direction = AttackDirection::W;
+					return Pos;
+				}
 			}
 		}
 		// zweite Bedingung: aktuelle Richtung ist Osten und Feldrand noch nicht erreicht -> Schuss auf das Feld östlich
@@ -258,21 +299,24 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 				FieldBorder = false; 
 				return Pos; 
 			}
-			else if (Pos.x + 1 < 9)					// Kollision mit östlichem Feldrand prüfen
+			else if ((Pos.x + 1) < 9)				// Kollision mit östlichem Feldrand prüfen
 			{
 				Pos = ShootEast(&Pos);
 				return Pos;
 			}
-			else if ((Pos.x + 1) == 9)				// östlicher Rand -> Richtungswechsel -> Westen 
+			else if ((Pos.x + 1) == 9)				// östlicher Rand kommt -> Richtungswechsel -> Westen 
 			{
 				Pos = ShootEast(&Pos);
 				Direction = AttackDirection::W;
 				FieldBorder = true;
 				return Pos;
 			}
-			else if (Pos.x == 9)					// wenn schon am Rand, muss hier der Richtungswechsel her
+			else if (Pos.x == 9)					// östlicher Rand schon da -> Richtungswechsel Westen
 			{
 				cout << "3. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
+				Pos = ShootWest(&first_hit);
+				Direction = AttackDirection::W;
+				return Pos;
 			}
 		}
 		// zweite Bedingung: aktuelle Richtung ist Westen -> Schuss auf das Feld westlich
@@ -284,17 +328,17 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 				FieldBorder = false; 
 				return Pos; 
 			}
-			else if (Pos.x - 1 > 0)					// Kollision mit westlichem Feldrand prüfen
+			else if ((Pos.x - 1) > 0)				// Kollision mit westlichem Feldrand prüfen
 			{
 				Pos = ShootWest(&Pos);
 				return Pos;
 			}
-			else if ((Pos.x - 1) == 0)				// westlicher Feldrand -> anschliessend neue rnd-Koordinaten
+			else if ((Pos.x - 1) == 0)				// westlicher Feldrand kommt -> anschliessend neue rnd-Koordinaten
 			{
 				Pos = ShootWest(&Pos);
 				return Pos;
 			}
-			else if (Pos.x == 0)					// wenn schon am Rand, muss hier der Richtungswechsel her
+			else if (Pos.x == 0)					// westlicher Rand schon da -> neue rnd-Koordinaten
 			{
 				Pos = rndCoordinates();
 				first_hit = Pos;
@@ -320,7 +364,7 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 	bool LastShotHit = false;
 	bool blubb = false;
 
-	for (int ii = 0; ii < 8; ii++)
+	for (int ii = 0; ii < 15; ii++)
 	{
 		Schuss = AttackStrategy4(&LastShotHit, &blubb);
 		cout << "(" << (Schuss.x) << "," << (Schuss.y) << ")" << "  " << "Pew Pew" << endl;
@@ -333,21 +377,53 @@ Position AttackStrategy4(bool* LastShotHit, bool *blubb)
 		{
 			LastShotHit = true; cout << ii << ": Schuss hat getroffen." << endl;
 		}
+		else if (ii == 2)
+		{
+			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl; 
+		}
 		else if (ii == 3)
+		{
+			LastShotHit = true; cout << ii << ": Schuss hat getroffen." << endl;
+		}
+		else if (ii == 4)
 		{
 			LastShotHit = true; cout << ii << ": Schuss hat getroffen." << endl; blubb = true;
 		}
-		else if (ii == 2)
+		else if (ii == 5)
 		{
-			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl;
+			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl; blubb = false;
 		}
-		else if (ii == 4)
+		else if (ii == 6)
+		{
+			LastShotHit = true; cout << ii << ": Schuss hat getroffen." << endl; blubb = false;
+		}
+		else if (ii == 7)
+		{
+			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl; blubb = false;
+		}
+		else if (ii == 8)
+		{
+			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl; blubb = false;
+		}
+		else if (ii == 9)
+		{
+			LastShotHit = true; cout << ii << ": Schuss hat getroffen." << endl; blubb = false;
+		}
+		else if (ii == 10)
+		{
+			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl; blubb = false;
+		}
+		else if (ii == 11)
+		{
+			LastShotHit = true; cout << ii << ": Schuss hat getroffen." << endl; blubb = false;
+		}
+		else if (ii == 12)
 		{
 			LastShotHit = true; cout << ii << ": Schuss hat getroffen." << endl; blubb = false;
 		}
 		else
 		{
-			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl;
+			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl; blubb = false;
 		}
 		;
 	}

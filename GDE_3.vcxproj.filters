@@ -22,6 +22,7 @@
     <ClCompile Include="Console\Console.cpp" />
     <ClCompile Include="PlayerHistory.cpp" />
     <ClCompile Include="NGames.cpp" />
+    <ClCompile Include="DefenseStrategy1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alternate.h" />
