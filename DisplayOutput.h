@@ -8,16 +8,6 @@
 
 using namespace std;
 
-/*
-	fuer die main/ zum Testen:
-
-	Player Spieler1, Spieler 2;
-	DisplayOutput Bildschirm;
-	Bildschirm.Ausgabe(20, Spieler1, Spieler2, BLAU, GRUEN);
-
-	Initialisierung eines Objektes Bildschirm der Klasse DisplayOutput und Spieler1, Spieler2 der Klasse Player
-*/
-
 
 class DisplayOutput
 {
@@ -37,14 +27,14 @@ private:
 	//	Parameter: 
 	//	Position Bildschirm : Koordinate der linken oberen Ecke des Grafikfensters
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
-	Position SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index);
+	Position SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index, int startpunkt);
 
 	//  Ausgabe einer Legende [unnoetig, nur zu Kontrollzwecken]
 	//	Parameter:
 	//	Position EckpunktSpielfeld : linke obere Ecke des Spielfeldes
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
 	//	int FarbeSpieler1, int FarbeSpieler2 : Farbe der Schiffe der Spieler
-	void Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int FarbeSpieler1, int FarbeSpieler2);
+	Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int index, Player Spieler);
 
 	//  Funktion zeichnet ein Schiff in das Spielfeld (muss überarbeitet werden / im Bezug auf Klasse ship)
 	//	Parameter:

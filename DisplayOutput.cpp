@@ -14,16 +14,15 @@
 
 //#include "Global_Definitions.h";
 
-Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
+Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index, int startpunkt) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
 	int const N = 4;
-	int const start = 50;
 	int const delta = Kaestchengroesse;		//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
 
 	int i;
 	int dx, dy;
 	int differenz;
-	int faktor = (start / 10 );
+	int faktor = (startpunkt / 10);
 	int abstand = (index - 1) * 300;
 
 	// Definition der verschiedenen Textfelder im Spielfeld
@@ -32,13 +31,13 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 
 	// Ueberschrift
 	Position Textfeld;
-	Textfeld.x = start / 2 + (Kaestchengroesse*2) + abstand;
-	Textfeld.y = start / 2;
+	Textfeld.x = startpunkt / 2 + (Kaestchengroesse*2) + abstand;
+	Textfeld.y = startpunkt / 3;
 
 	// Buchstabenreihe
 	Position Buchstaben;
-	Buchstaben.x = start + faktor + abstand;
-	Buchstaben.y = start - (faktor*2);
+	Buchstaben.x = startpunkt + faktor + abstand;
+	Buchstaben.y = startpunkt - (faktor*2);
 
 	char *BuchstabenArray[10];
 	BuchstabenArray[0] = "A"; BuchstabenArray[1] = "B"; BuchstabenArray[2] = "C"; BuchstabenArray[3] = "D"; BuchstabenArray[4] = "E";
@@ -46,8 +45,8 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 
 	// Zahlenreihe
 	Position Zahlen;
-	Zahlen.x = start - faktor + abstand;
-	Zahlen.y = start + (faktor*2);
+	Zahlen.x = startpunkt - faktor + abstand;
+	Zahlen.y = startpunkt + (faktor*2);
 
 	// PROVISORISCHE LOESUNG Zahlenreihe
 	char* ZahlenArray[10];
@@ -55,22 +54,13 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 	ZahlenArray[5] = "6"; ZahlenArray[6] = "7"; ZahlenArray[7] = "8"; ZahlenArray[8] = "9"; ZahlenArray[9] = "10";
 
 
-	// Hoehe und Breite des Graphikfensters
-	int breite = (10 * start) + 120;
-	int hoehe = (10 * delta) + (2 * start) + 50;
-
-	// Erstellen des Graphikfensters
-	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe); 
-
-
 	// Speichern der 4 Eckpunkte des Spielfeldes
 	Position Spielfeld[N]; 
-   	Spielfeld[0].x = start + abstand; Spielfeld[0].y = start;			// linke Ecke oben
-	Spielfeld[1].x = start + (10*delta) + abstand; Spielfeld[1].y = start;				// rechte Ecke oben
-	Spielfeld[2].x = start + (10*delta) + abstand; Spielfeld[2].y = start + (10*delta);	// rechte Ecke unten
-	Spielfeld[3].x = start+ abstand; Spielfeld[3].y = start + (10*delta);				// linke Ecke unten
+   	Spielfeld[0].x = startpunkt + abstand; Spielfeld[0].y = startpunkt;							// linke Ecke oben
+	Spielfeld[1].x = startpunkt + (10*delta) + abstand; Spielfeld[1].y = startpunkt;				// rechte Ecke oben
+	Spielfeld[2].x = startpunkt + (10*delta) + abstand; Spielfeld[2].y = startpunkt + (10*delta);	// rechte Ecke unten
+	Spielfeld[3].x = startpunkt+ abstand; Spielfeld[3].y = startpunkt + (10*delta);				// linke Ecke unten
 
-	
 	// Zeichnen des Spielfeldes
 	for (i = 0; i < 11; i++)
 	{
@@ -90,6 +80,7 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 			text(Buchstaben.x - delta, dy, textgroesse, WEISS, ZahlenArray[i]);
 		}
 	}
+	/*
 	char* ausgabe = "xx";
 	//char *ausgabe = "fancy Schiffe versenken von Norrer, Dommev & Vranzi";
 	if (index == 1)
@@ -100,47 +91,44 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 	{
 		ausgabe = "Spieler 2";
 	}
-	text(Textfeld.x, Textfeld.y, textgroesse, WEISS, ausgabe);	
-	
+	text(Textfeld.x, Textfeld.y, textgroesse+10, WEISS, ausgabe);	
+	*/
+
 	// Rückgabe der linken oberen Ecke 
-	Position linkeEckeOben = Spielfeld[0];
-	return linkeEckeOben;
+	return Spielfeld[0];
 };
 
 // falls zur Kontrolle des Spielablaufes ein Übersichtsfenster genutzt werden muss, indem beide Schiffe dargestellt werden sollen
-void DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int FarbeSpieler1, int FarbeSpieler2)
+Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int index, Player Spieler)
+
 {
-	Position Legende;
-	Legende.x = 2 * EckpunktSpielfeld.x + (10 * Kaestchengroesse);
-	Legende.y = EckpunktSpielfeld.y;
+	// Positionierung des Textes unter dem zugehörigen Spielfeld
+	Position Legende[2] = {};
+	Legende[0].x = EckpunktSpielfeld.x;			// linkes oberes Eck der Textbox
+	Legende[0].y = 14 * Kaestchengroesse;
 
-	Position Farbkasten1, Farbkasten2;
-	Farbkasten1.x = Legende.x + 5 * Kaestchengroesse;
-	Farbkasten1.y = Legende.y;
+	Legende[1].x = Legende[0].x + Kaestchengroesse * 10;
+	Legende[1].y = Legende[0].y + Kaestchengroesse * 5;
 
-	Farbkasten2.x = Farbkasten1.x;
-	Farbkasten2.y = Legende.y + Kaestchengroesse;
 
-	int x1, x2, y1, y2;
+	// Informationen zur Angriffs- und Verteidigungsstrategie des Spielers
+	int Angriffsstrategie = Spieler.AttackStrategy;
+	int Verteidigungsstrategie = Spieler.DefenseStrategy;
 
-	// Kasten 1
-	x1 = Farbkasten1.x;
-	y1 = Farbkasten1.y;
-	x2 = x1 + 3 * Kaestchengroesse;
-	y2 = y1 + Kaestchengroesse - 2;
+	// Platzhalter
+	int verfehlteSchuesse = 0;
+	int getroffeneSchuesse = 0;
+	int versenkteSchiffe = 0;
 
-	text(Legende.x, Legende.y, 15, WEISS, SCHWARZ, "Farbe Spieler 2:");
-	rectangle(x1, y1, x2, y2, WEISS, FarbeSpieler1);
+	// Informationstext
+	char InfoSpieler[500];
+		snprintf(InfoSpieler, sizeof(InfoSpieler), 
+			"Spieler Nr. % d \n Verteidigungsstrategie Nr. %d \n Angriffsstartegie Nr. %d \n verfehlte Schüsse : \d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
+			,index, Angriffsstrategie, Verteidigungsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
-	// Kasten 2
+	textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, WEISS, SCHWARZ, SCHWARZ, CENTER_ALIGN,InfoSpieler);
 
-	x1 = Farbkasten2.x;
-	y1 = Farbkasten2.y;
-	x2 = x1 + 3 * Kaestchengroesse;
-	y2 = y1 + Kaestchengroesse - 2;
-
-	text(Legende.x, Legende.y + Kaestchengroesse, 15, WEISS, SCHWARZ, "Farbe Spieler 1:");
-	rectangle(x1, y1, x2, y2, WEISS, FarbeSpieler2);
+	return Legende[0];
 }
 
 void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Kaestchengroesse, int Farbe)
@@ -154,8 +142,10 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 	// Ueberpruefung, ob Schiff bereits getroffen wurde
 	vector<bool> StatusSchiff = Schiff.Status;
 	int Statusabfrage;										// zu überprüfende Stelle des Schiffes
-	Position Treffer = {};										// zur Ausgabe einer bereits getroffenen Stelle
 
+	
+	// Eckpunkt des Schiffes auf dem Spielfeld (Skalierung)
+	
 	if (AusrichtungSchiff == Direction::Right) // Schiffsausrichtung auf dem Spielfeld: waagrecht
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
@@ -172,37 +162,43 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 		x2 = x1 + Kaestchengroesse - 1;
 		y2 = y1 + (Schiffslaenge * Kaestchengroesse)-1;
 	}
-
+	rectangle(x1, y1, x2, y2, Farbe, Farbe);
+	
 	for (int j = 0; j < Schiffslaenge; j++)
 	{
+		// Überprüfung ob Schiff an dieser Stelle bereits getroffen wurde [0 1 ... Schifflänge -1]
 		Statusabfrage = StatusSchiff.at(j);
 
-		if (Statusabfrage == 1)					// Stelle wurde bereits erfolgreich getroffen
+		if (Statusabfrage == 1)				// Stelle wurde bereits erfolgreich getroffen			
 		{
 			// Lokalisierung des Treffers abhaengig von der Ausrichtung des Schiffes
 			if (AusrichtungSchiff == Direction::Right) // Schiffsausrichtung auf dem Spielfeld: waagrecht
 			{
-				Treffer.x = x1 + Kaestchengroesse * j;
-				Treffer.y = y1;
+				x1 = x1 + (j * Kaestchengroesse);	// in x - Richtung, falls Schiff waagrecht
+				y1 = y1;
+				x2 = x1 + Kaestchengroesse - 1;
+				y2 = y1 + Kaestchengroesse - 1;
 			}
 			else if (AusrichtungSchiff == Direction::Down) // Schiffsausrichtung auf dem Spielfeld: senkrecht
 			{
-				Treffer.x = x1;
-				Treffer.y = y1 * Kaestchengroesse * j;
+				x1 = x1;
+				y1 = y1 + (j * Kaestchengroesse);
+				x2 = x1 + Kaestchengroesse - 1;
+				y2 = y1 + Kaestchengroesse - 1;
 			}
-
-			getroffenesFeld(EckpunktSpielfeld, Treffer, Kaestchengroesse, WEISS); // Ausgabe eine bisher getroffenen Stelle
+			rectangle(x1, y1, x2, y2, ROT, ROT); // Zeichnen eines roten Feldes als Treffer
 		}
 
 	}
-	rectangle(x1, y1, x2, y2, Farbe, Farbe);
+
+	
 
 
 }
 
 void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer, int Kaestchengroesse, int Farbe)
 {
-	int x1, x2, xx1, xx2, y1, y2, yy1, yy2 = 0;
+	int x1 = 0, x2 = 0, xx1 = 0, xx2 = 0, y1 = 0, y2 = 0, yy1 = 0, yy2 = 0;
 	// Skalierung des Ausgangspunktes an das Spielfeld
 	x1 = EckpunktSpielfeld.x + Treffer.x*Kaestchengroesse; 
 	y1 = EckpunktSpielfeld.y + Treffer.y*Kaestchengroesse;
@@ -221,8 +217,9 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
 {
 	int i;										// Zählvariable für die for- Schleife
-	Position Ecke_1, Ecke_2;					// Position der linken oberen Ecke der Spielfelder, Rückgabewert beim Erstellen des Spielfeldes
+	Position Ecke_1 = {};						// Position der linken oberen Ecke der Spielfelder, Rückgabewert beim Erstellen des Spielfeldes
 												// Ecke_1 : Ecke des Spielfeldes des 1. Spielers
+	Position Ecke_2 = {};					
 												// Ecke_2 : Ecke des Spielfeldes des 2. Spielers
 	Position Schuss1_1, Schuss2_1, Schuss3_1;	// letzten 3 Schuesse des Gegners (Spieler 1)
 	Position Schuss1_2, Schuss2_2, Schuss3_2;	// letzten 3 Schuesse des Gegners (Spieler 2)
@@ -230,45 +227,89 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 	Ship Schiff_1, Schiff_2;					// Schiff_1 : Schiff Spieler 1
 												// Schiff_2 : Schiff Spieler 2
 
-	int faktor = 0;
-
 	Position Bildschirm;						// Position des Grafikfensters auf dem Bildschirm
 	Bildschirm.x = 500;
 	Bildschirm.y = 250;
+	
+	int start = 50;
+
+	// Hoehe und Breite des Graphikfensters
+	int breite = (10 * start) + 200;
+	int hoehe = (10 * Kaestchengroesse) + (2 * start) + 200;
+
+	// Erstellen des Graphikfensters
+	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
+
+	// Schärzen der Fläche, damit alte Treffer nicht merh angezeigt werden
+	rectangle(start, start, start + breite, start + hoehe, SCHWARZ, SCHWARZ); updatescr();
 
 	// Spielfeld zeichnen
-	Ecke_1 = SpielfeldErstellen(Bildschirm, Kaestchengroesse,1); // Spielfeld fuer Spieler 1
-	Ecke_2 = SpielfeldErstellen(Bildschirm, Kaestchengroesse, 2); // Spielfeld fuer Spieler 2
+	Ecke_1 = SpielfeldErstellen(Bildschirm, Kaestchengroesse, 1, start);				 // Spielfeld fuer Spieler 1 
+	Ecke_2 = SpielfeldErstellen(Bildschirm, Kaestchengroesse, 2, start); updatescr(); // Spielfeld fuer Spieler 2
 
-	// Schiffe zeichnen
+	// Ausgabe Legende
+	Position Legende2 = {}, Legende1 = {};
+	Legende1 = Legende(Ecke_1, Kaestchengroesse, 1, Spieler1);
+	Legende2 = Legende(Ecke_2, Kaestchengroesse, 2, Spieler2);
+
+	// Schuesse
+	// Spieler 1
+    Schuss1_1 = Spieler1.Last3ShotsOfOpponent[0];	// letzter Schuss des Gegners
+	Schuss2_1 = Spieler1.Last3ShotsOfOpponent[1];
+	Schuss3_1 = Spieler1.Last3ShotsOfOpponent[2];
+
+	// Spieler 2
+	Schuss1_2 = Spieler2.Last3ShotsOfOpponent[0];	// letzter Schuss des Gegners
+	Schuss2_2 = Spieler2.Last3ShotsOfOpponent[1];
+	Schuss3_2 = Spieler2.Last3ShotsOfOpponent[2];
+
+	// Schiffe und Treffer zeichnen
 	for (i = 0; i < 10; i++)
 	{
 		// Ausgabe Spieler 1
 		Schiff_1 = Spieler1.Ships[i];				// aktuelles Schiff
 		Schiff_2 = Spieler2.Ships[i];
 
-		// Schuesse
-		// Spieler 1
-		Schuss1_1 = Spieler1.Last3ShotsOfOpponent[0];	// letzter Schuss des Gegners
-		Schuss2_1 = Spieler1.Last3ShotsOfOpponent[1];
-		Schuss3_1 = Spieler1.Last3ShotsOfOpponent[2];
+		// Lebendkontrolle
+		int Schiff_1_Kontrolle = Schiff_1.Sunk;
+		int Schiff_2_Kontrolle = Schiff_2.Sunk;
 
-		// Spieler 2
-		Schuss1_2 = Spieler2.Last3ShotsOfOpponent[0];	// letzter Schuss des Gegners
-		Schuss2_2 = Spieler2.Last3ShotsOfOpponent[1];
-		Schuss3_2 = Spieler2.Last3ShotsOfOpponent[2];
+		// zuerst die Schiffe und dann die getroffenen Felder zeichnen sonst werde die Kreuze übermalt
 
 		// Spieler 1
-		DarstellungSchiff(Ecke_1, Schiff_1, Kaestchengroesse, FarbeSpieler1);
-		getroffenesFeld(Ecke_1, Schuss1_1, Kaestchengroesse, ROT);		  // letzter Schuss des Gegeners wird in Rot angezeigt
-		getroffenesFeld(Ecke_1, Schuss2_1, Kaestchengroesse, WEISS);
-		getroffenesFeld(Ecke_1, Schuss3_1, Kaestchengroesse, WEISS);
+		if (Schiff_1_Kontrolle != 1) // gesunkene Schiffe sollen nicht gezeichnet werden
+		{
+			DarstellungSchiff(Ecke_1, Schiff_1, Kaestchengroesse, FarbeSpieler1); 	updatescr();
+		}
+		if (Schuss1_1.x != NULL && Schuss1_1.y != NULL) // Iniialisierung (0,0) soll nicht ausgegeben werden
+		{
+			getroffenesFeld(Ecke_1, Schuss1_1, Kaestchengroesse, ROT);	updatescr();	  // letzter Schuss des Gegeners wird in Rot angezeigt
+		}
+		if (Schuss2_1.x != NULL && Schuss2_1.y != NULL)
+		{
+			getroffenesFeld(Ecke_1, Schuss2_1, Kaestchengroesse, GRAU);	updatescr();
+		}
+		if (Schuss3_1.x != NULL && Schuss3_1.y != NULL)
+		{
+			getroffenesFeld(Ecke_1, Schuss3_1, Kaestchengroesse, GRAU); updatescr();
+		}
 
 		// Spieler 2
-		DarstellungSchiff(Ecke_2, Schiff_2, Kaestchengroesse, FarbeSpieler2);
-		getroffenesFeld(Ecke_2, Schuss1_2, Kaestchengroesse, ROT);		  // letzter Schuss des Gegeners wird in Rot angezeigt
-		getroffenesFeld(Ecke_2, Schuss2_2, Kaestchengroesse, WEISS);
-		getroffenesFeld(Ecke_2, Schuss3_2, Kaestchengroesse, WEISS);
-
+		if (Schiff_2_Kontrolle != 1) // gesunkene Schiffe sollen nicht gezeichnet werden
+		{
+			DarstellungSchiff(Ecke_2, Schiff_2, Kaestchengroesse, FarbeSpieler2); 	updatescr();
+		}
+		if (Schuss1_2.x != NULL && Schuss1_2.y != NULL)
+		{
+			getroffenesFeld(Ecke_2, Schuss1_2, Kaestchengroesse, ROT); 	updatescr(); // letzter Schuss des Gegeners wird in Rot angezeigt
+		} 
+		if (Schuss2_2.x != NULL && Schuss2_2.y != NULL)
+		{
+			getroffenesFeld(Ecke_2, Schuss2_2, Kaestchengroesse, GRAU); updatescr();
+		}
+		if (Schuss3_2.x != NULL && Schuss3_2.y != NULL) // Iniialisierung (0,0) soll nicht ausgegeben werden
+		{
+			getroffenesFeld(Ecke_2, Schuss3_2, Kaestchengroesse, GRAU);	updatescr();
+		}
 	}	
 }
