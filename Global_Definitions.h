@@ -19,6 +19,7 @@ enum class MoveDirection{ Forward, Backward};	// Richtung, ind ie ein Schiff bew
 #define BLAU RGB(0,0,255)
 #define GRUEN RGB(0,255,0)
 #define ROT RGB(255,0,0)
+#define GRAU RGB(192,192,192)
 
 enum class DefendAction { Nothing, Move, Turn };	// Aktion, die für ein Schiff beim verteidigen ausgeführt werden soll: Bewegen oder Drehen
 
