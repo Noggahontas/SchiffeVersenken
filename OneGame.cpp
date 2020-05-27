@@ -12,8 +12,8 @@ void OneGame(PlayerHistory (&GameResult)[2])
 {
 	Player P[2];			// Spieler werden erstellt -> Standartkonstruktor
 
-	P[0].AttackStrategy = 1;	// Zum Testen: Spieler 0 hat Spiralschieﬂen
-	P[1].AttackStrategy = 1;	// Spieler 1 hat Diagonalschieﬂen
+	P[0].AttackStrategy = 2;	// Zum Testen: Spieler 0 hat Spiralschieﬂen
+	P[1].AttackStrategy = 3;	// Spieler 1 hat Diagonalschieﬂen
 
 	//F¸r die graphische Ausgabe
 	DisplayOutput Graphics;	
