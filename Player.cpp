@@ -467,7 +467,7 @@ Player::Player() {
 	AttackStrategy = 1;
 	DefenseStrategy = 1;
 
-	Last3ShotsOfOpponent.resize(3, { NULL, NULL });	// Noch keine Schüsse abgefeuert -> NULL
+	Last3ShotsOfOpponent.resize(3, { -1, -1 });	// Noch keine Schüsse abgefeuert -> -1 für Abfragen
 
 	Lost = 0;
 
