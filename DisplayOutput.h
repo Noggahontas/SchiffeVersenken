@@ -24,7 +24,20 @@ public:
 	// Position Bildschirm: Position des Grafikfensters auf dem Bildschrim
 	// int Startpunkt: Abstand der linken oberen Ecke des 1.Spielfeldes zum Ursprung
 	// int Kaestchengroesse: Breite eines Kaestchens des dargestellten Spielfeldes // sinnvolle Angabe: 20
-		void Grafikfenster(Position Bildschirm, int Startpunkt, int Kaestchengroesse);
+	void Grafikfenster(Position Bildschirm, int Startpunkt, int Kaestchengroesse);
+
+	/*
+		// set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe); Z.279 in DisplaOutput.cpp muss auskommentiert werden
+		Position Bildschirm;						// Position des Grafikfensters auf dem Bildschirm
+		Bildschirm.x = 500;
+		Bildschirm.y = 250;
+		int Startpunkt = 50;
+		int Kaestchengroesse = 20;		// falls nicht schon anderweitig definiert
+
+		// einmalige Ausgabe pro Spiel
+		// moegliche Verbesserung der Ausgabe
+		Grafikfenster(Bildschirm,Startpunkt,Kaestchengroesse);
+	*/
 private:
 	// diese Funktionen werden in der Funktion Ausgabe(...) aufgerufen
 

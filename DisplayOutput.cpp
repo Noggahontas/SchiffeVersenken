@@ -264,7 +264,7 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 	Position Schuss1_1, Schuss2_1, Schuss3_1;	// letzten 3 Schuesse des Gegners (Spieler 1)
 	Position Schuss1_2, Schuss2_2, Schuss3_2;	// letzten 3 Schuesse des Gegners (Spieler 2)
 
-	Ship Schiff_1, Schiff_2;							// Schiff_1 : Schiff Spieler 1, Schiff_2 : Schiff Spieler 2
+	Ship Schiff_1, Schiff_2;					// Schiff_1 : Schiff Spieler 1, Schiff_2 : Schiff Spieler 2
 
 	Position Bildschirm;						// Position des Grafikfensters auf dem Bildschirm
 	Bildschirm.x = 500;
@@ -275,12 +275,10 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 	int breite = (10 * Startpunkt) + 500;
 	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
 
-	/*
 	// Erstellen des Graphikfensters
-
 	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
-	set_drawarea(breite, hoehe); updatescr();
-	*/
+	//set_drawarea(breite, hoehe); updatescr();
+	
 	// Ueberlegung, den Zeichenbereich aufzuhalten
 	Position Ursprung;
 	Ursprung.x = 0;
