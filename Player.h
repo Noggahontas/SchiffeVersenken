@@ -47,7 +47,7 @@ public:
 														// auf die geschossen werden soll
 														// Übergabe von Ergebnis dees letzten eigenen Schusses (Treffer, Versenkt)
 
-	void DefensiveAction(bool WasLastShotAHit);			// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
+	void DefensiveAction();								// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
 														// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
 														// Ruft ggf. Funktion Turn oder Move auf 
 

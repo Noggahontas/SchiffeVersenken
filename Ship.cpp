@@ -77,23 +77,26 @@ bool Ship::AreYouThere(Position CriticalCoordinates)
 
 	bool Occupied = 0; // Zwischenspeichern der Feststellung, dass Schiff auf diesem Feld sitzt
 
-	if (Orientation == Direction::Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
-	{
-		for (int i = 0; i < Length; i++)
+	if(Sunk == false)		// Nur wenn Schiff noch nicht versenkt wurde belegt es ein Feld. Wenn es versenkt wurde, kann ein anderes Schiff diese Felder belegen
+	{ 
+		if (Orientation == Direction::Right)	//Schiff von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
 		{
-			if ((StartPos.x + i == CriticalCoordinates.x) & (StartPos.y == CriticalCoordinates.y))	//Koordinaten stimmen mit der Position des Schiff-Feldes überein
-			{
-				Occupied = 1;			// Schiff sitzt auf Feld
+			for (int i = 0; i < Length; i++)
+			{ 
+					if ((StartPos.x + i == CriticalCoordinates.x) & (StartPos.y == CriticalCoordinates.y))	//Koordinaten stimmen mit der Position des Schiff-Feldes überein
+					{
+						Occupied = 1;			// Schiff sitzt auf Feld
+					}
 			}
 		}
-	}
-	else if (Orientation == Direction::Down) //Schiff von Startposition aus gesehen nach unten ausgerichtet (y-Richtung)
-	{
-		for (int i = 0; i < Length; i++)
+		else if (Orientation == Direction::Down) //Schiff von Startposition aus gesehen nach unten ausgerichtet (y-Richtung)
 		{
-			if ((StartPos.x == CriticalCoordinates.x) & (StartPos.y + i == CriticalCoordinates.y))	//Koordinaten des Schusses stimmen mit der Position des Schiff-Feldes überein
+			for (int i = 0; i < Length; i++)
 			{
-				Occupied = 1;			// Schiff sitzt auf Feld
+				if ((StartPos.x == CriticalCoordinates.x) & (StartPos.y + i == CriticalCoordinates.y))	//Koordinaten des Schusses stimmen mit der Position des Schiff-Feldes überein
+				{
+					Occupied = 1;			// Schiff sitzt auf Feld
+				}
 			}
 		}
 	}

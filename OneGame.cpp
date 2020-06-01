@@ -12,8 +12,8 @@ void OneGame(PlayerHistory (&GameResult)[2])
 {
 	Player P[2];			// Spieler werden erstellt -> Standartkonstruktor
 
-	P[0].AttackStrategy = 2;	// Zum Testen: Spieler 0 hat Spiralschießen
-	P[1].AttackStrategy = 3;	// Spieler 1 hat Diagonalschießen
+	P[0].AttackStrategy = 1;	// Zum Testen: Spieler 0 hat Spiralschießen
+	P[1].AttackStrategy = 4;	// Spieler 1 hat Diagonalschießen
 
 	//Für die graphische Ausgabe
 	DisplayOutput Graphics;	
@@ -27,7 +27,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 	cin >> WaitTime;
 
 	Position AttackShot;					// Koordinaten für Schuss beim Angreifen werden hier gespeichert
-	AttackResult Result[2] = {0,0};			// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
+	AttackResult Result[2] = {false,false};	// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt
 											// Für jeden Spieler eine Variable, notwendig für Strategien (benötogen die Infos)
 	int i = 0;								// Zum Wechseln zwischen Spieler 0 und 1 
@@ -38,7 +38,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 
 	//Angriff von erstem Spieler
 	cout << "Spieler " << i+1 << " an der Reihe: Angriff \n";
-	AttackShot = P[i].FindAttackShot(Result[Alternate(i)]);	// Durch ausgewählte Strategie des Spielers P[0] werden Koordinaten ausgewählt, auf die geschossen werden soll
+	AttackShot = P[i].FindAttackShot(Result[i]);	// Durch ausgewählte Strategie des Spielers P[0] werden Koordinaten ausgewählt, auf die geschossen werden soll
 	Result[i] = P[Alternate(i)].ShotOn(AttackShot);			// Auf ausgewählte Koordinaten wird geschossen: Schuss auf Spielfeld von zweitem Spieler P[1] 
 	
 
@@ -71,9 +71,8 @@ void OneGame(PlayerHistory (&GameResult)[2])
 		{
 			// Verteidigung von Spieler i
 			cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
-			P[i].DefensiveAction(Result[Alternate(i)].Hit);					// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
-																			// Übergabe, ob letzter Schuss des Gegners Treffer war
-			Sleep(WaitTime);												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+			P[i].DefensiveAction();										// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
+			Sleep(WaitTime);											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 			Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 		}
 		else
@@ -86,7 +85,8 @@ void OneGame(PlayerHistory (&GameResult)[2])
 
 		// Angriff von Spieler i
 		cout << "Spieler " << i + 1 << " an der Reihe: Angriff \n";
-		AttackShot = P[i].FindAttackShot(Result[Alternate(i)]);			// Durch ausgewählte Strategie des Spielers werden Koordinaten ausgewählt, auf die geschossen werden soll
+		AttackShot = P[i].FindAttackShot(Result[i]);					// Durch ausgewählte Strategie des Spielers werden Koordinaten ausgewählt, auf die geschossen werden soll
+																		// Übergabe von Ergebnissen (Treffer?, Versenkt?) des letzten eigenen Schusses
 		Result[i] = P[Alternate(i)].ShotOn(AttackShot);					// Auf ausgewählte Koordinaten wird geschossen (auf Spielfeld von zweitem Spieler )
 
 		Sleep(WaitTime);												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus

@@ -513,6 +513,9 @@ bool Player::Turn(int ShipNumber)
 }
 
 
+
+
+
 Position Player::FindAttackShot(AttackResult LastAttackResult)
 {
 	// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück, auf die geschossen werden soll
@@ -542,30 +545,25 @@ Position Player::FindAttackShot(AttackResult LastAttackResult)
 
 
 
-void Player::DefensiveAction(bool WasLastShotAHit)
+void Player::DefensiveAction()
 {	
-	// Üergabe ob der letzte Schuss des Gegeners ein Treffer war (WasLastShotAHit)
-	// Ermittelt nach Verteidigungsstrategie einen Verteidigungsmove: 
+	// Ermittelt entsprechend Verteidigungsstrategie einen Verteidigungsmove: 
 	// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
 	// Ruft ggf. Funktion Turn oder Move auf 
 
-
-		// was gemacht werden ,  welches schiff, welche richtungbewegen(drehehn geht nur in eine)
 
 	int ShipNumber;			// Nummer des Schiffes, das Bewegt/ Gedreht werden soll
 	DefendAction Action;	// Angabe ob gedreht oder Bewegt werden soll
 	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
 
-	// Prototyp Domme		void DefenseStrategy1(bool WarLetzterSchussEinTreffer, vector <position> &LetzteSchuesse, int &ShipNumber,DefendAction &WasTun, MoveDirection &MoveDir );
-	// WarLetzterSchusseinTreffer = Angabe ob der letzte Schuss des Gegners ein Schiff dieses Spielers getroffen hat
 
 	bool ActionSuccessful;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
 
 	do
 	{
 			ShipNumber = 3;
-			Action = DefendAction::Turn;
-			//MoveDir = MoveDirection::Forward;
+			Action = DefendAction::Nothing;
+			MoveDir = MoveDirection::Forward;
 			//DefenseStrategy1(WasLastShotAHit, &Last3ShotsOfOpponent, &ShipNumber, &Action, &MoveDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir
 		
 		switch (Action)
