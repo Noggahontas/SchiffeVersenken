@@ -32,7 +32,7 @@ Angriffsstrategie 4:
 	 X
  X X X X X
 	 X
-	 X
+	 X					RÜDIGER
 */
 
 // Ausgelaugerte "Berechnung" der nächsten Koordinaten:
