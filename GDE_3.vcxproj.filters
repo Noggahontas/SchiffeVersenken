@@ -53,6 +53,7 @@
     <ClInclude Include="Console\Console.h" />
     <ClInclude Include="PlayerHistory.h" />
     <ClInclude Include="NGames.h" />
+    <ClInclude Include="Global_Definitions_DisplayOutput.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GDE_3.rc" />
