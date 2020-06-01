@@ -26,7 +26,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 	cout << "Wie schnell soll das Spiel ablaufen? Angabe in ms:\t";
 	cin >> WaitTime;
 
-	Position AttackShot ;					// Koordinaten für Schuss beim Angreifen werden hier gespeichert
+	Position AttackShot;					// Koordinaten für Schuss beim Angreifen werden hier gespeichert
 	AttackResult Result[2] = {0,0};			// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt
 											// Für jeden Spieler eine Variable, notwendig für Strategien (benötogen die Infos)
@@ -71,7 +71,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 		{
 			// Verteidigung von Spieler i
 			cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
-			//P[i].DefensiveAction(Result[Alternate(i)].Hit);				// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
+			P[i].DefensiveAction(Result[Alternate(i)].Hit);					// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
 																			// Übergabe, ob letzter Schuss des Gegners Treffer war
 			Sleep(WaitTime);												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 			Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics

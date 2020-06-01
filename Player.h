@@ -27,7 +27,7 @@ public:
 											// Gibt zurück ob ein Schiff getroffen wurde: Hit=1= getroffen, Hit=0=nicht getroffen
 											// Gibt zurück ob ein Schiff versenkt wurde: Sunk=1=versenkt, Sunk=0=nicht versenkt
 
-	//bool Turn(int ShipNumber, TurnDirection Direction); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
+	bool Turn(int ShipNumber); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
 														// Übergabe Richtung, in die gedrecht werden soll. Left=1 oder Right=2
 														// Kollisionsabfrage ob Drehen möglich, wenn ja:
 														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
