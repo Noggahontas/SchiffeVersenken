@@ -12,8 +12,8 @@ void OneGame(PlayerHistory (&GameResult)[2])
 {
 	Player P[2];			// Spieler werden erstellt -> Standartkonstruktor
 
-	P[0].AttackStrategy = 2;	// Zum Testen: Spieler 0 hat Spiralschieﬂen
-	P[1].AttackStrategy = 3;	// Spieler 1 hat Diagonalschieﬂen
+	P[0].AttackStrategy = 1;	// Zum Testen: Spieler 0 hat Spiralschieﬂen
+	P[1].AttackStrategy = 4;	// Spieler 1 hat Diagonalschieﬂen
 
 	//F¸r die graphische Ausgabe
 	DisplayOutput Graphics;	
@@ -38,7 +38,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 
 	//Angriff von erstem Spieler
 	cout << "Spieler " << i+1 << " an der Reihe: Angriff \n";
-	AttackShot = P[i].FindAttackShot(Result[Alternate(i)]);	// Durch ausgew‰hlte Strategie des Spielers P[0] werden Koordinaten ausgew‰hlt, auf die geschossen werden soll
+	AttackShot = P[i].FindAttackShot(Result[i]);	// Durch ausgew‰hlte Strategie des Spielers P[0] werden Koordinaten ausgew‰hlt, auf die geschossen werden soll
 	Result[i] = P[Alternate(i)].ShotOn(AttackShot);			// Auf ausgew‰hlte Koordinaten wird geschossen: Schuss auf Spielfeld von zweitem Spieler P[1] 
 	
 
@@ -71,7 +71,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 		{
 			// Verteidigung von Spieler i
 			cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
-			//P[i].DefensiveAction(Result[Alternate(i)].Hit);				// Durch gew‰hlte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgwe‰hlt und ausgef¸hrt
+			//P[i].DefensiveAction(Result[Alternate(i)].Hit);					// Durch gew‰hlte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgwe‰hlt und ausgef¸hrt
 																			// ‹bergabe, ob letzter Schuss des Gegners Treffer war
 			Sleep(WaitTime);												// Versetzt Programm f¸r bestimmte Zeit (WaitTime) in einen inaktiven Modus
 			Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
@@ -86,7 +86,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 
 		// Angriff von Spieler i
 		cout << "Spieler " << i + 1 << " an der Reihe: Angriff \n";
-		AttackShot = P[i].FindAttackShot(Result[Alternate(i)]);			// Durch ausgew‰hlte Strategie des Spielers werden Koordinaten ausgew‰hlt, auf die geschossen werden soll
+		AttackShot = P[i].FindAttackShot(Result[i]);			// Durch ausgew‰hlte Strategie des Spielers werden Koordinaten ausgew‰hlt, auf die geschossen werden soll
 		Result[i] = P[Alternate(i)].ShotOn(AttackShot);					// Auf ausgew‰hlte Koordinaten wird geschossen (auf Spielfeld von zweitem Spieler )
 
 		Sleep(WaitTime);												// Versetzt Programm f¸r bestimmte Zeit (WaitTime) in einen inaktiven Modus

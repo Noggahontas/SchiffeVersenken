@@ -348,7 +348,7 @@ void Player::DefensiveAction(bool WasLastShotAHit)
 			ShipNumber = 0;
 			Action = DefendAction::Move;
 			MoveDir = MoveDirection::Forward;
-			//DefenseStrategy1(WasLastShotAHit, &Last3ShotsOfOpponent, &ShipNumber, &Action, &MoveDir );
+			//DefenseStrategy1(&ShipNumber, &Action, &MoveDir, &TurnDir);
 			break;
 
 		case 2:
