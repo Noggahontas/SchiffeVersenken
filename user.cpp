@@ -32,7 +32,7 @@ using namespace std;
 #include "AttackStrategy2.h"
 #include "AttackStrategy3.h"
 #include "AttackStrategy4.h"
-
+#include "DefenseStrategy1.h"
 
 
 // Include fuer Ausgabe des Graphikfensters
@@ -55,9 +55,8 @@ void user_main()
 	*/
 	//_________________________________________________________________________________________
 
-	srand(static_cast<unsigned int>(time(NULL)));	// PZG starten; Seed = time
+	srand(static_cast<unsigned int>(time(nullptr)));	// PZG starten; Seed = time  -- nur ein einziges mal zu Programmstart
 	
 	NGames();
 	
-
 }

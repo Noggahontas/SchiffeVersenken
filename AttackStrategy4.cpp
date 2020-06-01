@@ -32,7 +32,7 @@ Angriffsstrategie 4:
 	 X
  X X X X X
 	 X
-	 X
+	 X					RÜDIGER
 */
 
 // Ausgelaugerte "Berechnung" der nächsten Koordinaten:
@@ -78,7 +78,7 @@ Position rndCoordinates()
 	return new_pos;
 }
 
-Position AttackStrategy4(bool* LastShotHit, bool *sunk)
+Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 {
 	// bool LastShotHit -> Information, ob etwas getroffen wurde mit dem letzte Schuss
 	static Position Pos = { };
@@ -379,7 +379,7 @@ Position AttackStrategy4(bool* LastShotHit, bool *sunk)
 		}
 		else if (ii == 2)
 		{
-			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl; 
+			LastShotHit = false; cout << ii << ": Schuss ging daneben." << endl;
 		}
 		else if (ii == 3)
 		{
