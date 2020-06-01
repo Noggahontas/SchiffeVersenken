@@ -156,6 +156,7 @@
     <ClInclude Include="GDE_3Doc.h" />
     <ClInclude Include="GDE_3View.h" />
     <ClInclude Include="Global_Definitions.h" />
+    <ClInclude Include="Global_Definitions_DisplayOutput.h" />
     <ClInclude Include="Global_Definitions_Strategies.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="NGames.h" />

@@ -3,9 +3,9 @@
 
 #include "stdafx.h"
 #include <string>
-#include "Global_Definitions.h";
+#include "Global_Definitions.h"
 #include "Player.h"
-
+#include "Global_Definitions_DisplayOutput.h"
 using namespace std;
 
 
@@ -19,6 +19,12 @@ public:
 	// int Farbe : Farbe der Schiffe des Spielers
 	void Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2);
 
+	// einmaliger Aufruf zum Setzen eines Grafikfensters
+	// Parameter:
+	// Position Bildschirm: Position des Grafikfensters auf dem Bildschrim
+	// int Startpunkt: Abstand der linken oberen Ecke des 1.Spielfeldes zum Ursprung
+	// int Kaestchengroesse: Breite eines Kaestchens des dargestellten Spielfeldes // sinnvolle Angabe: 20
+		void Grafikfenster(Position Bildschirm, int Startpunkt, int Kaestchengroesse);
 private:
 	// diese Funktionen werden in der Funktion Ausgabe(...) aufgerufen
 
@@ -28,7 +34,7 @@ private:
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
 	//  int index : Nummer des Spielers, Spieler 1 = 1 und Spieler2 = 2
 	//	int startpunkt : Ankerpunkt auf der Grafikoberfläche
-	Position SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index, int startpunkt);
+	Position SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index, int Startpunkt);
 
 	//  Ausgabe einer Legende mit den wichtigen Informationen zum Spieler ( Verteidigungsstartegie, Angriffsstrategie, Schüsse, versenkte Schiffe etc.)
 	//	Parameter:
@@ -36,7 +42,7 @@ private:
 	//	int Kaestchengroesse : Breite eines Kaestchens des dargestellten Spielfeldes
 	//  int index : Nummer des Spielers, Spieler 1 = 1 und Spieler2 = 2
 	//  Player Spieler: Objekt der Klasse Player, beinhaltet Informationen zu den Schiffen etc. des Spielers
-	Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int index, Player Spieler);
+	Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int Startpunkt, int index, Player Spieler);
 
 	//  Funktion zeichnet ein Schiff in das Spielfeld (muss überarbeitet werden / im Bezug auf Klasse ship)
 	//	Parameter:
@@ -54,5 +60,6 @@ private:
 	//  int Farbe : Farbe des Treffers (Rot / Weiss)
 	void getroffenesFeld (Position EckpunktSpielfeld, Position Treffer, int Kaestchengroesse, int Farbe);
 
+	bool Beschleunigung(int Startpunkt, int Kaestchengroesse);
 };
 
