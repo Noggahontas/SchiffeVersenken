@@ -19,6 +19,11 @@ void OneGame(PlayerHistory (&GameResult)[2])
 	DisplayOutput Graphics;	
 	int Kaestchengroesse = 20;
 	int FarbeSchiffe = BLAU;
+	Position Bildschirm;										// Position des Grafikfensters auf dem Bildschirm
+	Bildschirm.x = 500;
+	Bildschirm.y = 250;
+	int Startpunkt = 50;
+	//Graphics.Grafikfenster(Bildschirm, Startpunkt, Kaestchengroesse);	// Erstellen Grafikfenster: Test für einmaligen Aufruf 
 
 
 	// Für die zeitliche Verzögerung

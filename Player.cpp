@@ -392,7 +392,7 @@ bool Player::Turn(int ShipNumber)
 		j = 0;
 		do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden
 		{
-			InsideBattlefield = ( (CriticalStartCoordinates.y + j) <= 9 );			// Beim Rechtsdrehen ist das Schiff in x-Richtung sicher immer innerhalb des Spielfeldes, weil
+			InsideBattlefield = ((CriticalStartCoordinates.y + j) <= 9) && ((CriticalStartCoordinates.y + j) >= 0);	// Beim Rechtsdrehen ist das Schiff in x-Richtung sicher immer innerhalb des Spielfeldes, weil
 																					// Ausrichtung_aktuell = Right -> Ausrichtung_neu = Down. Nur die y-Koordinaten müssen gecheckt werden
 			j++;																	// nächste Koordinate
 		} while ((j < Ships[ShipNumber].Length) & (InsideBattlefield == true));
@@ -482,10 +482,10 @@ bool Player::Turn(int ShipNumber)
 
 		// Check, ob das ganze Schiff nach dem Bewegen noch im Spielfeld
 		InsideBattlefield = true;
-		j = 0;
+		j = 0;				// Zum Durchlaufen der Schifssfelder
 		do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden
 		{
-			InsideBattlefield = ((CriticalStartCoordinates.x + j) <= 9);			// Beim Linksdrehen ist das Schiff in y-Richtung sicher immer innerhalb des Spielfeldes, weil
+			InsideBattlefield =  ((CriticalStartCoordinates.x + j) <= 9) && ((CriticalStartCoordinates.x + j) >= 0);// Beim Linksdrehen ist das Schiff in y-Richtung sicher immer innerhalb des Spielfeldes, weil
 																					// Ausrichtung_aktuell = Down -> Ausrichtung_neu = Right. Nur die x-Koordinaten müssen gecheckt werden
 			j++;																	// nächste Koordinate
 		} while ((j < Ships[ShipNumber].Length) & (InsideBattlefield == true));
@@ -555,16 +555,16 @@ void Player::DefensiveAction()
 	int ShipNumber;			// Nummer des Schiffes, das Bewegt/ Gedreht werden soll
 	DefendAction Action;	// Angabe ob gedreht oder Bewegt werden soll
 	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
-
+	TurnDirection TurnDir;	// Angabe in welche Richtung gedreht werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
 
 	bool ActionSuccessful;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
 
 	do
 	{
-			ShipNumber = 3;
-			Action = DefendAction::Nothing;
-			MoveDir = MoveDirection::Forward;
-			//DefenseStrategy1(WasLastShotAHit, &Last3ShotsOfOpponent, &ShipNumber, &Action, &MoveDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir
+		/*	ShipNumber = 0;
+			Action = DefendAction::Turn;
+			MoveDir = MoveDirection::Forward;*/
+			DefenseStrategy1(&ShipNumber, &Action, &MoveDir, &TurnDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir, TurnDir
 		
 		switch (Action)
 		{
