@@ -17,9 +17,9 @@ void DisplayOutput::Grafikfenster(Position Bildschirm,int Startpunkt, int Kaestc
 	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
 
 	// Erstellen des Graphikfensters
-
-	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
 	set_drawarea(breite, hoehe); updatescr();
+	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
+	
 }
 
 Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index, int Startpunkt) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
@@ -276,7 +276,7 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
 
 	// Erstellen des Graphikfensters
-	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
+	//set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
 	//set_drawarea(breite, hoehe); updatescr();
 	
 	// Ueberlegung, den Zeichenbereich aufzuhalten

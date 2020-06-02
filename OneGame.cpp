@@ -23,7 +23,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 	Bildschirm.x = 500;
 	Bildschirm.y = 250;
 	int Startpunkt = 50;
-	//Graphics.Grafikfenster(Bildschirm, Startpunkt, Kaestchengroesse);	// Erstellen Grafikfenster: Test für einmaligen Aufruf 
+	Graphics.Grafikfenster(Bildschirm, Startpunkt, Kaestchengroesse);	// Erstellen Grafikfenster: Test für einmaligen Aufruf 
 
 
 	// Für die zeitliche Verzögerung
