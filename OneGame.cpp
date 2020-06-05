@@ -8,12 +8,12 @@
 #include "PlayerHistory.h"
 
 
-void OneGame(PlayerHistory (&GameResult)[2])		
+void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips)		
 {
-	Player P[2];			// Spieler werden erstellt -> Standartkonstruktor
+	Player P[2]{ (ModeSetShips), (ModeSetShips) };			// Spieler werden erstellt -> Parameterkonstruktor
 
-	P[0].AttackStrategy = 1;	// Zum Testen: Spieler 0 hat Spiralschießen
-	P[1].AttackStrategy = 4;	// Spieler 1 hat Diagonalschießen
+	//P[0].AttackStrategy = 1;	// Zum Testen: Spieler 0 hat Spiralschießen
+	//P[1].AttackStrategy = 4;	// Spieler 1 hat Diagonalschießen
 
 	//Für die graphische Ausgabe
 	DisplayOutput Graphics;	
@@ -29,8 +29,8 @@ void OneGame(PlayerHistory (&GameResult)[2])
 	// Für die zeitliche Verzögerung
 	int WaitTime;
 	cout << "Wie schnell soll das Spiel ablaufen? Angabe in ms:\t";
-	cin >> WaitTime;
-
+	//cin >> WaitTime;
+	WaitTime = 0;
 	Position AttackShot;					// Koordinaten für Schuss beim Angreifen werden hier gespeichert
 	AttackResult Result[2] = {false,false};	// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt
@@ -138,7 +138,7 @@ void OneGame(PlayerHistory (&GameResult)[2])
 	cout << "Getroffene Schüsse: " << P[0].HitShotsOfOpponent << "\n Verfehlte Schüsse: " << P[0].MissedShotsOfOpponent << "\n Versenkte Schiffe: " << P[0].SunkShipsByOpponent << "\n";
 	cout << "___________________________________________________________\n";
 
-	Sleep(3000);
+	Sleep(WaitTime);
 
 	//Abspeichern der Spielergebnisse für jeden Spieler in übergebenes Array (Teil des Vektors GameHistory in Funktion NGames())
 	GameResult[0].Save(P[0], P[1]);				

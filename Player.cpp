@@ -8,6 +8,7 @@
 #include "AttackStrategy3.h"
 #include "AttackStrategy4.h"
 #include "DefenseStrategy1.h"
+#include <time.h>	// Für Generierung Zufallszahlen
 using namespace std;
 
 
@@ -557,7 +558,7 @@ void Player::DefensiveAction()
 	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
 	TurnDirection TurnDir;	// Angabe in welche Richtung gedreht werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
 
-	bool ActionSuccessful;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
+	bool ActionSuccessful = 1;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
 
 	do
 	{
@@ -584,24 +585,57 @@ void Player::DefensiveAction()
 	
 	}while (ActionSuccessful == 0);			// Wenn das Bewegen/Drehen so nicht möglich war wie von Strategie vorgegeben, muss Strategie neue Aktion wählen
 
-
 }
 
 
 
 
 
-Player::Player() {
+Player::Player(int ModeSetShips) {
 	 // Konstruktor 
 	 // Stößt Konstruktor für jedes Schiff an
 	 // legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL
 	 // Wählt zufällig AttackStrategy und DefenseStrategy aus
 
-	 //Bei Player P1
 	// Einlesen der Initialisierungswerte der Schiffe aus Textdatei
 	// Eigentlich mit Lexikalischer Analyse:
-	//...
+	// ...
 	// Vorläufige Lösung: Direktes, festes Initialisieren; Korrekte Lösung kommt noch
+
+	string NameDocSetShips;		// Name der Datei, die zum Setzen der Schiffe bei Spielbeginn genutzt werden soll
+	int NumberTextDocShips;		// Nummer der Datei zum Schiffe Setzen 1...4
+	switch (ModeSetShips)
+	{
+		case 1: 
+			NumberTextDocShips = (rand() % 4) + 1;		// Nummer der Textdatei, die zum Setzen der Schiffe bei Spielbeginn genutzt werden soll. Zahlen von 1...4
+			switch (NumberTextDocShips)
+			{
+				case 1: 
+					NameDocSetShips = "SetShips1"; 
+					break;
+				case 2: 
+					NameDocSetShips = "SetShips2";
+					break;
+				case 3:
+					NameDocSetShips = "SetShips3";
+					break;
+				case 4:
+					NameDocSetShips = "SetShips4";
+					break;
+				default:
+					cout << "Fehler bei NumberTextDocShips";
+					break;
+			}
+			break;
+		case 2: 
+			NameDocSetShips = "SetShips";
+			break;
+		default:
+			cout << "Fehler bei ModeSetShips";
+			break;
+	}
+
+	//Lexan(NameDoc);		// Aufruf lexikalische Analyse
 
 	Ships[0].Length = 5;
 	Ships[0].StartPos = { 0,0 };
@@ -663,14 +697,31 @@ Player::Player() {
 	Ships[9].Status.resize(Ships[9].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
 	Ships[9].Sunk = 0;
 
-	// Dies soll später zufällig passieren ODER vom Nutzer geählt werden
+	// Dies soll später zufällig passieren ODER vom Nutzer gewählt werden
 
-	// Spieler 1 und Spieler 2 dürfen NICHT DIESELBE ANGRIFFSSTRAGTEGIE haben!!!!!!!  -> geht das wenn es zufällig ist?? -> testen vlt  mit festen Werten
+	// Spieler 1 und Spieler 2 dürfen NICHT DIESELBE ANGRIFFSSTRAGTEGIE haben!!!!!!!  
 	// Lösungsansatz: Mit ermitteltem Zufallswert in "main", dann ´nicht mit Standartkonstruktorm sondern einem dem der Wert übergeben wird!
-	AttackStrategy = 1;
-	DefenseStrategy = 1;
+	static int Number_AttackStrategy_OtherPlayer = -1 ;	// Speichern der Strategiewahl (1...4) des anderen Spielers. Wenn noch keine Strategie für einen Spieler gewählt, dann = -1
 
-	Last3ShotsOfOpponent.resize(3, { -1, -1 });	// Noch keine Schüsse abgefeuert -> -1 für Abfragen
+	AttackStrategy = (rand() % 4) + 1;						// Zahlen von 1...4
+
+	if (Number_AttackStrategy_OtherPlayer == -1)				// erster Spieler für ein Spiel wird erstellt, es wurde noch keine Strategie für einen Spieler in diesem Spiel gewählt
+	{
+		Number_AttackStrategy_OtherPlayer = AttackStrategy;		// Strategiewahl für ersten Speieler in diesem Spiel wird gespeichert
+	}
+	else if (Number_AttackStrategy_OtherPlayer != -1)			// zweiter Spieler für ein Spiel wird erstellt, es wird zum zweiten Mal eine Strategie für einen Spieler in diesem Spiel ermittelt
+	{
+		while (AttackStrategy == Number_AttackStrategy_OtherPlayer)	// es müssen unterscheidliche Strategien für beide Spieler in einem Spiel gewählt werden
+		{
+			AttackStrategy = (rand() % 4) + 1;					// Zahlen von 1...4 für die Wahl der Stratgie
+		}
+		Number_AttackStrategy_OtherPlayer = -1;					// Strategien für beide Spieler wurden gewählt, die zuletzte gespeicherte Strategienummer soll für das nächste Spiel irrelevant sein
+	}
+	
+	
+	DefenseStrategy = 1;							// Verteidigungsstrategie gibt es momentan nur eine -> immer diese wird gewählt
+
+	Last3ShotsOfOpponent.resize(3, { -1, -1 });		// Noch keine Schüsse abgefeuert -> -1 für Abfragen
 
 	Lost = 0;
 

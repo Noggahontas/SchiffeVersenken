@@ -23,6 +23,7 @@
     <ClCompile Include="PlayerHistory.cpp" />
     <ClCompile Include="NGames.cpp" />
     <ClCompile Include="DefenseStrategy1.cpp" />
+    <ClCompile Include="Statistic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alternate.h" />
@@ -54,6 +55,7 @@
     <ClInclude Include="PlayerHistory.h" />
     <ClInclude Include="NGames.h" />
     <ClInclude Include="Global_Definitions_DisplayOutput.h" />
+    <ClInclude Include="Statistic.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GDE_3.rc" />

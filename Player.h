@@ -51,10 +51,10 @@ public:
 														// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
 														// Ruft ggf. Funktion Turn oder Move auf 
 
-	Player();		// Konstruktor 
-					// Stößt Kontruktor für jedes Schiff an
-					//legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL
-					// Wählt zufällig AttackStrategy und DefenseStrategy aus
+	Player(int ModeSetShips);		// Konstruktor 
+									// Stößt Kontruktor für jedes Schiff an
+									// legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL
+									// Wählt zufällig AttackStrategy und DefenseStrategy aus
 
 	
 														
