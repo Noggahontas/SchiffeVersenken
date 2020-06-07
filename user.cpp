@@ -45,18 +45,23 @@ using namespace std;
 
 void user_main()
 {
-	/*
-	int ww, hh;
-	set_windowpos(0, 0, 600, 400);
-
-	get_windowsize(&ww, &hh);
-	set_drawarea(ww, hh);				// Setzen des Zeichenbereiches
-	clrscr();
-	*/
-	//_________________________________________________________________________________________
-
 	srand(static_cast<unsigned int>(time(nullptr)));	// PZG starten; Seed = time  -- nur ein einziges mal zu Programmstart
-	
-	NGames();
-	
+
+	//Für die graphische Ausgabe
+	DisplayOutput Graphics;			// Übergabe --> Ngames()
+	int Kaestchengroesse = 20;
+	int FarbeSchiffe = BLAU;
+	Position Bildschirm;										// Position des Grafikfensters auf dem Bildschirm
+	Bildschirm.x = 500;
+	Bildschirm.y = 250;
+	int Startpunkt = 50;
+	Graphics.Grafikfenster(Bildschirm, Startpunkt, Kaestchengroesse);	// Erstellen Grafikfenster: Test für einmaligen Aufruf 
+
+	while (1)
+	{
+		NGames(Graphics);		// Übergabe der DisplayOutput Klassen-Variable Graphics
+		
+
+	}
+
 }

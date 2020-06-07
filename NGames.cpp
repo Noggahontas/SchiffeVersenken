@@ -6,11 +6,13 @@
 #include "Statistic.h"
 #include <iomanip>
 
-//void Statistic(PlayerHistory(&GameResult)[2]);			// Erstellung einer Statistik für Angriffsstrategien aus N Spielen 
-														// Übergabe der Ergebnisse der N Spiele als Referenz
 
-void NGames()
+void NGames(DisplayOutput &Graphics)
 {
+	// Führt meherere Speiler hintereinander aus, Anzahl der Spiele, die gespielt werden sollen werden vom Nutzer eingegeben
+	// Übergabe der DisplayOutput Klassen-Variable Graphics als Referenz, notwendig für die Ausgabe
+
+
 	int NumberOfGames;
 	cout << "Wie viele Spiele sollen gespielt werden?\t";
 	cin >> NumberOfGames;
@@ -40,10 +42,9 @@ void NGames()
 	//int FarbeSchiffe = BLAU;
 	//Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 
-
 	for (int i = 0; i < NumberOfGames; i++)
 	{
-		OneGame(GameHistory.at(i), ModeSetShips);			// Ein Spiel wird ausgeführt
+		OneGame(GameHistory.at(i), ModeSetShips, Graphics);			// Ein Spiel wird ausgeführt
 	}
 
 	// So Funktioniert Zuweisung, zum Testen für Funtionsparameter
@@ -80,7 +81,6 @@ void NGames()
 		cout << "Durchnittliche verfehlte Schüsse pro Spiel: " << fixed << AttackStrategy[i].MissedShots << "\n";
 		cout << "Anzahl der Spiele, in der genutzt wurde: " << AttackStrategy[i].NumberOfGamesUsed << "\n\n";
 	}
-
 
 
 }

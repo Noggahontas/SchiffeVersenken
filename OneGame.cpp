@@ -8,23 +8,14 @@
 #include "PlayerHistory.h"
 
 
-void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips)		
+void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Graphics)
 {
 	Player P[2]{ (ModeSetShips), (ModeSetShips) };			// Spieler werden erstellt -> Parameterkonstruktor
 
 	//P[0].AttackStrategy = 1;	// Zum Testen: Spieler 0 hat Spiralschießen
 	//P[1].AttackStrategy = 4;	// Spieler 1 hat Diagonalschießen
 
-	//Für die graphische Ausgabe
-	DisplayOutput Graphics;	
-	int Kaestchengroesse = 20;
-	int FarbeSchiffe = BLAU;
-	Position Bildschirm;										// Position des Grafikfensters auf dem Bildschirm
-	Bildschirm.x = 500;
-	Bildschirm.y = 250;
-	int Startpunkt = 50;
-	Graphics.Grafikfenster(Bildschirm, Startpunkt, Kaestchengroesse);	// Erstellen Grafikfenster: Test für einmaligen Aufruf 
-
+	
 
 	// Für die zeitliche Verzögerung
 	int WaitTime;
@@ -37,6 +28,8 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips)
 											// Für jeden Spieler eine Variable, notwendig für Strategien (benötogen die Infos)
 	int i = 0;								// Zum Wechseln zwischen Spieler 0 und 1 
 
+	int Kaestchengroesse = 20;
+	int FarbeSchiffe = BLAU;										// Position des Grafikfensters auf dem Bildschirm
 	Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 	Sleep(WaitTime);										// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
