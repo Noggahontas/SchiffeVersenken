@@ -10,6 +10,7 @@
 #include "DefenseStrategy1.h"
 #include <time.h>	// Für Generierung Zufallszahlen
 using namespace std;
+#include "PlayerLexan.h"
 
 
 AttackResult Player::ShotOn(Position Shot)
@@ -611,96 +612,101 @@ Player::Player(int ModeSetShips) {
 			switch (NumberTextDocShips)
 			{
 				case 1: 
-					NameDocSetShips = "SetShips1"; 
+					NameDocSetShips = "SetShips1.txt"; 
 					break;
 				case 2: 
-					NameDocSetShips = "SetShips2";
+					NameDocSetShips = "SetShips2.txt";
 					break;
 				case 3:
-					NameDocSetShips = "SetShips3";
+					NameDocSetShips = "SetShips3.txt";
 					break;
 				case 4:
-					NameDocSetShips = "SetShips4";
+					NameDocSetShips = "SetShips4.txt";
 					break;
 				default:
-					cout << "Fehler bei NumberTextDocShips";
+					cout << "Fehler bei NumberTextDocShips.txt";
 					break;
 			}
 			break;
 		case 2: 
-			NameDocSetShips = "SetShips";
+			NameDocSetShips = "SetShips.txt";
 			break;
 		default:
 			cout << "Fehler bei ModeSetShips";
 			break;
 	}
 
-	//Lexan(NameDoc);		// Aufruf lexikalische Analyse
+	lex(NameDocSetShips);		// Aufruf lexikalische Analyse
 
-	Ships[0].Length = 5;
-	Ships[0].StartPos = { 0,0 };
-	Ships[0].Orientation = Direction::Down;
-	Ships[0].Status.resize(Ships[0].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[0].Sunk = 0;							// Noch keine Treffer, noch nicht versenkt
+	//Ships[0].Length = 5;
+	//Ships[0].StartPos = { 0,0 };
+	//Ships[0].Orientation = Direction::Down;
+	//Ships[0].Status.resize(Ships[0].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[0].Sunk = 0;							// Noch keine Treffer, noch nicht versenkt
 
-	Ships[1].Length = 4;
-	Ships[1].StartPos = { 4,2 };
-	Ships[1].Orientation = Direction::Right;
-	Ships[1].Status.resize(Ships[1].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[1].Sunk = 0;
+	//Ships[1].Length = 4;
+	//Ships[1].StartPos = { 4,2 };
+	//Ships[1].Orientation = Direction::Right;
+	//Ships[1].Status.resize(Ships[1].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[1].Sunk = 0;
 
-	Ships[2].Length = 4;
-	Ships[2].StartPos = { 8,6 };
-	Ships[2].Orientation = Direction::Down;
-	Ships[2].Status.resize(Ships[2].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[2].Sunk = 0;
+	//Ships[2].Length = 4;
+	//Ships[2].StartPos = { 8,6 };
+	//Ships[2].Orientation = Direction::Down;
+	//Ships[2].Status.resize(Ships[2].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[2].Sunk = 0;
 
-	Ships[3].Length = 3;
-	Ships[3].StartPos = { 0,7 };
-	Ships[3].Orientation = Direction::Right;
-	Ships[3].Status.resize(Ships[3].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[3].Sunk = 0;
+	//Ships[3].Length = 3;
+	//Ships[3].StartPos = { 0,7 };
+	//Ships[3].Orientation = Direction::Right;
+	//Ships[3].Status.resize(Ships[3].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[3].Sunk = 0;
 
-	Ships[4].Length = 3;
-	Ships[4].StartPos = { 2,3 };
-	Ships[4].Orientation = Direction::Down;
-	Ships[4].Status.resize(Ships[4].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[4].Sunk = 0;
+	//Ships[4].Length = 3;
+	//Ships[4].StartPos = { 2,3 };
+	//Ships[4].Orientation = Direction::Down;
+	//Ships[4].Status.resize(Ships[4].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[4].Sunk = 0;
 
-	Ships[5].Length = 3;
-	Ships[5].StartPos = { 5,4 };
-	Ships[5].Orientation = Direction::Down;
-	Ships[5].Status.resize(Ships[5].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[5].Sunk = 0;
+	//Ships[5].Length = 3;
+	//Ships[5].StartPos = { 5,4 };
+	//Ships[5].Orientation = Direction::Down;
+	//Ships[5].Status.resize(Ships[5].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[5].Sunk = 0;
 
-	Ships[6].Length = 2;
-	Ships[6].StartPos = { 3,0 };
-	Ships[6].Orientation = Direction::Right;
-	Ships[6].Status.resize(Ships[6].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[6].Sunk = 0;
+	//Ships[6].Length = 2;
+	//Ships[6].StartPos = { 3,0 };
+	//Ships[6].Orientation = Direction::Right;
+	//Ships[6].Status.resize(Ships[6].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[6].Sunk = 0;
 
-	Ships[7].Length = 2;
-	Ships[7].StartPos = { 9,0 };
-	Ships[7].Orientation = Direction::Down;
-	Ships[7].Status.resize(Ships[7].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[7].Sunk = 0;
+	//Ships[7].Length = 2;
+	//Ships[7].StartPos = { 9,0 };
+	//Ships[7].Orientation = Direction::Down;
+	//Ships[7].Status.resize(Ships[7].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[7].Sunk = 0;
 
-	Ships[8].Length = 2;
-	Ships[8].StartPos = { 9,3 };
-	Ships[8].Orientation = Direction::Down;
-	Ships[8].Status.resize(Ships[8].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[8].Sunk = 0;
+	//Ships[8].Length = 2;
+	//Ships[8].StartPos = { 9,3 };
+	//Ships[8].Orientation = Direction::Down;
+	//Ships[8].Status.resize(Ships[8].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[8].Sunk = 0;
 
-	Ships[9].Length = 2;
-	Ships[9].StartPos = { 3,9 };
-	Ships[9].Orientation = Direction::Right;
-	Ships[9].Status.resize(Ships[9].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	Ships[9].Sunk = 0;
+	//Ships[9].Length = 2;
+	//Ships[9].StartPos = { 3,9 };
+	//Ships[9].Orientation = Direction::Right;
+	//Ships[9].Status.resize(Ships[9].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+	//Ships[9].Sunk = 0;
 
-	// Dies soll später zufällig passieren ODER vom Nutzer gewählt werden
+	//
 
-	// Spieler 1 und Spieler 2 dürfen NICHT DIESELBE ANGRIFFSSTRAGTEGIE haben!!!!!!!  
-	// Lösungsansatz: Mit ermitteltem Zufallswert in "main", dann ´nicht mit Standartkonstruktorm sondern einem dem der Wert übergeben wird!
+	for (int i = 0; i < 10; i++)
+	{
+		Ships[i].Status.resize(Ships[i].Length, 0);  // Größe des Vektors anpassen. Alle Elemente von Status auf 0 setzen -> noch keine Treffer
+		Ships[i].Sunk = 0;							 // Noch keine Treffer, noch nicht versenkt
+	}
+
+	// Spieler 1 und Spieler 2 dürfen NICHT DIESELBE ANGRIFFSSTRAGTEGIE haben!!!
 	static int Number_AttackStrategy_OtherPlayer = -1 ;	// Speichern der Strategiewahl (1...4) des anderen Spielers. Wenn noch keine Strategie für einen Spieler gewählt, dann = -1
 
 	AttackStrategy = (rand() % 4) + 1;						// Zahlen von 1...4
@@ -730,66 +736,36 @@ Player::Player(int ModeSetShips) {
 	SunkShipsByOpponent = 0;
 
 
-
-
-// Ohne lexikalische Analyse - so war es nicht gedacht
-// Folgende Probleme hier: Letztes Schiff wird falsch initialisiert und ein NULL Problem -> Mystery
-// Einlesen aus Textdatei, um Schiffe zu initialisieren
-
-	//FILE* File;
-	//char *Element;						//separiertes Element aus einer Zeile
-	//char* Filename = "SetShips.txt";
-	//const int Bufferlen = 20;
-	//char Buffer[Bufferlen];				// Puffer zum Einlesen einer Zeile
-
-	//int ShipNumber = 0;		// Zum Zählen der Zeilen. Zeilen werden Schiffen zugeordnet
-
-
-	//File = fopen(Filename, "r");
-
-	//if (File == NULL)
-	//{
-	//	printf("Cannot open file %s", Filename);
-	//	return;							// Springt das auch aus dem Konstruktor?
-	//}
-
-	//while (!feof(File))
-	//{
-	//	fgets(Buffer, Bufferlen, File);			// eine Zeile einlesen
-
-	//	Element = strtok(Buffer, "\n \t");		// erstes Element ohne Trennzeichen aus Buffer separieren
-
-	//	while (Element != NULL)					// Bis der Buffer ganz durchlaufen wurde			
-	//	{							//Quick and Dirt Lösung	// - 48, weil die Zhalen aus Textdatei werden als ASCII Zeichen zurückgegeben int 0 -> 48 in ASCII
-	//		Ships[ShipNumber].Length = *Element - 48 ;		// In Textdatei steht die Länge in erster Spalte
-	//		
-	//		Element = strtok(NULL, "\n \t");			//nächstes Elemente aus Buffer separieren
-	//		Ships[ShipNumber].StartPos.x = *Element - 48;	// In Textdatei steht die x-Koordinate der Startposition in der zweiten Spalte
-
-	//		Element = strtok(NULL, "\n \t");			//nächstes Elemente aus Buffer separieren
-	//		Ships[ShipNumber].StartPos.y = *Element - 48;	// In Textdatei steht y-Koordinate der Startposition in der ditten Spalte
-
-	//		Element = strtok(NULL, "\n \t");			//nächstes Elemente aus Buffer separieren
-	//		if((*Element - 48) == 0)							// In Textdatei steht in letzter Spalte die Ausrichtung
-	//		{
-	//			Ships[ShipNumber].Orientation = Direction::Right;	
-	//		}
-	//		else if ((*Element -48) == 1)
-	//		{
-	//			Ships[ShipNumber].Orientation = Direction::Down;	
-	//		}
-	//		
-	//		Element = strtok(NULL, "\n \t");
-
-	//	}
-
-	//	ShipNumber++;	// nächste Zeile wird geholt, gilt für nächstes Schiff
-	//}
-
 }
 
 
 
+
+
+
+
+void Player::lex(string FileName)
+{
+	FILE* inputFile;														// File-Ptr für die Schiffspositionsdateien
+	char inputFileName[20];													// Name der Datei als char-Array (aus Parameter)
+	strncpy_s(inputFileName, FileName.c_str(), sizeof(inputFileName));		// string in char-Array kopieren
+
+
+	fopen_s(&inputFile, inputFileName, "r");
+
+	if (inputFile == NULL) {
+		cout << "Cannot open input file" << FileName << endl;
+		return;
+	}
+	cout << "Open: " << inputFileName << endl;
+
+	CParser obj;
+	obj.InitParse(inputFile, stderr, stdout);
+	obj.yyparse(this);
+
+
+	return;
+}
 
 
 

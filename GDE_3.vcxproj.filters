@@ -57,6 +57,7 @@
     <ClInclude Include="NGames.h" />
     <ClInclude Include="Global_Definitions_DisplayOutput.h" />
     <ClInclude Include="Statistic.h" />
+    <ClInclude Include="PlayerLexan.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GDE_3.rc" />

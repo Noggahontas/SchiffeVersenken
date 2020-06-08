@@ -3,6 +3,7 @@
 #include "Global_Definitions.h"
 #include <vector>
 using namespace std;
+#include <string>
 
 
 class Player
@@ -56,7 +57,7 @@ public:
 									// legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL
 									// Wählt zufällig AttackStrategy und DefenseStrategy aus
 
-	
+	void lex(string FileName);		// Ruft lexikalische Analyse auf
 														
 };
 

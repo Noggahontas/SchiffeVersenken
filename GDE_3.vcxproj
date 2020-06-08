@@ -165,6 +165,7 @@
     <ClInclude Include="OneGame.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHistory.h" />
+    <ClInclude Include="PlayerLexan.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="Statistic.h" />
