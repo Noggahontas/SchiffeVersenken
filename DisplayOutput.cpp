@@ -10,19 +10,19 @@
 #include <iostream>
 #include <stdio.h>
 
-void DisplayOutput::Grafikfenster(Position Bildschirm,int Startpunkt, int Kaestchengroesse)
+void DisplayOutput::Grafikfenster(Position Bildschirm,int Startpunkt)
 {
 	// Hoehe und Breite des Graphikfensters
 	int breite = (10 * Startpunkt) + 500;
 	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
 
 	// Erstellen des Graphikfensters
-	set_drawarea(breite, hoehe); updatescr();
+	set_drawarea(breite, hoehe); 
 	set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
 	
 }
 
-Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengroesse, int index, int Startpunkt) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
+Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int index, int Startpunkt) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
 	int const N = 4;
 	int const delta = Kaestchengroesse;		//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
@@ -72,7 +72,7 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 	Position Ursprung;
 	Ursprung.x = 0;
 	Ursprung.y = 0;
-	getroffenesFeld(Ursprung, Ursprung, Kaestchengroesse, SCHWARZ); updatescr();// haelt Grafikfenster offen
+	getroffenesFeld(Ursprung, Ursprung, SCHWARZ); updatescr();// haelt Grafikfenster offen
 
 	// Zeichnen des Spielfeldes
 	for (i = 0; i < 11; i++)
@@ -111,7 +111,7 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int Kaestchengro
 	return Spielfeld[0];
 };
 
-Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse, int Startpunkt, int index, Player Spieler)
+Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int index, Player Spieler)
 
 {
 	// Positionierung des Textes unter dem zugehörigen Spielfeld
@@ -143,7 +143,7 @@ Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Kaestchengroesse
 	return Legende[0];
 }
 
-void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Kaestchengroesse, int Farbe)
+void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Farbe)
 {
 	int Schiffslaenge = Schiff.Length;						// Schiffslaenge des darzustellenden Schiff
 	Direction AusrichtungSchiff = Schiff.Orientation;		// Ausrichtung des Schiffs auf dem Spielfeld
@@ -174,7 +174,7 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 		x2 = x1 + Kaestchengroesse - 1;
 		y2 = y1 + (Schiffslaenge * Kaestchengroesse)-1;
 	}
-	rectangle(x1, y1, x2, y2, Farbe, Farbe); updatescr();
+	rectangle(x1, y1, x2, y2, Farbe, Farbe);
 	
 	for (int j = 0; j < Schiffslaenge; j++)
 	{
@@ -195,19 +195,18 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 			{
 				getroffenesFeld[0].x = x1;
 				getroffenesFeld[0].y = y1 + (j* Kaestchengroesse);
-
 				getroffenesFeld[1].x = x1 + Kaestchengroesse - 1;
 				getroffenesFeld[1].y = y1 + 2*Kaestchengroesse - 1;
 			}
-			rectangle(getroffenesFeld[0].x, getroffenesFeld[0].y, getroffenesFeld[1].x, getroffenesFeld[1].y, ROT, ROT); updatescr();// Zeichnen eines roten Feldes als Treffer
+			rectangle(getroffenesFeld[0].x, getroffenesFeld[0].y, getroffenesFeld[1].x, getroffenesFeld[1].y, ROT, ROT); // Zeichnen eines roten Feldes als Treffer
 			
-			getroffenesFeld[0] = {}; getroffenesFeld[1] = {};
+			//getroffenesFeld[0] = {}; getroffenesFeld[1] = {};
 		}
 
 	}
 }
 
-void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer, int Kaestchengroesse, int Farbe)
+void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer,int Farbe)
 {
 	int x1 = 0, x2 = 0, xx1 = 0, xx2 = 0, y1 = 0, y2 = 0, yy1 = 0, yy2 = 0;
 	// Skalierung des Ausgangspunktes an das Spielfeld
@@ -225,7 +224,7 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 	line(xx1, yy1, xx2, yy2, Farbe);
 }
 
-bool DisplayOutput::Beschleunigung(int Startpunkt, int Kaestchengroesse)
+bool DisplayOutput::Beschleunigung(int Startpunkt)
 {
 
 	Position Box[2] = {};
@@ -254,9 +253,10 @@ bool DisplayOutput::Beschleunigung(int Startpunkt, int Kaestchengroesse)
 	return beschleunigen;
 }
 
-void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
+bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
 {
 	int i = 0;										// Zählvariable für die for- Schleife
+	
 	// Position der linken oberen Ecke der Spielfelder, Rückgabewert beim Erstellen des Spielfeldes
 	Position Ecke_1;						// Ecke_1 : Ecke des Spielfeldes des 1. Spielers
 	Position Ecke_2;						// Ecke_2 : Ecke des Spielfeldes des 2. Spielers
@@ -275,10 +275,6 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 	int breite = (10 * Startpunkt) + 500;
 	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
 
-	// Erstellen des Graphikfensters
-	//set_windowpos(Bildschirm.x, Bildschirm.y, breite, hoehe);
-	//set_drawarea(breite, hoehe); updatescr();
-	
 	// Ueberlegung, den Zeichenbereich aufzuhalten
 	Position Ursprung;
 	Ursprung.x = 0;
@@ -291,15 +287,16 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 	rectangle(Startpunkt, Startpunkt, Startpunkt + breite, Startpunkt + hoehe, SCHWARZ, SCHWARZ); updatescr();
 
 	// Spielfeld zeichnen
-	Ecke_1 = SpielfeldErstellen(Bildschirm, Kaestchengroesse, 1, Startpunkt); updatescr(); // Spielfeld fuer Spieler 1 
-	Ecke_2 = SpielfeldErstellen(Bildschirm, Kaestchengroesse, 2, Startpunkt); updatescr(); // Spielfeld fuer Spieler 2
+	Ecke_1 = SpielfeldErstellen(Bildschirm, 1, Startpunkt); updatescr(); // Spielfeld fuer Spieler 1 
+	Ecke_2 = SpielfeldErstellen(Bildschirm, 2, Startpunkt); updatescr(); // Spielfeld fuer Spieler 2
 
 	// Ausgabe Legende
 	Position Legende2 = {}, Legende1 = {};
-	Legende1 = Legende(Ecke_1, Kaestchengroesse, Startpunkt, 1, Spieler1);
-	Legende2 = Legende(Ecke_2, Kaestchengroesse, Startpunkt, 2, Spieler2);
+	Legende1 = Legende(Ecke_1, Startpunkt, 1, Spieler1);
+	Legende2 = Legende(Ecke_2, Startpunkt, 2, Spieler2);
 
-	Beschleunigung(Startpunkt, Kaestchengroesse); updatescr();
+	// Überprüfung ob 'schneller' gedrückt wurde
+	bool schneller = Beschleunigung(Startpunkt);
 
 	// Schuesse
 	// Spieler 1
@@ -312,7 +309,7 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 	Schuss2_2 = Spieler2.Last3ShotsOfOpponent[1];
 	Schuss3_2 = Spieler2.Last3ShotsOfOpponent[2];
 
-	// Schiffe und Treffer zeichnen
+	// Schiffe und Schuesse zeichnen
 	for (i = 0; i < 10; i++)
 	{
 		// Ausgabe Spieler 1
@@ -328,41 +325,42 @@ void DisplayOutput::Ausgabe(int Kaestchengroesse, Player Spieler1, Player Spiele
 		// Spieler 1
 		if (Schiff_1_Kontrolle != 1) // gesunkene Schiffe sollen nicht gezeichnet werden
 		{
-			DarstellungSchiff(Ecke_1, Schiff_1, Kaestchengroesse, FarbeSpieler1);
+			DarstellungSchiff(Ecke_1, Schiff_1, FarbeSpieler1);
 		}
 
 		if (Schuss1_1.x >= 0 && Schuss1_1.y >= 0) // Iniialisierung soll nicht ausgegeben werden
 		{
-			getroffenesFeld(Ecke_1, Schuss1_1, Kaestchengroesse, ROT);		updatescr();	// letzter Schuss des Gegeners wird in Rot angezeigt
+			getroffenesFeld(Ecke_1, Schuss1_1, ROT);		updatescr();	// letzter Schuss des Gegeners wird in Rot angezeigt
 		}
 		if (Schuss2_1.x >= 0 && Schuss2_1.y >= 0)
 		{
-			getroffenesFeld(Ecke_1, Schuss2_1, Kaestchengroesse, WEISS);	updatescr();
+			getroffenesFeld(Ecke_1, Schuss2_1, WEISS);	updatescr();
 		}
 		if (Schuss3_1.x >= 0 && Schuss3_1.y >= 0)
 		{
-			getroffenesFeld(Ecke_1, Schuss3_1, Kaestchengroesse, WEISS);	updatescr();
+			getroffenesFeld(Ecke_1, Schuss3_1, WEISS);	updatescr();
 		}
 
 		// Spieler 2
 		if (Schiff_2_Kontrolle != 1) // gesunkene Schiffe sollen nicht gezeichnet werden
 		{
-			DarstellungSchiff(Ecke_2, Schiff_2, Kaestchengroesse, FarbeSpieler2); 	updatescr();
+			DarstellungSchiff(Ecke_2, Schiff_2, FarbeSpieler2); 	updatescr();
 		}
 
 		if (Schuss1_2.x >= 0 && Schuss1_2.y >= 0) // Iniialisierung soll nicht ausgegeben werden
 		{
-			getroffenesFeld(Ecke_2, Schuss1_2, Kaestchengroesse, ROT); 		updatescr();	// letzter Schuss des Gegeners wird in Rot angezeigt
+			getroffenesFeld(Ecke_2, Schuss1_2, ROT); 		updatescr();	// letzter Schuss des Gegeners wird in Rot angezeigt
 		}
 		if (Schuss2_2.x >= 0 && Schuss2_2.y)
 		{
-			getroffenesFeld(Ecke_2, Schuss2_2, Kaestchengroesse, WEISS);	updatescr();
+			getroffenesFeld(Ecke_2, Schuss2_2, WEISS);	updatescr();
 		}
 		if (Schuss3_2.x >= 0 && Schuss3_2.y >= 0)
 		{
-			getroffenesFeld(Ecke_2, Schuss3_2, Kaestchengroesse, WEISS);	updatescr();
+			getroffenesFeld(Ecke_2, Schuss3_2, WEISS);	updatescr();
 		}
 	}
 
-
+	// Information, ob Spiel beschleunigt werden soll
+	return schneller;
 }
