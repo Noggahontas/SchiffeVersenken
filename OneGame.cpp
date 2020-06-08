@@ -21,7 +21,6 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	int WaitTime = 2000;					// Für den langsamen Durchlauf 2s Ruhezustand zwischen Zügen. Parameter für Sleep()
 	//cout << "Wie schnell soll das Spiel ablaufen? Angabe in ms:\t";
 	//cin >> WaitTime;
-	//WaitTime = 0;
 	Position AttackShot;					// Koordinaten für Schuss beim Angreifen werden hier gespeichert
 	AttackResult Result[2] = {false,false};	// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt
