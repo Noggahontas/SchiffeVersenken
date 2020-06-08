@@ -30,7 +30,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 
 	int Kaestchengroesse = 20;
 	int FarbeSchiffe = BLAU;										// Position des Grafikfensters auf dem Bildschirm
-	Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
+	//Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 	Sleep(WaitTime);										// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
 
@@ -41,7 +41,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	
 
 	Sleep(WaitTime);										// Versetzt Programm für 2 Sekunden in einen inaktiven Modus
-	Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
+	//Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 
 	if (Result[i].Hit == 1)								// Ausgabe Resultat des Schusses von P[0]
 	{
@@ -71,7 +71,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
 			P[i].DefensiveAction();										// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
 			Sleep(WaitTime);											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
-			Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
+			//Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 		}
 		else
 		{
@@ -88,7 +88,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 		Result[i] = P[Alternate(i)].ShotOn(AttackShot);					// Auf ausgewählte Koordinaten wird geschossen (auf Spielfeld von zweitem Spieler )
 
 		Sleep(WaitTime);												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
-		Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
+		//Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 
 		if (Result[i].Hit == 1)
 		{
