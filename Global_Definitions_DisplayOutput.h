@@ -1,0 +1,8 @@
+#pragma once
+
+#define MBTN_LEFT	MK_LBUTTON
+#define MBTN_MIDDLE	MK_MBUTTON
+#define MBTN_RIGHT	MK_RBUTTON
+#define MBTN_SHIFT	MK_SHIFT
+#define MBTN_CONTROL	MK_CONTROL
+
