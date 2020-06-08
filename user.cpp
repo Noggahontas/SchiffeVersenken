@@ -49,19 +49,19 @@ void user_main()
 
 	//Für die graphische Ausgabe
 	DisplayOutput Graphics;			// Übergabe --> Ngames()
-	int Kaestchengroesse = 20;
+	Graphics.Kaestchengroesse = 20;
 	int FarbeSchiffe = BLAU;
 	Position Bildschirm;										// Position des Grafikfensters auf dem Bildschirm
 	Bildschirm.x = 500;
 	Bildschirm.y = 250;
 	int Startpunkt = 50;
-	Graphics.Grafikfenster(Bildschirm, Startpunkt, Kaestchengroesse);	// Erstellen Grafikfenster: Test für einmaligen Aufruf 
+	Graphics.Grafikfenster(Bildschirm, Startpunkt);	// Erstellen Grafikfenster: Test für einmaligen Aufruf 
 
 	while (1)
 	{
 		NGames(Graphics);		// Übergabe der DisplayOutput Klassen-Variable Graphics
 		
-
+		clrscr();				// clear screen
 	}
 
 }

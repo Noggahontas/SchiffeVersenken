@@ -698,7 +698,6 @@ Player::Player(int ModeSetShips) {
 	//Ships[9].Status.resize(Ships[9].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
 	//Ships[9].Sunk = 0;
 
-	//
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -707,9 +706,9 @@ Player::Player(int ModeSetShips) {
 	}
 
 	// Spieler 1 und Spieler 2 dürfen NICHT DIESELBE ANGRIFFSSTRAGTEGIE haben!!!
-	static int Number_AttackStrategy_OtherPlayer = -1 ;	// Speichern der Strategiewahl (1...4) des anderen Spielers. Wenn noch keine Strategie für einen Spieler gewählt, dann = -1
+	static int Number_AttackStrategy_OtherPlayer = -1 ;			// Speichern der Strategiewahl (1...4) des anderen Spielers. Wenn noch keine Strategie für einen Spieler gewählt, dann = -1
 
-	AttackStrategy = (rand() % 4) + 1;						// Zahlen von 1...4
+	AttackStrategy = (rand() % 4) + 1;							// Zahlen von 1...4
 
 	if (Number_AttackStrategy_OtherPlayer == -1)				// erster Spieler für ein Spiel wird erstellt, es wurde noch keine Strategie für einen Spieler in diesem Spiel gewählt
 	{
@@ -757,7 +756,7 @@ void Player::lex(string FileName)
 		cout << "Cannot open input file" << FileName << endl;
 		return;
 	}
-	cout << "Open: " << inputFileName << endl;
+	//cout << "Open: " << inputFileName << endl;
 
 	CParser obj;
 	obj.InitParse(inputFile, stderr, stdout);

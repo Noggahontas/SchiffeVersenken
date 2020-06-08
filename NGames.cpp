@@ -40,7 +40,7 @@ void NGames(DisplayOutput &Graphics)
 	//DisplayOutput Graphics;
 	//int Kaestchengroesse = 20;
 	//int FarbeSchiffe = BLAU;
-	//Graphics.Ausgabe(Kaestchengroesse, P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
+	//Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
 
 	for (int i = 0; i < NumberOfGames; i++)
 	{
