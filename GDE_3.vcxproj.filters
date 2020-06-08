@@ -23,6 +23,7 @@
     <ClCompile Include="PlayerHistory.cpp" />
     <ClCompile Include="NGames.cpp" />
     <ClCompile Include="DefenseStrategy1.cpp" />
+    <ClCompile Include="PlayerLexan.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alternate.h" />

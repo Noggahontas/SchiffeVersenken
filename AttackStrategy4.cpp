@@ -72,7 +72,7 @@ Position ShootWest(Position* previous_Position)
 Position rndCoordinates()
 {
 	Position new_pos = {};
-	cout << "Random: ";
+	//cout << "Random: ";
 	new_pos.x = (rand() % 10);
 	new_pos.y = (rand() % 10);
 	return new_pos;
@@ -99,7 +99,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 	{
 		if (*sunk == true)
 		{
-			cout << "Versenkt." << endl;
+			//cout << "Versenkt." << endl;
 			alreadyShot = false;
 			Direction = AttackDirection::N;
 			DirectionChoice = false;
@@ -116,7 +116,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 	{
 		Direction = AttackDirection::N;
 		DirectionChoice = true;
-		cout << "Richtung \"Norden\" aktivieren. " << endl;
+		//cout << "Richtung \"Norden\" aktivieren. " << endl;
 	}
 
 
@@ -133,7 +133,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 			}
 			else if ((first_hit.y + 1) <= 9)		// Kollision mit südlichem Rand prüfen weil Richtungswechsel nach Süden
 			{
-				cout << "Richtung von Norden nach Sueden aendern." << endl;
+				//cout << "Richtung von Norden nach Sueden aendern." << endl;
 				Direction = AttackDirection::S;
 				Pos = ShootSouth(&first_hit);
 				return Pos;
@@ -156,7 +156,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 			}
 			else if (first_hit.x + 1 <= 9)		// Kollision mit östlichem Rand prüfen weil Richtungswechsel nach Osten
 			{
-				cout << "Richtung von Sueden nach Osten aendern." << endl;
+				//cout << "Richtung von Sueden nach Osten aendern." << endl;
 				Direction = AttackDirection::E;
 				Pos = ShootEast(&first_hit);
 				return Pos;
@@ -179,7 +179,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 			}
 			else if (first_hit.x - 1 >= 0)		// Kollision mit westlichem Rand prüfen weil Richtungswechsel nach Westen
 			{
-				cout << "Richtung von Osten nach Westen aendern." << endl;
+				//cout << "Richtung von Osten nach Westen aendern." << endl;
 				Direction = AttackDirection::W;
 				Pos = ShootWest(&first_hit);
 				return Pos;
@@ -206,7 +206,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 			}
 			else
 			{
-				cout << "Richtung von Westen nach Neustart aendern." << endl;
+				//cout << "Richtung von Westen nach Neustart aendern." << endl;
 				alreadyShot = false;						// nachdem West-Richtung fertig abgearbeitet, wieder alles zurücksetzen -> neue rnd Koords
 				Direction = AttackDirection::N;
 				DirectionChoice = false;
@@ -246,7 +246,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 			}
 			else if (Pos.y == 0)					// nördlicher Rand schon da -> Richtungswechsel Süden
 			{
-				cout << "1. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
+				//cout << "1. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
 				Pos = ShootSouth(&first_hit);
 				Direction = AttackDirection::S;
 				return Pos;
@@ -275,7 +275,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 			}
 			else if (Pos.y == 9)					// südlicher Rand schon da -> Richtungswechsel ... 
 			{
-				cout << "2. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
+				//cout << "2. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
 				if (Pos.x < 9)						// ... wenn noch nicht am östlichen Rand angekommen, nach Osten
 				{
 					Pos = ShootEast(&first_hit);
@@ -313,7 +313,7 @@ Position AttackStrategy4(bool *LastShotHit, bool *sunk)
 			}
 			else if (Pos.x == 9)					// östlicher Rand schon da -> Richtungswechsel Westen
 			{
-				cout << "3. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
+				//cout << "3. Vergessen was hier her kommt. Ääh...Selbstzerstörung aktiviert..." << endl;
 				Pos = ShootWest(&first_hit);
 				Direction = AttackDirection::W;
 				return Pos;
