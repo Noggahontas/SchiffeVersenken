@@ -278,7 +278,8 @@ void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
 
 	// Schwärzen der Fläche, damit alte Treffer nicht merh angezeigt werden
-	rectangle(Startpunkt, Startpunkt, Startpunkt + breite, Startpunkt + hoehe, SCHWARZ, SCHWARZ); updatescr();
+	//rectangle(Startpunkt, Startpunkt, Startpunkt + breite, Startpunkt + hoehe, SCHWARZ, SCHWARZ); updatescr();
+	clrscr(); // räumt auf;
 
 	// Spielfeld zeichnen
 	Ecke_1 = SpielfeldErstellen(Bildschirm, 1, Startpunkt); updatescr(); // Spielfeld fuer Spieler 1 
