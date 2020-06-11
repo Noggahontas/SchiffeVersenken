@@ -200,9 +200,8 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 			}
 			rectangle(getroffenesFeld[0].x, getroffenesFeld[0].y, getroffenesFeld[1].x, getroffenesFeld[1].y, ROT, ROT); // Zeichnen eines roten Feldes als Treffer
 			
-			//getroffenesFeld[0] = {}; getroffenesFeld[1] = {};
-		}
-
+			getroffenesFeld[0] = {}; getroffenesFeld[1] = {}; // reeeeesett
+		} 
 	}
 }
 
@@ -226,7 +225,7 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 
 bool DisplayOutput::Beschleunigung(int Startpunkt)
 {
-
+	// Positionierung des Buttons "schneller"
 	Position Box[2] = {};
 	Box[0].x = 2*Startpunkt + 25 *Kaestchengroesse; // in Relation zu der Spielfeldanordnung
 	Box[0].y = Startpunkt;
@@ -238,22 +237,25 @@ bool DisplayOutput::Beschleunigung(int Startpunkt)
 
 	textbox(Box[0].x, Box[0].y, Box[1].x, Box[1].y, textgroesse, WEISS, WEISS, SCHWARZ, CENTER_ALIGN, "schneller");
 
-	bool beschleunigen = false; // Annahme: Mouse nicht gedrückt
+	int x, y;
+	int klick = mouseclick(&x, &y); 
+	bool beschleunigen;
 
-	int klick = checkmouse();
-	if (klick == 0)
-	{
-		beschleunigen = false;
-	}
-	else if (klick == 1)
+	// Mouseclick muss im Bereich des gezeichneten Kastchens erfolgt sein
+	// Mouseclick auf beliebigen Bereich des Spiefeldes ungültig
+	if ((klick == 1) && (x > Box[0].x) && (x < Box[1].x) && (y > Box[0].y) && (y < Box[1].y))
 	{
 		beschleunigen = true;
+	}
+	else
+	{
+		beschleunigen = false;
 	}
 
 	return beschleunigen;
 }
 
-bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
+void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
 {
 	int i = 0;										// Zählvariable für die for- Schleife
 	
@@ -275,14 +277,6 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	int breite = (10 * Startpunkt) + 500;
 	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
 
-	// Ueberlegung, den Zeichenbereich aufzuhalten
-	Position Ursprung;
-	Ursprung.x = 0;
-	Ursprung.y = 0;
-	Position Platzhalter;
-	Platzhalter.x = Ursprung.x + Kaestchengroesse;
-	Platzhalter.y = Ursprung.y + Kaestchengroesse;
-	
 	// Schwärzen der Fläche, damit alte Treffer nicht merh angezeigt werden
 	rectangle(Startpunkt, Startpunkt, Startpunkt + breite, Startpunkt + hoehe, SCHWARZ, SCHWARZ); updatescr();
 
@@ -294,9 +288,6 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	Position Legende2 = {}, Legende1 = {};
 	Legende1 = Legende(Ecke_1, Startpunkt, 1, Spieler1);
 	Legende2 = Legende(Ecke_2, Startpunkt, 2, Spieler2);
-
-	// Überprüfung ob 'schneller' gedrückt wurde
-	bool schneller = Beschleunigung(Startpunkt);
 
 	// Schuesse
 	// Spieler 1
@@ -360,7 +351,4 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 			getroffenesFeld(Ecke_2, Schuss3_2, WEISS);	updatescr();
 		}
 	}
-
-	// Information, ob Spiel beschleunigt werden soll
-	return schneller;
 }
