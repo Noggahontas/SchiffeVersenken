@@ -104,7 +104,7 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int index, int S
 	return Spielfeld[0];
 };
 
-Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int index, Player Spieler)
+Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int index, Player Spieler1, Player Spieler2)
 
 {
 	// Positionierung des Textes unter dem zugehörigen Spielfeld
@@ -115,21 +115,37 @@ Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int 
 	Legende[1].x = Legende[0].x + Kaestchengroesse * 10;
 	Legende[1].y = Legende[0].y + Kaestchengroesse * 5;
 
+	int Angriffsstrategie = 0, Verteidigungsstrategie = 0, verfehlteSchuesse = 0,getroffeneSchuesse = 0,versenkteSchiffe = 0;
 
-	// Informationen zur Angriffs- und Verteidigungsstrategie des Spielers
-	int Angriffsstrategie = Spieler.AttackStrategy;
-	int Verteidigungsstrategie = Spieler.DefenseStrategy;
+	if (index == 1)
+	{
+		// Informationen zur Angriffs- und Verteidigungsstrategie des Spielers
+		Angriffsstrategie = Spieler1.AttackStrategy;
+		Verteidigungsstrategie = Spieler1.DefenseStrategy;
 
-	// Platzhalter
-	int verfehlteSchuesse = Spieler.MissedShotsOfOpponent;
-	int getroffeneSchuesse = Spieler.HitShotsOfOpponent;
-	int versenkteSchiffe = Spieler.SunkShipsByOpponent;
+		// die Information über Treffe /Schüsse/ gesunkene Schiffe steht beim Gegner
+		verfehlteSchuesse = Spieler2.MissedShotsOfOpponent;
+		getroffeneSchuesse = Spieler2.HitShotsOfOpponent;
+		versenkteSchiffe = Spieler2.SunkShipsByOpponent;
+	}
+	else if( index == 2)
+	{
+		// Informationen zur Angriffs- und Verteidigungsstrategie des Spielers
+		Angriffsstrategie = Spieler2.AttackStrategy;
+		Verteidigungsstrategie = Spieler2.DefenseStrategy;
+
+		// die Information über Treffe /Schüsse/ gesunkene Schiffe steht beim Gegner
+		verfehlteSchuesse = Spieler1.MissedShotsOfOpponent;
+		getroffeneSchuesse = Spieler1.HitShotsOfOpponent;
+		versenkteSchiffe = Spieler1.SunkShipsByOpponent;
+	}
+
 
 	// Informationstext
 	char InfoSpieler[500];
 		snprintf(InfoSpieler, sizeof(InfoSpieler), 
 			"Spieler Nr. % d \n Verteidigungsstrategie Nr. %d \n Angriffsstartegie Nr. %d \n verfehlte Schüsse : %d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
-			,index, Angriffsstrategie, Verteidigungsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
+			,index,  Verteidigungsstrategie, Angriffsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
 	textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN,InfoSpieler);
 
@@ -182,15 +198,15 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 			{
 				getroffenesFeld[0].x = x1 + (j * Kaestchengroesse);	// in x - Richtung, falls Schiff waagrecht
 				getroffenesFeld[0].y = y1;
-				getroffenesFeld[1].x = x1 + Kaestchengroesse - 1;
-				getroffenesFeld[1].y = y1 + Kaestchengroesse - 1;
+				getroffenesFeld[1].x = getroffenesFeld[0].x + Kaestchengroesse - 1;
+				getroffenesFeld[1].y = getroffenesFeld[0].y + Kaestchengroesse - 1;
 			}
 			else if (AusrichtungSchiff == Direction::Down) // Schiffsausrichtung auf dem Spielfeld: senkrecht
 			{
 				getroffenesFeld[0].x = x1;
 				getroffenesFeld[0].y = y1 + (j * Kaestchengroesse);
-				getroffenesFeld[1].x = x1 + Kaestchengroesse - 1;
-				getroffenesFeld[1].y = y1 + Kaestchengroesse - 1;
+				getroffenesFeld[1].x = getroffenesFeld[0].x + Kaestchengroesse - 1;
+				getroffenesFeld[1].y = getroffenesFeld[0].y + Kaestchengroesse - 1;
 			}
 			rectangle(getroffenesFeld[0].x, getroffenesFeld[0].y, getroffenesFeld[1].x, getroffenesFeld[1].y, ROT, ROT); // Zeichnen eines roten Feldes als Treffer
 		} 
@@ -223,12 +239,12 @@ bool DisplayOutput::Beschleunigung(int Startpunkt)
 	Box[0].x = 2*Startpunkt + 25 *Kaestchengroesse; // in Relation zu der Spielfeldanordnung
 	Box[0].y = Startpunkt;
 
-	Box[1].x = Box[0].x + 4*Kaestchengroesse;
-	Box[1].y = Box[0].y + Kaestchengroesse;
+	Box[1].x = Box[0].x + 10*Kaestchengroesse;
+	Box[1].y = Box[0].y + Kaestchengroesse +2;
 
 	int textgroesse = Kaestchengroesse;
 
-	textbox(Box[0].x, Box[0].y, Box[1].x, Box[1].y, textgroesse, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, "schneller"); updatescr();
+	textbox(Box[0].x, Box[0].y, Box[1].x, Box[1].y, textgroesse, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, "für Beschleunigung drücken"); updatescr();
 
 	int x = 0, y = 0;
 	int klick = checkmouse(); 
@@ -273,13 +289,13 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	clrscr(); 
 
 	// Spielfeld zeichnen
-	Ecke_1 = SpielfeldErstellen(Bildschirm, 1, Startpunkt); updatescr(); // Spielfeld fuer Spieler 1 
-	Ecke_2 = SpielfeldErstellen(Bildschirm, 2, Startpunkt); updatescr(); // Spielfeld fuer Spieler 2
+	Ecke_1 = SpielfeldErstellen(Bildschirm, 1, Startpunkt);// Spielfeld fuer Spieler 1 
+	Ecke_2 = SpielfeldErstellen(Bildschirm, 2, Startpunkt); // Spielfeld fuer Spieler 2
 
 	// Ausgabe Legende
 	Position Legende2 = {}, Legende1 = {};
-	Legende1 = Legende(Ecke_1, Startpunkt, 1, Spieler1);
-	Legende2 = Legende(Ecke_2, Startpunkt, 2, Spieler2);
+	Legende1 = Legende(Ecke_1, Startpunkt, 1, Spieler1, Spieler2);
+	Legende2 = Legende(Ecke_2, Startpunkt, 2, Spieler1, Spieler2);
 
 	// Schuesse
 	// Spieler 1
@@ -311,37 +327,41 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 			DarstellungSchiff(Ecke_1, Schiff_1, FarbeSpieler1);
 		}
 
-		if (Schuss1_1.x >= 0 && Schuss1_1.y >= 0) // Iniialisierung soll nicht ausgegeben werden
-		{
-			getroffenesFeld(Ecke_1, Schuss1_1, ROT);		updatescr();	// letzter Schuss des Gegeners wird in Rot angezeigt
-		}
-		if (Schuss2_1.x >= 0 && Schuss2_1.y >= 0)
-		{
-			getroffenesFeld(Ecke_1, Schuss2_1, SCHWARZ);	updatescr();
-		}
-		if (Schuss3_1.x >= 0 && Schuss3_1.y >= 0)
-		{
-			getroffenesFeld(Ecke_1, Schuss3_1, SCHWARZ);	updatescr();
-		}
+		// Treffer Spieler 1
 
 		// Spieler 2
 		if (Schiff_2_Kontrolle != 1) // gesunkene Schiffe sollen nicht gezeichnet werden
 		{
-			DarstellungSchiff(Ecke_2, Schiff_2, FarbeSpieler2); 	updatescr();
+			DarstellungSchiff(Ecke_2, Schiff_2, FarbeSpieler2); 	
 		}
+		
+		// Treffer Spieler 2
+	}
 
-		if (Schuss1_2.x >= 0 && Schuss1_2.y >= 0) // Iniialisierung soll nicht ausgegeben werden
-		{
-			getroffenesFeld(Ecke_2, Schuss1_2, ROT); 		updatescr();	// letzter Schuss des Gegeners wird in Rot angezeigt
-		}
-		if (Schuss2_2.x >= 0 && Schuss2_2.y)
-		{
-			getroffenesFeld(Ecke_2, Schuss2_2, SCHWARZ);	updatescr();
-		}
-		if (Schuss3_2.x >= 0 && Schuss3_2.y >= 0)
-		{
-			getroffenesFeld(Ecke_2, Schuss3_2, SCHWARZ);	updatescr();
-		}
+	if (Schuss1_1.x >= 0 && Schuss1_1.y >= 0) // Iniialisierung soll nicht ausgegeben werden
+	{
+		getroffenesFeld(Ecke_1, Schuss1_1, ROT);			// letzter Schuss des Gegeners wird in Rot angezeigt
+	}
+	if (Schuss2_1.x >= 0 && Schuss2_1.y >= 0)
+	{
+		getroffenesFeld(Ecke_1, Schuss2_1, SCHWARZ);
+	}
+	if (Schuss3_1.x >= 0 && Schuss3_1.y >= 0)
+	{
+		getroffenesFeld(Ecke_1, Schuss3_1, SCHWARZ);
+	}
+
+	if (Schuss1_2.x >= 0 && Schuss1_2.y >= 0) // Iniialisierung soll nicht ausgegeben werden
+	{
+		getroffenesFeld(Ecke_2, Schuss1_2, ROT); 			// letzter Schuss des Gegeners wird in Rot angezeigt
+	}
+	if (Schuss2_2.x >= 0 && Schuss2_2.y)
+	{
+		getroffenesFeld(Ecke_2, Schuss2_2, SCHWARZ);
+	}
+	if (Schuss3_2.x >= 0 && Schuss3_2.y >= 0)
+	{
+		getroffenesFeld(Ecke_2, Schuss3_2, SCHWARZ);
 	}
 
 	bool schneller = Beschleunigung(Startpunkt); // soll später nicht mehr in der Ausgabe aufgerufen werden

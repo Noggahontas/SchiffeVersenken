@@ -51,7 +51,7 @@ private:
 	//	Position EckpunktSpielfeld : linke obere Ecke des Spielfeldes
 	//  int index : Nummer des Spielers, Spieler 1 = 1 und Spieler2 = 2
 	//  Player Spieler: Objekt der Klasse Player, beinhaltet Informationen zu den Schiffen etc. des Spielers
-	Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int index, Player Spieler);
+	Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int index, Player Spieler1, Player Spieler2);
 
 	//  Funktion zeichnet ein Schiff in das Spielfeld (muss überarbeitet werden / im Bezug auf Klasse ship)
 	//	
