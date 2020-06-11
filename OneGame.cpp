@@ -12,11 +12,6 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 {
 	Player P[2]{ (ModeSetShips), (ModeSetShips) };			// Spieler werden erstellt -> Parameterkonstruktor
 
-	//P[0].AttackStrategy = 1;	// Zum Testen: Spieler 0 hat Spiralschießen
-	//P[1].AttackStrategy = 4;	// Spieler 1 hat Diagonalschießen
-
-	
-
 	// Für die zeitliche Verzögerung
 	int WaitTime = 2000;					// Für den langsamen Durchlauf 2s Ruhezustand zwischen Zügen. Parameter für Sleep()
 	//cout << "Wie schnell soll das Spiel ablaufen? Angabe in ms:\t";
@@ -41,7 +36,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	
 
 	if (!Pressed) { Sleep(WaitTime); }									// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
-	Pressed = Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);			// Ausgabe Graphics
+	Pressed = Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
 
 	if (Result[i].Hit == 1)												// Ausgabe Resultat des Schusses von P[0]
 	{
@@ -64,10 +59,10 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 
 		i = Alternate(i);			// ändert i: 1->0 , 0->1
 
-		// Prüfen ob Bwegen/Drehen noch erlaubt ist. Wenn bei jedem Spieler nur noch jewils 2 Schiffe übrog sind, darf nicht mehr bewegt weredn.
+		// Prüfen ob Bwegen/Drehen noch erlaubt ist. Wenn bei jedem Spieler nur noch jewils 2 Schiffe übrig sind, darf nicht mehr bewegt weredn.
 		if( (P[i].SunkShipsByOpponent < 8) && (P[Alternate(i)].SunkShipsByOpponent < 8) )
 		{
-			// Verteidigung von Spieler i
+			// Bewegen noch erlaubt -> Verteidigung von Spieler i
 			cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
 			P[i].DefensiveAction();										// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
 			if (!Pressed) { Sleep(WaitTime); }
@@ -75,10 +70,11 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 		}
 		else
 		{
+			// Bewegen nich mehr erlaubt
 			cout << "Es darf nicht mehr bewegt/gedreht werden, da jewils nur noch zwei Schiffe übrig sind \n";
 		}
 
-		if (!Pressed) { Sleep(WaitTime); }												// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+		if (!Pressed) { Sleep(WaitTime); }								// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 
 
 		// Angriff von Spieler i
