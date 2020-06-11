@@ -21,22 +21,27 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt
 											// Für jeden Spieler eine Variable, notwendig für Strategien (benötogen die Infos)
 	int i = 0;								// Zum Wechseln zwischen Spieler 0 und 1 
-	bool Pressed;
+	static bool Pressed = true;
 	int Kaestchengroesse = 20;
 	int FarbeSchiffe = BLAU;											// Position des Grafikfensters auf dem Bildschirm
-
-	Pressed = Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe); // Ausgabe Graphics, Rückgabe "Schneller"- Knopf
-	if (!Pressed) { Sleep(WaitTime); }									// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
-
+	
+	if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+	{
+		Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+		Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
+	}
 
 	//Angriff von erstem Spieler
 	cout << "\nSpieler " << i+1 << " an der Reihe: Angriff \n";
 	AttackShot = P[i].FindAttackShot(Result[i]);	// Durch ausgewählte Strategie des Spielers P[0] werden Koordinaten ausgewählt, auf die geschossen werden soll
-	Result[i] = P[Alternate(i)].ShotOn(AttackShot);			// Auf ausgewählte Koordinaten wird geschossen: Schuss auf Spielfeld von zweitem Spieler P[1] 
+	Result[i] = P[Alternate(i)].ShotOn(AttackShot);	// Auf ausgewählte Koordinaten wird geschossen: Schuss auf Spielfeld von zweitem Spieler P[1] 
 	
-
-	if (!Pressed) { Sleep(WaitTime); }									// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
-	Pressed = Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
+	//Pressed =
+	if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+	{ 
+		Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+		Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
+	}
 
 	if (Result[i].Hit == 1)												// Ausgabe Resultat des Schusses von P[0]
 	{
@@ -65,8 +70,12 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			// Bewegen noch erlaubt -> Verteidigung von Spieler i
 			cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
 			P[i].DefensiveAction();										// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
-			if (!Pressed) { Sleep(WaitTime); }
-			Pressed = Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);// Ausgabe Graphics
+			//Pressed =
+			if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+			{
+				Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+				Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
+			}
 		}
 		else
 		{
@@ -74,7 +83,10 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			cout << "Es darf nicht mehr bewegt/gedreht werden, da jewils nur noch zwei Schiffe übrig sind \n";
 		}
 
-		if (!Pressed) { Sleep(WaitTime); }								// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+		if (!Pressed) 
+		{ 
+			Sleep(WaitTime);											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+		}								
 
 
 		// Angriff von Spieler i
@@ -83,8 +95,12 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 																		// Übergabe von Ergebnissen (Treffer?, Versenkt?) des letzten eigenen Schusses
 		Result[i] = P[Alternate(i)].ShotOn(AttackShot);					// Auf ausgewählte Koordinaten wird geschossen (auf Spielfeld von zweitem Spieler )
 
-		if (!Pressed) { Sleep(WaitTime); }								// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
-		Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);		// Ausgabe Graphics
+		//Pressed =
+		if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+		{
+			Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+			Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
+		}
 
 		if (Result[i].Hit == 1)
 		{
@@ -99,8 +115,11 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			cout << "Kein Treffer \n";
 		}
 
-		if (!Pressed) { Sleep(WaitTime); }								// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
-
+		//Pressed =
+		if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+		{
+			Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+		}
 	}
 
 	cout << "\n";
@@ -127,7 +146,11 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	cout << "Getroffene Schüsse: " << P[0].HitShotsOfOpponent << "\n Verfehlte Schüsse: " << P[0].MissedShotsOfOpponent << "\n Versenkte Schiffe: " << P[0].SunkShipsByOpponent << "\n";
 	cout << "___________________________________________________________\n";
 
-	if (!Pressed) { Sleep(WaitTime); }
+	//Pressed =
+	if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+	{
+		Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
+	}
 
 	//Abspeichern der Spielergebnisse für jeden Spieler in übergebenes Array (Teil des Vektors GameHistory in Funktion NGames())
 	GameResult[0].Save(P[0], P[1]);				

@@ -32,7 +32,7 @@ Statistic::Statistic()
 	HitShots = 0;
 	SunkShips = 0;
 	Lost = 0;
-	ProbabilityOfWinning = 0;				// Wahrscheinlich keit zu gewinnen in Prozent
+	ProbabilityOfWinning = 0;			// Wahrscheinlichkeit zu gewinnen in Prozent
 	NumberOfGamesUsed = 0;				// Wie oft die Strategie zum Einsatz kam 
 
 }

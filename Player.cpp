@@ -605,6 +605,7 @@ Player::Player(int ModeSetShips) {
 
 	string NameDocSetShips;		// Name der Datei, die zum Setzen der Schiffe bei Spielbeginn genutzt werden soll
 	int NumberTextDocShips;		// Nummer der Datei zum Schiffe Setzen 1...4
+
 	// Datei zum Setzen der Schiffe je nach gewähltem Modus auswählen
 	switch (ModeSetShips)
 	{
