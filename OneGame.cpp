@@ -30,7 +30,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 
 
 	//Angriff von erstem Spieler
-	cout << "Spieler " << i+1 << " an der Reihe: Angriff \n";
+	cout << "\nSpieler " << i+1 << " an der Reihe: Angriff \n";
 	AttackShot = P[i].FindAttackShot(Result[i]);	// Durch ausgewählte Strategie des Spielers P[0] werden Koordinaten ausgewählt, auf die geschossen werden soll
 	Result[i] = P[Alternate(i)].ShotOn(AttackShot);			// Auf ausgewählte Koordinaten wird geschossen: Schuss auf Spielfeld von zweitem Spieler P[1] 
 	

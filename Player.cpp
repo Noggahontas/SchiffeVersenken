@@ -605,6 +605,7 @@ Player::Player(int ModeSetShips) {
 
 	string NameDocSetShips;		// Name der Datei, die zum Setzen der Schiffe bei Spielbeginn genutzt werden soll
 	int NumberTextDocShips;		// Nummer der Datei zum Schiffe Setzen 1...4
+	// Datei zum Setzen der Schiffe je nach gewähltem Modus auswählen
 	switch (ModeSetShips)
 	{
 		case 1: 
@@ -612,16 +613,16 @@ Player::Player(int ModeSetShips) {
 			switch (NumberTextDocShips)
 			{
 				case 1: 
-					NameDocSetShips = "SetShips1.txt"; 
+					NameDocSetShips = "SetShips.txt"; 
 					break;
 				case 2: 
-					NameDocSetShips = "SetShips2.txt";
+					NameDocSetShips = "SetShips.txt";	// hier müssen noch die Dateinamen angepasst werden
 					break;
 				case 3:
-					NameDocSetShips = "SetShips3.txt";
+					NameDocSetShips = "SetShips.txt";
 					break;
 				case 4:
-					NameDocSetShips = "SetShips4.txt";
+					NameDocSetShips = "SetShips.txt";
 					break;
 				default:
 					cout << "Fehler bei NumberTextDocShips.txt";

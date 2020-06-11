@@ -21,16 +21,16 @@ void NGames(DisplayOutput &Graphics)
 	int ModeSetShips;										// Nutzereingabe: Wie sollen Schiffe bei Spielbeginn gesetzt werden
 
 	//Auswahl Nutzer zum Setzen der Schiffe bei Spielbeginn
-	cout << "Möglichkeit 1:\t Datei zum Setzen der Schiffe wird bei jedem Spielbeginn\n";
-	cout << "\t\t und für jeden Spieler zufällig gewählt -> Eingabe 1 \n";
-	cout << "Möglichkeit 2: \tFür jedes Spiel und beide Spieler immer eine bestimmte \n";
+	cout << "Moeglichkeit 1:\t Datei zum Setzen der Schiffe wird bei jedem Spielbeginn\n";
+	cout << "\t\t und für jeden Spieler zufaellig gewaehlt -> Eingabe 1 \n";
+	cout << "Moeglichkeit 2: \tFuer jedes Spiel und beide Spieler immer eine bestimmte \n";
 	cout << "\t\tDatei (\"SetShipsFix.txt\") für die Startpositionen der Schiffe nutzen -> Eingabe 2 \n";
-	cout << "Zur Auswahl Nummer der Möglichkeit eingeben (1, 2):\t \n";
+	cout << "Zur Auswahl Nummer der Moeglichkeit eingeben (1, 2):\t ";
 	cin >> ModeSetShips;
 	while ((ModeSetShips != 1) && (ModeSetShips != 2))				// Nur 1 oder 2 als Eingabe erlaubt, Möglichkeit zur Korrektur
 	{
-		cout << "\nEingabe ungültig! Nur \"1\" oder \"2\" möglich\n";
-		cout << "Zur Auswahl Nummer der Möglichkeit eingeben (1, 2):\t \n";
+		cout << "\nEingabe ungueltig! Nur \"1\" oder \"2\" moeglich\n";
+		cout << "Zur Auswahl Nummer der Moeglichkeit eingeben (1, 2):\t \n";
 		cin >> ModeSetShips;
 	}
 	
@@ -77,8 +77,8 @@ void NGames(DisplayOutput &Graphics)
 		cout << "Angriffsstrategie " << i + 1 << ":\n";
 		cout << "Gewinnwahrscheinlichkeit: " << setprecision(2) << fixed << AttackStrategy[i].ProbabilityOfWinning << " %\n";
 		cout << "Durchnittliche versenkte Schiffe pro Spiel: " << fixed << AttackStrategy[i].SunkShips << "\n";
-		cout << "Durchnittliche getroffene Schüsse pro Spiel: " << fixed << AttackStrategy[i].HitShots << "\n";
-		cout << "Durchnittliche verfehlte Schüsse pro Spiel: " << fixed << AttackStrategy[i].MissedShots << "\n";
+		cout << "Durchnittliche getroffene Schuesse pro Spiel: " << fixed << AttackStrategy[i].HitShots << "\n";
+		cout << "Durchnittliche verfehlte Schuesse pro Spiel: " << fixed << AttackStrategy[i].MissedShots << "\n";
 		cout << "Anzahl der Spiele, in der genutzt wurde: " << AttackStrategy[i].NumberOfGamesUsed << "\n\n";
 	}
 
