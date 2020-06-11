@@ -18,7 +18,7 @@ public:
 	// 
 	// Player Spieler: Objekt der Klasse Player, beinhaltet Informationen zu den Schiffen etc. des Spielers
 	// int Farbe : Farbe der Schiffe des Spielers
-	void Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2);
+	bool Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2);
 
 	// einmaliger Aufruf zum Positionieren eines Grafikfensters
 	//
