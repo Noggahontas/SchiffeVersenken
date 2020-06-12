@@ -8,7 +8,7 @@
 #include <iostream>
 #include <stdio.h>
 
-void DisplayOutput::Grafikfenster(Position Bildschirm,int Startpunkt)
+void DisplayOutput::Grafikfenster()
 {
 	// Hoehe und Breite des Graphikfensters
 	int breite = (10 * Startpunkt) + 500;
@@ -20,11 +20,10 @@ void DisplayOutput::Grafikfenster(Position Bildschirm,int Startpunkt)
 	
 }
 
-Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int index, int Startpunkt) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
+Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
 	int const N = 4;
-	int const delta = Kaestchengroesse;		//10; // Breite eines "Spielkaestchens" auf dem Spielfeld
-
+	
 	int i;
 	int dx, dy;
 	int differenz;
@@ -34,11 +33,6 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int index, int S
 	// Definition der verschiedenen Textfelder im Spielfeld
 	// alle Texte sollen dieselbe Schriftgroesse haben
 	int textgroesse = Kaestchengroesse/2 ;
-
-	// Ueberschrift
-	Position Textfeld;
-	Textfeld.x = Startpunkt / 2 + (Kaestchengroesse*2) + abstand;
-	Textfeld.y = Startpunkt / 3;
 
 	// Buchstabenreihe
 	Position Buchstaben;
@@ -59,18 +53,17 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int index, int S
 	ZahlenArray[0] = "1"; ZahlenArray[1] = "2"; ZahlenArray[2] = "3"; ZahlenArray[3] = "4"; ZahlenArray[4] = "5";
 	ZahlenArray[5] = "6"; ZahlenArray[6] = "7"; ZahlenArray[7] = "8"; ZahlenArray[8] = "9"; ZahlenArray[9] = "10";
 
-
 	// Speichern der 4 Eckpunkte des Spielfeldes
 	Position Spielfeld[N]; 
    	Spielfeld[0].x = Startpunkt + abstand; Spielfeld[0].y = Startpunkt;								// linke Ecke oben
-	Spielfeld[1].x = Startpunkt + (10*delta) + abstand; Spielfeld[1].y = Startpunkt;				// rechte Ecke oben
-	Spielfeld[2].x = Startpunkt + (10*delta) + abstand; Spielfeld[2].y = Startpunkt + (10*delta);	// rechte Ecke unten
-	Spielfeld[3].x = Startpunkt+ abstand; Spielfeld[3].y = Startpunkt + (10*delta);					// linke Ecke unten
+	Spielfeld[1].x = Startpunkt + (10*Kaestchengroesse) + abstand; Spielfeld[1].y = Startpunkt;				// rechte Ecke oben
+	Spielfeld[2].x = Startpunkt + (10* Kaestchengroesse) + abstand; Spielfeld[2].y = Startpunkt + (10*Kaestchengroesse);	// rechte Ecke unten
+	Spielfeld[3].x = Startpunkt+ abstand; Spielfeld[3].y = Startpunkt + (10*Kaestchengroesse);					// linke Ecke unten
 
 	// Zeichnen des Spielfeldes
 	for (i = 0; i < 11; i++)
 	{
-		differenz = i*delta;
+		differenz = i* Kaestchengroesse;
 
 		// senkrechte Linien
 		line((Spielfeld[0].x + differenz), Spielfeld[0].y, (Spielfeld[3].x + differenz), Spielfeld[3].y, SCHWARZ);
@@ -81,30 +74,17 @@ Position DisplayOutput::SpielfeldErstellen(Position Bildschirm, int index, int S
 		if (i != 10)
 		{
 			dx = Buchstaben.x + differenz;
-			dy = Buchstaben.y + differenz + delta;
+			dy = Buchstaben.y + differenz + Kaestchengroesse;
 			text(dx, Buchstaben.y, textgroesse, SCHWARZ, BuchstabenArray[i]);
-			text(Buchstaben.x - delta, dy, textgroesse, SCHWARZ, ZahlenArray[i]);
+			text(Buchstaben.x - Kaestchengroesse, dy, textgroesse, SCHWARZ, ZahlenArray[i]);
 		}
 	}
-	/*
-	char* ausgabe = "xx";
-	//char *ausgabe = "fancy Schiffe versenken von Norrer, Dommev & Vranzi";
-	if (index == 1)
-	{
-		ausgabe = "Spieler 1";
-	}
-	else
-	{
-		ausgabe = "Spieler 2";
-	}
-	text(Textfeld.x, Textfeld.y, textgroesse+10, WEISS, ausgabe);	
-	*/
 
 	// Rückgabe der linken oberen Ecke 
 	return Spielfeld[0];
 };
 
-Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int index, Player Spieler1, Player Spieler2)
+Position DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spieler1, Player Spieler2)
 
 {
 	// Positionierung des Textes unter dem zugehörigen Spielfeld
@@ -115,6 +95,7 @@ Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int 
 	Legende[1].x = Legende[0].x + Kaestchengroesse * 10;
 	Legende[1].y = Legende[0].y + Kaestchengroesse * 5;
 
+	// Initialisierung
 	int Angriffsstrategie = 0, Verteidigungsstrategie = 0, verfehlteSchuesse = 0,getroffeneSchuesse = 0,versenkteSchiffe = 0;
 
 	if (index == 1)
@@ -149,6 +130,7 @@ Position DisplayOutput::Legende(Position EckpunktSpielfeld, int Startpunkt, int 
 
 	textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN,InfoSpieler);
 
+	// Rückgabe der linken oberen Ecke des gezeichneten Spielfeldes
 	return Legende[0];
 }
 
@@ -232,7 +214,7 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 	line(xx1, yy1, xx2, yy2, Farbe);
 }
 
-bool DisplayOutput::Beschleunigung(int Startpunkt)
+bool DisplayOutput::Beschleunigung()
 {
 	// Positionierung des Buttons "schneller"
 	Position Box[2] = {};
@@ -242,21 +224,21 @@ bool DisplayOutput::Beschleunigung(int Startpunkt)
 	Box[1].x = Box[0].x + 10*Kaestchengroesse;
 	Box[1].y = Box[0].y + Kaestchengroesse +2;
 
+	// Schriftgroesse
 	int textgroesse = Kaestchengroesse;
 
+	// Textbox zur Ausgabe des Buttons
 	textbox(Box[0].x, Box[0].y, Box[1].x, Box[1].y, textgroesse, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, "für Beschleunigung drücken"); updatescr();
 
-	int x = 0, y = 0;
+	// Abfragen auf Mouseclick
 	int klick = checkmouse(); 
-	bool beschleunigen;
+	bool beschleunigen = false;
 
-	// Mouseclick muss im Bereich des gezeichneten Kastchens erfolgt sein
-	// Mouseclick auf beliebigen Bereich des Spiefeldes ungültig
-	if (klick == 1) // && (x > Box[0].x) && (x < Box[1].x) && (y > Box[0].y) && (y < Box[1].y))
+	if (klick == 1) // Mouse betätigt
 	{
 		beschleunigen = true;
 	}
-	else
+	else if(klick == 0)	// Mouse nicht betätigt
 	{
 		beschleunigen = false;
 	}
@@ -265,37 +247,37 @@ bool DisplayOutput::Beschleunigung(int Startpunkt)
 
 bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
 {
-	int i = 0;										// Zählvariable für die for- Schleife
+	int i = 0;									// Zählvariable für die for- Schleife
 	
 	// Position der linken oberen Ecke der Spielfelder, Rückgabewert beim Erstellen des Spielfeldes
-	Position Ecke_1;						// Ecke_1 : Ecke des Spielfeldes des 1. Spielers
-	Position Ecke_2;						// Ecke_2 : Ecke des Spielfeldes des 2. Spielers
+	Position Ecke_1;							// Ecke_1 : Ecke des Spielfeldes des 1. Spielers
+	Position Ecke_2;							// Ecke_2 : Ecke des Spielfeldes des 2. Spielers
 
 	Position Schuss1_1, Schuss2_1, Schuss3_1;	// letzten 3 Schuesse des Gegners (Spieler 1)
 	Position Schuss1_2, Schuss2_2, Schuss3_2;	// letzten 3 Schuesse des Gegners (Spieler 2)
 
 	Ship Schiff_1, Schiff_2;					// Schiff_1 : Schiff Spieler 1, Schiff_2 : Schiff Spieler 2
 
-	Position Bildschirm;						// Position des Grafikfensters auf dem Bildschirm
-	Bildschirm.x = 500;
-	Bildschirm.y = 250;
-	int Startpunkt = 50;
-
-	// Hoehe und Breite des Graphikfensters
-	int breite = (10 * Startpunkt) + 500;
-	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
-
-	// damit alte Treffer nicht mehr angezeigt werden 
+	// Aufräumen
 	clrscr(); 
 
+	// Ueberschrift
+	Position Textfeld;
+	Textfeld.x = Startpunkt + (Kaestchengroesse * 7);
+	Textfeld.y = Startpunkt / 5;
+
+	int textgroesse = Kaestchengroesse / 2;
+	char* ausgabe = "SCHIFFE VERSENKEN";
+	text(Textfeld.x, Textfeld.y, textgroesse*3, SCHWARZ, ausgabe);
+
 	// Spielfeld zeichnen
-	Ecke_1 = SpielfeldErstellen(Bildschirm, 1, Startpunkt);// Spielfeld fuer Spieler 1 
-	Ecke_2 = SpielfeldErstellen(Bildschirm, 2, Startpunkt); // Spielfeld fuer Spieler 2
+	Ecke_1 = SpielfeldErstellen(1);// Spielfeld fuer Spieler 1 
+	Ecke_2 = SpielfeldErstellen(2); // Spielfeld fuer Spieler 2
 
 	// Ausgabe Legende
 	Position Legende2 = {}, Legende1 = {};
-	Legende1 = Legende(Ecke_1, Startpunkt, 1, Spieler1, Spieler2);
-	Legende2 = Legende(Ecke_2, Startpunkt, 2, Spieler1, Spieler2);
+	Legende1 = Legende(Ecke_1, 1, Spieler1, Spieler2);
+	Legende2 = Legende(Ecke_2, 2, Spieler1, Spieler2);
 
 	// Schuesse
 	// Spieler 1
@@ -308,7 +290,7 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	Schuss2_2 = Spieler2.Last3ShotsOfOpponent[1];
 	Schuss3_2 = Spieler2.Last3ShotsOfOpponent[2];
 
-	// Schiffe und Schuesse zeichnen
+	// Schiffe zeichnen
 	for (i = 0; i < 10; i++)
 	{
 		// Ausgabe Spieler 1
@@ -319,25 +301,21 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 		int Schiff_1_Kontrolle = Schiff_1.Sunk;
 		int Schiff_2_Kontrolle = Schiff_2.Sunk;
 
-		// zuerst die Schiffe und dann die getroffenen Felder zeichnen sonst werde die Kreuze übermalt
-
-		// Spieler 1
+		// zuerst die Schiffe und dann die getroffenen Felder zeichnen, sonst werde die Kreuze übermalt
+		// Schiff von Spieler 1
 		if (Schiff_1_Kontrolle != 1) // gesunkene Schiffe sollen nicht gezeichnet werden
 		{
 			DarstellungSchiff(Ecke_1, Schiff_1, FarbeSpieler1);
 		}
 
-		// Treffer Spieler 1
-
-		// Spieler 2
+		// Schiff von Spieler 2
 		if (Schiff_2_Kontrolle != 1) // gesunkene Schiffe sollen nicht gezeichnet werden
 		{
 			DarstellungSchiff(Ecke_2, Schiff_2, FarbeSpieler2); 	
 		}
-		
-		// Treffer Spieler 2
 	}
-
+	
+	// Schuesse des 1. Spielers
 	if (Schuss1_1.x >= 0 && Schuss1_1.y >= 0) // Iniialisierung soll nicht ausgegeben werden
 	{
 		getroffenesFeld(Ecke_1, Schuss1_1, ROT);			// letzter Schuss des Gegeners wird in Rot angezeigt
@@ -351,6 +329,7 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 		getroffenesFeld(Ecke_1, Schuss3_1, SCHWARZ);
 	}
 
+	// Schuesse des 2.Spielers
 	if (Schuss1_2.x >= 0 && Schuss1_2.y >= 0) // Iniialisierung soll nicht ausgegeben werden
 	{
 		getroffenesFeld(Ecke_2, Schuss1_2, ROT); 			// letzter Schuss des Gegeners wird in Rot angezeigt
@@ -364,7 +343,7 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 		getroffenesFeld(Ecke_2, Schuss3_2, SCHWARZ);
 	}
 
-	bool schneller = Beschleunigung(Startpunkt); // soll später nicht mehr in der Ausgabe aufgerufen werden
-
-	return false;
+	// Beschleunigung
+	bool schneller = Beschleunigung(); // soll später nicht mehr in der Ausgabe aufgerufen werden
+	return schneller;
 }
