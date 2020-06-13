@@ -22,8 +22,7 @@ void DisplayOutput::Grafikfenster()
 
 Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
-	int const N = 4;
-	
+	int const N = 4;	
 	int i;
 	int dx, dy;
 	int differenz;
@@ -84,8 +83,7 @@ Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle
 	return Spielfeld[0];
 };
 
-Position DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spieler1, Player Spieler2)
-
+void DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spieler1, Player Spieler2)
 {
 	// Positionierung des Textes unter dem zugehörigen Spielfeld
 	Position Legende[2] = {};
@@ -129,9 +127,6 @@ Position DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Sp
 			,index,  Verteidigungsstrategie, Angriffsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
 	textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN,InfoSpieler);
-
-	// Rückgabe der linken oberen Ecke des gezeichneten Spielfeldes
-	return Legende[0];
 }
 
 void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Farbe)
@@ -275,9 +270,8 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	Ecke_2 = SpielfeldErstellen(2); // Spielfeld fuer Spieler 2
 
 	// Ausgabe Legende
-	Position Legende2 = {}, Legende1 = {};
-	Legende1 = Legende(Ecke_1, 1, Spieler1, Spieler2);
-	Legende2 = Legende(Ecke_2, 2, Spieler1, Spieler2);
+	Legende(Ecke_1, 1, Spieler1, Spieler2);
+	Legende(Ecke_2, 2, Spieler1, Spieler2);
 
 	// Schuesse
 	// Spieler 1
