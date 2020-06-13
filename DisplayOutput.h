@@ -5,7 +5,7 @@
 #include <string>
 #include "Global_Definitions.h"
 #include "Player.h"
-#include "Global_Definitions_DisplayOutput.h"
+// #include "Global_Definitions_DisplayOutput.h"
 using namespace std;
 
 // Anmerkung zu wichtigen Aenderungen
@@ -28,7 +28,7 @@ public:
 	// Abfrage, ob Spiel schneller laufen soll (schneller  => true, nicht schneller/ unverändert => false)
 	// Ausgabe eines Buttons "schneller"
 	// 
-	bool Beschleunigung();
+	//bool Beschleunigung();
 
 	//Breite eines Kaestchens des dargestellten Spielfeldes
 	int Kaestchengroesse; 

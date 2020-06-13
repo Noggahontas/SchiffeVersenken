@@ -49,13 +49,13 @@ void user_main()
 
 	//Für die graphische Ausgabe
 	DisplayOutput Graphics;			// Übergabe --> Ngames()
-	// Graphics.Kaestchengroesse = 20; // NEU: Graphics..DisplayOutput(); Konstruktor aufrufen
+	// Graphics.Kaestchengroesse = 20; 
 	int FarbeSchiffe = BLAU;
 	Position Bildschirm;										// Position des Grafikfensters auf dem Bildschirm
 	Bildschirm.x = 500;
 	Bildschirm.y = 250;
 	int Startpunkt = 50;
-	Graphics.Grafikfenster(Bildschirm, Startpunkt); // Erstellen Grafikfenster: Test für einmaligen Aufruf // NEU: Graphics.Grafikfenster();
+	Graphics.Grafikfenster(); //Graphics.Grafikfenster(Bildschirm, Startpunkt); // Erstellen Grafikfenster: Test für einmaligen Aufruf // NEU: Graphics.Grafikfenster();
 
 	while (1)
 	{

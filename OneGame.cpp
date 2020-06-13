@@ -21,7 +21,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt
 											// Für jeden Spieler eine Variable, notwendig für Strategien (benötogen die Infos)
 	int i = 0;								// Zum Wechseln zwischen Spieler 0 und 1 
-	static bool Pressed = true;
+	static bool Pressed = false;
 	int Kaestchengroesse = 20;
 	int FarbeSchiffe = BLAU;											// Position des Grafikfensters auf dem Bildschirm
 	

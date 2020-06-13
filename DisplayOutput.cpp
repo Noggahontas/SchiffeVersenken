@@ -11,7 +11,7 @@
 void DisplayOutput::Grafikfenster()
 {
 	// Hoehe und Breite des Graphikfensters
-	int breite = (10 * Startpunkt) + 305;
+	int breite = (20 * Kaestchengroesse) + (4 * Startpunkt);//(10 * Startpunkt) + 150;
 	int hoehe = (16 * Kaestchengroesse) + (2 * Startpunkt);
 
 	// Erstellen des Graphikfensters
@@ -126,7 +126,7 @@ void DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spiele
 			"Spieler Nr. % d \n Verteidigungsstrategie Nr. %d \n Angriffsstrategie Nr. %d \n\n verfehlte Schüsse : %d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
 			,index,  Verteidigungsstrategie, Angriffsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
-	textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN,InfoSpieler);
+		textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, InfoSpieler); updatescr();
 }
 
 void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Farbe)
@@ -207,6 +207,7 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 	line(xx1, yy1, xx2, yy2, Farbe);
 }
 
+/*
 bool DisplayOutput::Beschleunigung()
 {
 	// Positionierung des Buttons "schneller"
@@ -237,7 +238,7 @@ bool DisplayOutput::Beschleunigung()
 	}
 	return beschleunigen;
 }
-
+*/
 void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
 {
 	int i = 0;									// Zählvariable für die for- Schleife
@@ -335,7 +336,8 @@ void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 		getroffenesFeld(Ecke_2, Schuss3_2, SCHWARZ);
 	}
 
+	updatescr();
 	// Beschleunigung
-	//bool schneller = Beschleunigung(); // soll später nicht mehr in der Ausgabe aufgerufen werden
+	// bool schneller = Beschleunigung(); // soll später nicht mehr in der Ausgabe aufgerufen werden
 	//return schneller;
 }
