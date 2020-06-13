@@ -5,79 +5,77 @@
 
 using namespace std;
 /*
-Diagonale Angriffsstrategie, Start bei (0,3). 
-Erster Durchlauf: Abstand von 3 Kästchen nach rechts zur nächsten diagonalen Linie.
-Zweiter Durchlauf: Abstand nur noch 2 Kästchen zur nächsten Linie.
-Dritter Durchlauf: Abstand nur noch 1 Kästchen zur nächsten Linie.
+Angriffsstrategie 2:
+Vier Durchläufe in diagonalen Linien vom linken Rand zum oberen Rand, bzw vom unteren Rand zum rechten Rand 
 
-
- -	Pos: als static struct -> kein Übergabeparameter mehr
-	-	beinhaltet die die Angriffskoordinaten (x,y) des vorherigen Angriffs
+ -	Position Pos: als static struct - beinhaltet die Angriffskoordinaten (x,y) des vorherigen Angriffs
 		und anschliessend die neu berechneten, die zurückgegeben werden.
 
- -	Strategy_Rounds: 0,1,2 für die Rundenanzahl, wie oft die diagonale Abfolge
-	schon durchgeführt wurde.
+ -	Strategy_Rounds: 0, 1, 2, 3 für die Anzahl der Durchläufe.
 		0: Erste Runde	- Start {0,3}	- 3 Kästchen Abstand in x-Richtung zur nächsten diagonalen Linie
 		1: Zweite Runde	- Start {0,2}	- 3 Kästchen Abstand in x-Richtung zur nächsten diagonalen Linie
 		2: Dritte Runde - Start {0,1}	- 3 Kästchen Abstand in x-Richtung zur nächsten diagonalen Linie
 		3: Vierte Runde - Start {0,4}	- 3 Kästchen Abstand in x-Richtung zur nächsten diagonalen Linie
 	Anschliessend wieder von vorne.
 
+	Reihe y=0 bzw. Spalte x=9 sind die Bereiche, in denen eine diagonale Linie abbricht 
+	um anschliessend eine neue diagonale Linie zu starten in der Spalte x=0 bzw. Reihe y=9
 */
 
 
 Position AttackStrategy2()
 {
-	static int Strategy_Rounds = 0;
+	static int Strategy_Rounds = 0;					// Enthält die Nummer des aktuellen Durchlaufes
 
-	static Position Pos = { };
+	static Position Pos = { };						// beinhaltet die vorherigen Angriffskoordinaten 
+													// und für die Rückgabe die neu bestimmen Koordinaten
 
-	if ((Pos.x == NULL) && (Pos.y == NULL))
+	if ((Pos.x == NULL) && (Pos.y == NULL))			// Am Ende des letzten Durchlaufs muss von {0,0} zu {0,3} gewechselt werden
 	{
 		Pos.x = 0;
 		Pos.y = 3;
 		return Pos;
 	}
 
-	switch (Strategy_Rounds)
+	switch (Strategy_Rounds)						// Jeder Durchlauf hat unterschiedliche Start-/Endpunkte
 	{
-	case 0:
-		if ((Pos.x == 9) || (Pos.y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
-		{																			// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
-			if (Pos.x == 3)
+	case 0:											// Erster Durchlauf
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
+			if (Pos.x == 3)							// Endpunkt der ersten diagonalen Linie bei {3,0} -> return neuer Startpunkt 
 			{
-				Pos = { 0,7 };
+				Pos = { 0,7 };						// Startpunkt der neuen diagonalen Linie
 				return Pos;
 			}
-			else if (Pos.x == 7)
+			else if (Pos.x == 7)					// Endpunkt der zweiten diagonalen Linie bei {0,7} -> return neuer Startpunkt
 			{
-				Pos = { 2,9 };
+				Pos = { 2,9 };						// Startpunkt der neuen diagonalen Linie
 				return Pos;
 			}
-			else if (Pos.y == 2)
+			else if (Pos.y == 2)					// Endpunkt der dritten diagonalen Linie bei {9,2} -> return neuer Startpunkt
 			{
-				Pos = { 6,9 };
+				Pos = { 6,9 };						// Startpunkt der neuen diagonalen Linie
 				return Pos;
 			}
-			else if (Pos.y == 6)
+			else if (Pos.y == 6)					// Endpunkt der vierten diagonalen Linie bei {9,6} -> return neuer Startpunkt
 			{
-				Pos = { 0,2 };
-				Strategy_Rounds = 1;
+				Pos = { 0,2 };						// Startpunkt der neuen diagonalen Linie
+				Strategy_Rounds = 1;				// Zweiter Durchlauf beim nächsten Aufruf
 				return Pos;
 			}
 		}
 		else
 		{
-			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
-			Pos.y = Pos.y - 1;
+			Pos.x = Pos.x + 1;						// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
+			Pos.y = Pos.y - 1;						
 			return Pos;
 		}
 	case 1:
-		if ((Pos.x == 9) || (Pos.y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
-		{												// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
-			if (Pos.x == 2)
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
+			if (Pos.x == 2)							// Endpunkt der ersten diagonalen Linie {0,9} -> return neuer Startpunkt
 			{
-				Pos = { 0,6 };
+				Pos = { 0,6 };						// Startpunkt der neuen diagonalen Linie
 				return Pos;
 			}
 			else if (Pos.x == 6)
@@ -98,19 +96,19 @@ Position AttackStrategy2()
 			else if (Pos.y == 9)
 			{
 				Pos = { 0,1 };
-				Strategy_Rounds = 2;
+				Strategy_Rounds = 2;				// Dritter Durchlauf beim nächsten Aufruf
 				return Pos;
 			}
 		}
 		else
 		{
-			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
+			Pos.x = Pos.x + 1;						// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
 			Pos.y = Pos.y - 1;
 			return Pos;
 		}
 	case 2:
-		if ((Pos.x == 9) || (Pos.y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
-		{												// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
 			if (Pos.x == 1)
 			{
 				Pos = { 0,5 };
@@ -135,19 +133,19 @@ Position AttackStrategy2()
 			{
 				Pos.x = 0;
 				Pos.y = 4;
-				Strategy_Rounds = 3;
+				Strategy_Rounds = 3;				// vierter Durchlauf beim nächsten Aufruf
 				return Pos;
 			}
 		}
 		else
 		{
-			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
+			Pos.x = Pos.x + 1;						// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
 			Pos.y = Pos.y - 1;
 			return Pos;
 		}
 	case 3:
-		if ((Pos.x == 9) || (Pos.y == 0))				// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
-		{												// da dort das Spielfeld verlassen und von neuem Punkt aus gestartet wird.
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
 			if (Pos.x == 4)
 			{
 				Pos = { 0,8 };
@@ -172,13 +170,13 @@ Position AttackStrategy2()
 			{
 				Pos.x = 0;
 				Pos.y = 0;
-				Strategy_Rounds = 0;
-				return Pos;
+				Strategy_Rounds = 0;			// Am Ende des vierten Durchlaufs wird wieder mit dem ersten Durchlauf
+				return Pos;						// im nächsten Aufruf gestartet
 			}
 		}
 		else
 		{
-			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts hoch - Richtung bleibt konstant
+			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
 			Pos.y = Pos.y - 1;
 			return Pos;
 		}

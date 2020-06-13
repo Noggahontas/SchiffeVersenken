@@ -764,6 +764,7 @@ void Player::lex(string FileName)
 	obj.InitParse(inputFile, stderr, stdout);
 	obj.yyparse(this);
 
+	fclose(inputFile);
 
 	return;
 }
