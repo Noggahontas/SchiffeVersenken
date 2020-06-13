@@ -28,6 +28,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	int i = 0;								// Zum Wechseln zwischen Spieler 0 und 1 
 
 	int FarbeSchiffe = BLAU;				// Farbe der Schiffe
+
 	
 	if (!FastPlayThrough)													// Nur wenn Schneller-Button nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
 	{
