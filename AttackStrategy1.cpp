@@ -8,8 +8,10 @@ using namespace std;
 
 
 /*
+Angriffsstrategie1:
+Strategie gibt beim Aufruf für den x- und für den y-Wert jeweils eine Zufallszahl zwischen 0 und 9 zurück
 
- - new_Position: neue Koordinaten (x,y) im Spielfeld, auf die der nächste Angriff erfolgt
+ - new_Position: struct für die neuen Koordinaten (x,y) im Spielfeld, auf die der nächste Angriff erfolgt
 
 */
 

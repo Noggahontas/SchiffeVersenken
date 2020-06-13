@@ -27,28 +27,28 @@ const int TOKENSTART = 300;
 //{
 //public:
 //
-//	string yytext;								//input buffer
-//	struct tyylval {							//value return
-//		string s;								//structure
+//	string yytext;												//input buffer
+//	struct tyylval {											//value return
+//		string s;												//structure
 //		int i;
 //	}yylval;
-//	FILE* IP_Input;								//Input File
-//	FILE* IP_Error;								//Error Output
-//	FILE* IP_List;								//List Output
-//	int  IP_LineNumber;							//Line counter
-//	map<string, int> IP_Token_table;			//Tokendefinitions
-//	map<int, string> IP_revToken_table;			//reverse Tokendefinitions
+//	FILE* IP_Input;												//Input File
+//	FILE* IP_Error;												//Error Output
+//	FILE* IP_List;												//List Output
+//	int  IP_LineNumber;											//Line counter
+//	map<string, int> IP_Token_table;							//Tokendefinitions
+//	map<int, string> IP_revToken_table;							//reverse Tokendefinitions
 //
 //
-//	int CParser::yylex();								//lexial analyser
-//	void CParser::yyerror(char* ers);					//error reporter
-//	int CParser::IP_MatchToken(string& tok);				//checks the token
+//	int CParser::yylex();										//lexial analyser
+//	void CParser::yyerror(char* ers);							//error reporter
+//	int CParser::IP_MatchToken(string& tok);					//checks the token
 //	void CParser::InitParse(FILE* inp, FILE* err, FILE* lst);
-//	int	CParser::yyparse(Player *iptat);					//parser
-//	void CParser::pr_tokentable();						//test output for tokens
-//	void CParser::IP_init_token_table();					//loads the tokens
-//	void CParser::Load_tokenentry(string str, int index);//load one token
-//	CParser::CParser() { IP_LineNumber = 1; };			//Constructor
+//	int	CParser::yyparse(Player *iptat);						//parser
+//	void CParser::pr_tokentable();								//test output for tokens
+//	void CParser::IP_init_token_table();						//loads the tokens
+//	void CParser::Load_tokenentry(string str, int index);		//load one token
+//	CParser::CParser() { IP_LineNumber = 1; };					//Constructor
 //};
 //------------------------------------------------------------------------
 
@@ -86,13 +86,11 @@ void CParser::pr_tokentable()
 }
 //------------------------------------------------------------------------
 
-int	CParser::yyparse(Player *iptat)
+int	CParser::yyparse(Player *iptat)								// Bekommt als Parameter den Pointer auf das Objekt in dem Lexan aufgerufen wird
 {
-	// static int x;
-	// static int y;
-	bool nr = 0;
-	bool ident = 0;
-	int ShipNo = 0;
+	bool altKoordinates = 0;									// alternierende Hilfsvariable zum Umschalten zwischen x- und y-Wert
+	bool altNameDirection = 0;									// alternierende Hilfsvariable zum Unterscheiden von Schiffsname und Ausrichtung
+	int ShipNo = 0;												// Schiffsnummerierung
 
 	int tok;
 	/*
@@ -101,34 +99,31 @@ int	CParser::yyparse(Player *iptat)
 	while ((tok = yylex()) != 0) {
 		if (tok == INTEGER1)
 
-			if (nr == 0)
+			if (altKoordinates == 0)
 			{
-				iptat->Ships[ShipNo].StartPos.x = yylval.i;			
-				//x = yylval.i; printf("x = %d, ", yylval.i);
-				nr = 1;
+				iptat->Ships[ShipNo].StartPos.x = yylval.i;		// schreibt die ausgelesene x-Startposition in den x-Wert des Schiffs
+				altKoordinates = 1;
 			}
 			else
 			{
-				iptat->Ships[ShipNo].StartPos.y = yylval.i;
-				//y = yylval.i; printf("y = %d, ",  yylval.i);
-				nr = 0;
+				iptat->Ships[ShipNo].StartPos.y = yylval.i;		// schreibt die ausgelesene y-Startposition in den y-Wert des Schiffs
+				altKoordinates = 0;
 			}
 
 		else
 			if (tok == IDENTIFIER)
-				if (ident == 0)
+				if (altNameDirection == 0)
 				{
-					//printf("Schiff: %s, ", yylval.s.c_str());			// Ausgabe zur Kontrolle
-					ident = 1;
+					altNameDirection = 1;
 					
-					if (yylval.s == "Battleship")
+					if (yylval.s == "Battleship")				// wird "Battleship" ausgelesen...
 					{
-						iptat->Ships[ShipNo].Length = 5;
+						iptat->Ships[ShipNo].Length = 5;		// bekommt das erste Schiff die Länge 5
 					}
-					else if (yylval.s == "Cruiser")
+					else if (yylval.s == "Cruiser")				// wird "Cruiser" ausgelesen...
 					{
 						ShipNo += 1;
-						iptat->Ships[ShipNo].Length = 4;
+						iptat->Ships[ShipNo].Length = 4;		// bekommt das zweite und dritte Schiff die Länge 4
 					}
 					else if (yylval.s == "Destroyer")
 					{
@@ -145,25 +140,21 @@ int	CParser::yyparse(Player *iptat)
 				}
 				else
 				{
-					//printf("Richtung: %s ", /*IP_revToken_table[tok].c_str(),*/ yylval.s.c_str());		// Ausgabe zur Kontrolle
-					ident = 0;
-					if (yylval.s == "RIGHT")
+					altNameDirection = 0;
+					if (yylval.s == "RIGHT")					// wird "RIGHT" ausgelesen, wird die Richtung des entsprechenden Schiffs auf Right gesetzt
 					{
 						iptat->Ships[ShipNo].Orientation = Direction::Right;
 					}
-					else if (yylval.s == "DOWN")
+					else if (yylval.s == "DOWN")				// wird "DOWN" ausgelesen, wird die Richtung des entsprechenden Schiffs auf Down gesetzt
 					{
 						iptat->Ships[ShipNo].Orientation = Direction::Down;
 					}
-					//printf("\n");
+					
 				}
 
 			else
 				if (tok >= TOKENSTART)
 					printf("a: %s ", IP_revToken_table[tok].c_str());
-				else ;
-				//printf("Seperator: %c ",tok);
-		//printf("\n");
 	}
 	return 0;
 
