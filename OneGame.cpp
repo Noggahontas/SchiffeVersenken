@@ -8,12 +8,13 @@
 #include "PlayerHistory.h"
 
 
-void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Graphics)
+void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Graphics, bool FastPlayThrough)
 {
 	// Spielablauf für 1 Spiel	
 	// Übergabe eines Arrays mit 2 Elementen zum Abspeichern der Ergebnisse jedes Spiels für jeden Spieler (als Referenz)
 	// Übergabe des Modus wie Schiffe am Anfang eines Spiels gesetzt werden sollen 
 	// Übergabe der DisplayOutput Klassen-Variable Graphics als Referenz, notwendig für die Ausgabe
+	// Übergabe ob alles im Schnelldurchlauf oder langsam erfolgen soll
 
 	Player P[2]{ (ModeSetShips), (ModeSetShips) };			// Spieler werden erstellt -> Parameterkonstruktor
 
@@ -25,11 +26,10 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 											// Für jeden Spieler eine Variable, notwendig für Strategien (benötogen die Infos)
 
 	int i = 0;								// Zum Wechseln zwischen Spieler 0 und 1 
-	static bool Pressed = true;				// Rückgabewert vom Schneller-Button
 
 	int FarbeSchiffe = BLAU;				// Farbe der Schiffe
 	
-	if (!Pressed)													// Nur wenn Schneller-Button nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+	if (!FastPlayThrough)													// Nur wenn Schneller-Button nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
 	{
 		Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 		Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Graphische Ausgabe
@@ -43,7 +43,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	Result[i] = P[Alternate(i)].ShotOn(AttackShot);					// Auf ausgewählte Koordinaten wird geschossen: Schuss auf Spielfeld von zweitem Spieler P[1] 
 	
 	//Pressed =
-	if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+	if ((!FastPlayThrough))													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
 	{ 
 		Sleep(WaitTime); 											
 		Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Graphische Ausgabe 
@@ -62,7 +62,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			cout << "Kein Treffer \n";
 		}
 
-		Sleep(WaitTime); 
+		Sleep(WaitTime);
 	}
 
 
@@ -73,19 +73,17 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 		i = Alternate(i);			// ändert i: 1->0 , 0->1 ; Anderer Spieler an der Reihe
 
 
-		//Pressed =
-
 		// Prüfen ob Bwegen/Drehen noch erlaubt ist. Wenn bei jedem Spieler nur noch jewils 2 Schiffe übrig sind, darf nicht mehr bewegt weredn.
 		if( (P[i].SunkShipsByOpponent < 8) && (P[Alternate(i)].SunkShipsByOpponent < 8) )
 		{
-			if (!Pressed)
+			if (!FastPlayThrough)
 			{ 
 				// Bewegen noch erlaubt -> Verteidigung von Spieler i
 				cout << "Spieler " << i + 1 << " an der Reihe: Drehen/Bewegen \n";
 			}
 			P[i].DefensiveAction();											// Durch gewählte Verteidigungsstrategie des jew. Spielers wird Aktion zum Verteidigen ausgweählt und ausgeführt
 			
-			if (!Pressed)													// Nur wenn nicht geklickt wurde, sollen Wartezeit und Ausgabe eingebaut werden
+			if (!FastPlayThrough)													// Nur wenn nicht geklickt wurde, sollen Wartezeit und Ausgabe eingebaut werden
 			{
 				Sleep(WaitTime); 											
 				Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
@@ -93,15 +91,14 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 		}
 		else
 		{
-			if (!Pressed)
+			if (!FastPlayThrough)
 			{
 				// Bewegen nich mehr erlaubt
 				cout << "Es darf nicht mehr bewegt/gedreht werden, da jewils nur noch zwei Schiffe übrig sind \n";
 			}
 		}
 
-		//Pressed =
-		if (!Pressed) 
+		if (!FastPlayThrough)
 		{ 
 			Sleep(WaitTime);											
 										
@@ -112,8 +109,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 																		// Übergabe von Ergebnissen (Treffer?, Versenkt?) des letzten eigenen Schusses
 		Result[i] = P[Alternate(i)].ShotOn(AttackShot);					// Auf ausgewählte Koordinaten wird geschossen (auf Spielfeld von zweitem Spieler )
 
-		//Pressed =
-		if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+		if (!FastPlayThrough)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
 		{
 			Sleep(WaitTime); 											
 			Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
@@ -136,8 +132,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 		}
 	}
 
-	//Pressed =
-	if (!Pressed)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+	if (!FastPlayThrough)													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
 	{
 		cout << "\n";
 		//Beim Verlassen der Schleife hat ein Spieler verloren
