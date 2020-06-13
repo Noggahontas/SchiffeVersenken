@@ -11,8 +11,8 @@
 void DisplayOutput::Grafikfenster()
 {
 	// Hoehe und Breite des Graphikfensters
-	int breite = (10 * Startpunkt) + 500;
-	int hoehe = (15 * Kaestchengroesse) + (2 * Startpunkt);
+	int breite = (10 * Startpunkt) + 305;
+	int hoehe = (16 * Kaestchengroesse) + (2 * Startpunkt);
 
 	// Erstellen des Graphikfensters
 	set_drawarea(breite, hoehe); 
@@ -93,7 +93,7 @@ Position DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Sp
 	Legende[0].y = 14 * Kaestchengroesse;
 
 	Legende[1].x = Legende[0].x + Kaestchengroesse * 10;
-	Legende[1].y = Legende[0].y + Kaestchengroesse * 5;
+	Legende[1].y = Legende[0].y + Kaestchengroesse * 6;
 
 	// Initialisierung
 	int Angriffsstrategie = 0, Verteidigungsstrategie = 0, verfehlteSchuesse = 0,getroffeneSchuesse = 0,versenkteSchiffe = 0;
@@ -125,7 +125,7 @@ Position DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Sp
 	// Informationstext
 	char InfoSpieler[500];
 		snprintf(InfoSpieler, sizeof(InfoSpieler), 
-			"Spieler Nr. % d \n Verteidigungsstrategie Nr. %d \n Angriffsstartegie Nr. %d \n verfehlte Schüsse : %d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
+			"Spieler Nr. % d \n Verteidigungsstrategie Nr. %d \n Angriffsstrategie Nr. %d \n\n verfehlte Schüsse : %d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
 			,index,  Verteidigungsstrategie, Angriffsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
 	textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN,InfoSpieler);
