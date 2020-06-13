@@ -22,16 +22,16 @@ AttackResult Player::ShotOn(Position Shot)
 	// Gibt zurück ob ein Schiff versenkt wurde: Sunk=1=versenkt, Sunk=0=nicht versenkt
 
 	Last3ShotsOfOpponent.insert(Last3ShotsOfOpponent.begin(), Shot);	//An Position 0 neuen Schuss des Gegners einfügen (Iterator auf Position 0 wird übergeben)
-																		//Nun sind es 4 Element!
+																		//Nun sind es 4 Elemente!
 	Last3ShotsOfOpponent.pop_back();									//Letztes Element löschen -> Es sind wieder die letzten 3 Schüsse gespeichert
 
-	AttackResult Result;				// Result.Hit: Angabe ob ein Schiff getroffen wurde
+	AttackResult Result;					// Result.Hit: Angabe ob ein Schiff getroffen wurde
 	Result.Sunk = false;					// Angabe ob ein Schiff versenkt wurde. Wenn kein Schiff getroffen wurde Sunk = 0
 	
 	int i = 0;
-	do									// Ausführen bis ein getroffenes Schiff gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
+	do		// Ausführen bis ein getroffenes Schiff gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
 	{
-		Result.Hit = Ships[i].IsHit(Shot);		// Funktion ISHit gibt zurück ob dieses Schiff getroffen wurde
+		Result.Hit = Ships[i].IsHit(Shot);			// Funktion IsHit gibt zurück ob dieses Schiff getroffen wurde
 		i++;
 	} while ( (i < 10) & (Result.Hit != true) );	// in i steht jetzt (Nummer des Schiffes +1), das getroffen wurde. Wenn kein Schiff getroffen wurde i=10
 
@@ -40,7 +40,7 @@ AttackResult Player::ShotOn(Position Shot)
 		Result.Sunk = Ships[i-1].Sunk;
 	}
 
-	// Aktualisieren der "Mitzählvariablen" für einen Vergleich der Strategien
+	// Mitzählen für den Gegner, je nach dem ob ein Schiff getroffen und evtl. versenkt wurde
 	if (Result.Hit == true)
 	{
 		HitShotsOfOpponent++;
@@ -83,14 +83,14 @@ void Player::CheckIfLost()
 
 
 bool Player::Move(int ShipNumber, MoveDirection Direction)
-{
+{	// Bewegt ein Schiff
 	// Übergabe welches Schiff bewegt werden soll. Nummer Schiff = Index i aus Array Ships[i] 
 	// Übergabe Richtung, in die bewegt werden soll: Forward oder Backward. ein Schiff kann nur in Längsrichtung bewegt werden
 	// Kollisionsabfrage ob Bewegen möglich, wenn ja:
 	// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
 	// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
 
-	//bool MoveSuccess = 1;			// Angabe ob Bewegen möglich war
+	
 
 	Position CriticalCoordinates;	// Koordinaten, die Schiff nach dem Bewegen belegen würde
 									// Für diese muss geprüft werden ob das möglich ist -> Kollision/ Außerhalb Spielfeld		
@@ -102,7 +102,7 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 	bool InsideBattlefield;			//Angabe ob nach Bewegen noch innerhalb von Schlachtfeld wäre
 
 	// Abfrage ob das Schiff, das bewegt werden soll, schon einen Treffer kassiert hat -> getroffene Schiffe sind bewegungsunfähig
-	for (int i = 0; i < Ships[ShipNumber].Length; i++)
+	for (int i = 0; i < Ships[ShipNumber].Length; i++)			// Durchlauf des gesamten Statusvektors
 	{
 		if (Ships[ShipNumber].Status.at(i) == true) 
 		{	
@@ -293,7 +293,7 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 
 
 bool Player::Turn(int ShipNumber)
-{
+{	// Dreht ein Schiff
 	// Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
 	// Übergabe Richtung, in die gedrecht werden soll nicht notwendig, da ein Schiff entsprechend seiner Ausrichtung(Right oder Down) nur in eine Richtung gedreht werden kann. (Festlegung Ausrichtung: nach links, nach oben gibt es nicht)
 	// Kollisionsabfrage ob Drehen möglich, wenn ja:
@@ -310,7 +310,7 @@ bool Player::Turn(int ShipNumber)
 
 	bool Hit;							// Angabe ob es durch Bewegen eine Kollision mit einem Feld geben würde, das in den letzten 3 Runden abgeschossen wurde
 
-	bool InsideBattlefield;				//Angabe ob nach Bewegen noch innerhalb von Schlachtfeld wäre
+	bool InsideBattlefield;				// Angabe ob nach Bewegen noch innerhalb von Schlachtfeld wäre
 
 
 	// Abfrage ob das Schiff, das bewegt werden soll, schon einen Treffer kassiert hat -> getroffene Schiffe sind bewegungsunfähig
@@ -326,7 +326,7 @@ bool Player::Turn(int ShipNumber)
 
 	if (Ships[ShipNumber].Orientation == Direction::Right)	// Wenn das Schiff vor dem Drehen nach rechts ausgerichtet ist
 	{
-		NewOrientation = Direction::Down;					// Ein Schiff, das nach rechts ausgerichtet ist, kann nur im Uhrzeigersinn gedreht werden -> neue Ausrichtung nach unten
+		NewOrientation = Direction::Down;					// Ein Schiff, das nach rechts ausgerichtet ist, wird immer im Uhrzeigersinn gedreht -> neue Ausrichtung nach unten
 
 		// Neue Startposition nach dem Drehen bestimmen. In Abhängigkeit derLänge des Schiffs
 		if (Ships[ShipNumber].Length == 2)		// Wenn Schiff die Länge 2 hat						
@@ -352,7 +352,7 @@ bool Player::Turn(int ShipNumber)
 		// Check, ob auf neuen Koordinaten durch Drehen schon ein Schiff sitzt
 		Collision = false;
 		int j = 0;
-		do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden 
+		do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden bis eine Kollision entdeckt wurde oder bis alle Schiffe durchgeschaut
 		{
 			int i = 0;
 			do				// Ausführen für alle Schiffe, bis ein Schiff auf CriticalCoordinates gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
@@ -377,7 +377,7 @@ bool Player::Turn(int ShipNumber)
 		for (int i = 0; i < 3; i++)
 		{
 			j = 0;
-			do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden 
+			do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden bis alle Koordinaten durch oder bis Übereinstimmung gefunden
 			{
 				if ( (Last3ShotsOfOpponent.at(i).x == CriticalStartCoordinates.x) & (Last3ShotsOfOpponent.at(i).y == (CriticalStartCoordinates.y + j)) )
 				{
@@ -392,7 +392,7 @@ bool Player::Turn(int ShipNumber)
 		// Check, ob das ganze Schiff nach dem Bewegen noch im Spielfeld
 		InsideBattlefield = true;
 		j = 0;
-		do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden
+		do					// Ausführen für alle Koordinaten (Anzahl = Länge Schiff), die durch Drehen belegt werden würden bis alle durchgeschaut oder bis Grenzüberschreitung gefunden
 		{
 			InsideBattlefield = ((CriticalStartCoordinates.y + j) <= 9) && ((CriticalStartCoordinates.y + j) >= 0);	// Beim Rechtsdrehen ist das Schiff in x-Richtung sicher immer innerhalb des Spielfeldes, weil
 																					// Ausrichtung_aktuell = Right -> Ausrichtung_neu = Down. Nur die y-Koordinaten müssen gecheckt werden
@@ -419,9 +419,9 @@ bool Player::Turn(int ShipNumber)
 
 	else if(Ships[ShipNumber].Orientation == Direction::Down)	// Wenn das Schiff vor dem Drehen nach unten ausgerichtet ist
 	{
-		NewOrientation = Direction::Right;						// Ein Schiff, das nach unten ausgerichtet ist, kann nur gegen den Uhrzeigersinn gedreht werden -> neue Ausrichtung nach rechts
+		NewOrientation = Direction::Right;						// Ein Schiff, das nach unten ausgerichtet ist, wird immer gegen den Uhrzeigersinn gedreht -> neue Ausrichtung nach rechts
 
-		// Neue Startposition nach dem Drehen bestimmen. In Abhängigkeit derLänge des Schiffs
+		// Neue Startposition nach dem Drehen bestimmen. In Abhängigkeit der Länge des Schiffs
 		if (Ships[ShipNumber].Length == 2)		// Wenn Schiff die Länge 2 hat						
 		{
 			CriticalStartCoordinates = { Ships[ShipNumber].StartPos.x, Ships[ShipNumber].StartPos.y };	// dann bleibt die Startposition gleich, nur Ausrichtung ändert sich
@@ -524,7 +524,7 @@ Position Player::FindAttackShot(AttackResult LastAttackResult)
 	// Übergabe von Ergebnis dees letzten eigenen Schusses (Treffer, Versenkt)
 
 	switch (AttackStrategy)
-	{											// hier müssen noch korrekte Aufrufe der Strategiefunktionen eingefügt werden!
+	{										
 	case 1:
 		return AttackStrategy1();
 
@@ -554,19 +554,19 @@ void Player::DefensiveAction()
 	// Ruft ggf. Funktion Turn oder Move auf 
 
 
-	int ShipNumber;			// Nummer des Schiffes, das Bewegt/ Gedreht werden soll
-	DefendAction Action;	// Angabe ob gedreht oder Bewegt werden soll
-	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
-	TurnDirection TurnDir;	// Angabe in welche Richtung gedreht werden soll. Wenn bewegt werden soll, wird MoveDir ignoriert
+	int ShipNumber;			// Nummer des Schiffes, das bewegt/ gedreht werden soll
+	DefendAction Action;	// Angabe ob gedreht oder bewegt werden soll oder gar nichts davon
+	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn gedreht werden soll, wird MoveDir ignoriert
+	TurnDirection TurnDir;	// Angabe in welche Richtung gedreht werden soll. Wenn bewegt werden soll, wird TurnDir ignoriert
 
 	bool ActionSuccessful = 1;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
 
 	do
 	{
-		/*	ShipNumber = 0;
-			Action = DefendAction::Turn;
-			MoveDir = MoveDirection::Forward;*/
-			DefenseStrategy1(&ShipNumber, &Action, &MoveDir, &TurnDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir, TurnDir
+		
+			
+			
+		DefenseStrategy1(&ShipNumber, &Action, &MoveDir, &TurnDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir, TurnDir
 		
 		switch (Action)
 		{
@@ -596,20 +596,20 @@ Player::Player(int ModeSetShips) {
 	 // Konstruktor 
 	 // Stößt Konstruktor für jedes Schiff an
 	 // legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL
-	 // Wählt zufällig AttackStrategy und DefenseStrategy aus
+	 // Wählt zufällig AttackStrategy aus
 
 	// Einlesen der Initialisierungswerte der Schiffe aus Textdatei
-	// Eigentlich mit Lexikalischer Analyse:
-	// ...
-	// Vorläufige Lösung: Direktes, festes Initialisieren; Korrekte Lösung kommt noch
+	
+	
+	
 
 	string NameDocSetShips;		// Name der Datei, die zum Setzen der Schiffe bei Spielbeginn genutzt werden soll
 	int NumberTextDocShips;		// Nummer der Datei zum Schiffe Setzen 1...4
 
-	// Datei zum Setzen der Schiffe je nach gewähltem Modus auswählen
+	// Je nach gewähltem Modus Datei auswählen zum Setzen der Schiffe 
 	switch (ModeSetShips)
 	{
-		case 1: 
+		case 1:		// Modus 1: Datei zum Schiffe setzen wird zufällig gewählt							
 			NumberTextDocShips = (rand() % 4) + 1;		// Nummer der Textdatei, die zum Setzen der Schiffe bei Spielbeginn genutzt werden soll. Zahlen von 1...4
 			switch (NumberTextDocShips)
 			{
@@ -630,7 +630,7 @@ Player::Player(int ModeSetShips) {
 					break;
 			}
 			break;
-		case 2: 
+		case 2:		// Modus 2: Als Datei zum Schiffe setzen wird immer "SetShips.txt" genutzt
 			NameDocSetShips = "SetShips.txt";
 			break;
 		default:
@@ -707,7 +707,7 @@ Player::Player(int ModeSetShips) {
 		Ships[i].Sunk = 0;							 // Noch keine Treffer, noch nicht versenkt
 	}
 
-	// Spieler 1 und Spieler 2 dürfen NICHT DIESELBE ANGRIFFSSTRAGTEGIE haben!!!
+	// Spieler 1 und Spieler 2 dürfen nicht dieselbe Angriffsstrategie haben!!! -> verhindern
 	static int Number_AttackStrategy_OtherPlayer = -1 ;			// Speichern der Strategiewahl (1...4) des anderen Spielers. Wenn noch keine Strategie für einen Spieler gewählt, dann = -1
 
 	AttackStrategy = (rand() % 4) + 1;							// Zahlen von 1...4
@@ -722,7 +722,7 @@ Player::Player(int ModeSetShips) {
 		{
 			AttackStrategy = (rand() % 4) + 1;					// Zahlen von 1...4 für die Wahl der Stratgie
 		}
-		Number_AttackStrategy_OtherPlayer = -1;					// Strategien für beide Spieler wurden gewählt, die zuletzte gespeicherte Strategienummer soll für das nächste Spiel irrelevant sein
+		Number_AttackStrategy_OtherPlayer = -1;		// Strategien für beide Spieler in diesem Spiel wurden gewählt, die zuletzte gespeicherte Strategienummer soll für das nächste Spiel irrelevant sein
 	}
 	
 	

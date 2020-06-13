@@ -2,7 +2,7 @@
 # include "Player.h"
 
 
-class PlayerHistory
+class PlayerHistory			// Zum Abspeichern der Ergebnisse eines Spielers von einem Spiel
 {
 public:
 
@@ -10,8 +10,8 @@ public:
 	int DefenseStrategy;
 	int MissedShots;
 	int HitShots;
-	int SunkShips;
-	int Lost;
+	int SunkShips;			// Anzahl der Schiffe, die der Spieler in diesem Spiel versenkt hat
+	bool Lost;				// Angabe ob der Spieler dieses Spiel verloren hat: true = verloren
 
 	void Save(Player& PlayerHimself, Player& Opponent);		// Speichert Ergenisse eines Spieles von einem Spieler ab		
 															// Übergabe des Speiers selbst, für den absgespeichert werden soll  

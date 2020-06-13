@@ -18,21 +18,21 @@ using namespace std;
 
 // Includes für Klassen Ship, Player, PlayerHistory
 //#include <vector>
-#include "Ship.h"
-#include "Global_Definitions.h" // hier können alle Structs etc rein, die wir quer durch unsre Dateien brauchen; da einbinden, wo sie gebraucht werden!
-#include "Player.h"
-#include "OneGame.h"
-#include "PlayerHistory.h"
+//#include "Ship.h"
+//#include "Global_Definitions.h" // hier können alle Structs etc rein, die wir quer durch unsre Dateien brauchen; da einbinden, wo sie gebraucht werden!
+//#include "Player.h"
+//#include "OneGame.h"
+//#include "PlayerHistory.h"
 #include "NGames.h"
 
 // Includes für Strategien
 #include <time.h>
-#include "Global_Definitions_Strategies.h"
-#include "AttackStrategy1.h"
-#include "AttackStrategy2.h"
-#include "AttackStrategy3.h"
-#include "AttackStrategy4.h"
-#include "DefenseStrategy1.h"
+//#include "Global_Definitions_Strategies.h"
+//#include "AttackStrategy1.h"
+//#include "AttackStrategy2.h"
+//#include "AttackStrategy3.h"
+//#include "AttackStrategy4.h"
+//#include "DefenseStrategy1.h"
 
 
 // Include fuer Ausgabe des Graphikfensters
@@ -45,6 +45,9 @@ using namespace std;
 
 void user_main()
 {
+	// Rahmen für den gesamten Programmablauf
+	// Initialisierungen für die grafische Ausgabe, Aufruf von NGames(), die für Durchlauf von N (=Nutzereingabe) Spielen sorgt
+
 	srand(static_cast<unsigned int>(time(nullptr)));	// PZG starten; Seed = time  -- nur ein einziges mal zu Programmstart
 
 	//Für die graphische Ausgabe
@@ -59,7 +62,7 @@ void user_main()
 
 	while (1)
 	{
-		NGames(Graphics);		// Übergabe der DisplayOutput Klassen-Variable Graphics
+		NGames(Graphics);		// Durchführen von N Spielen  // Übergabe der DisplayOutput Klassen-Variable Graphics
 		
 		clrscr();				// clear screen
 	}

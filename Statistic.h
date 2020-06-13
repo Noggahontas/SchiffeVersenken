@@ -2,7 +2,7 @@
 #include"PlayerHistory.h"
 
 
-class Statistic							// Statistik füre ine Angriffsstrategie
+class Statistic							// Statistik für eine Angriffsstrategie
 {
 	public:
 
@@ -13,7 +13,7 @@ class Statistic							// Statistik füre ine Angriffsstrategie
 		float ProbabilityOfWinning;				// Wahrscheinlich keit zu gewinnen in Prozent
 		int NumberOfGamesUsed;					// Wie oft die Strategie zum Einsatz kam 
 
-		void add(PlayerHistory& GameHistory);	//Fügt der Statistik für eine Angriffsstrategie Werte von einem Spiel hinzu 
+		void add(PlayerHistory& GameHistory);	// Fügt der Statistik für eine Angriffsstrategie Werte von einem Spiel hinzu 
 
 		void Calculate();						// Berechnet Statistik für diese Angriffsstrategie
 

@@ -10,14 +10,14 @@ class Player
 {
 public:
 	Ship Ships[10];							// Array vom Typ/Klasse Ships; alle 10 Schiffe, die ein Spieler besitzt
-	vector<Position> Last3ShotsOfOpponent;	// Hier werden die letzten 3 Schüsse des Gegners gespeichert. [0]=aktuellster Schuss, [2]= Schuss vor 2 Runden.  Am Anfang alle Elemente = NULL
+	vector<Position> Last3ShotsOfOpponent;	// Hier werden die letzten 3 Schüsse des Gegners gespeichert. [0]=aktuellster Schuss, [2]= Schuss vor 2 Runden.  Am Anfang alle Elemente = -1
 	int AttackStrategy;						// Hier wird ein Schlüssel entsprechend der gewählten Angriffsstrategie gespeichert
 	int DefenseStrategy;					// Hier wird ein Schlüssel entsprechend der gewählten Verteidigungsstrategie gespeichert
 	bool Lost;								// Gibt an ob Spieler verloren hat. Verloren wenn alle seine Schiffe versenkt wurden. 1 = Verloren, 0 = nich nicht verloren
 
 	int MissedShotsOfOpponent;				// Hier wird während eines Spiels mitgezählt wie viele Schüsse der Gegner schon ins Leere geschossen hat
 	int HitShotsOfOpponent;					// Hier wird während eines Spiels mitgezählt wie viele Schüsse der Gegner schon getroffen hat
-	int SunkShipsByOpponent;				// Hier wird gezählt wie viele Schiffe der Gegner bei diesem Spielr versenkt hat
+	int SunkShipsByOpponent;				// Hier wird gezählt wie viele Schiffe (von diesem Spieler) der Gegner in diesem Spiel versenkt hat
 
 
 
@@ -25,16 +25,17 @@ public:
 	AttackResult ShotOn(Position Shot);		// Schuss von Gegner auf Koordinaten Shot	
 											// ändert Last3ShotsOfOpponent
 											// Rückgabe als Strukt 
-											// Gibt zurück ob ein Schiff getroffen wurde: Hit=1= getroffen, Hit=0=nicht getroffen
+											// Gibt zurück ob ein Schiff getroffen wurde: Hit=1=getroffen, Hit=0=nicht getroffen
 											// Gibt zurück ob ein Schiff versenkt wurde: Sunk=1=versenkt, Sunk=0=nicht versenkt
 
-	bool Turn(int ShipNumber); // Übergabe welches Schiff gedreht werden soll. Nummer Schiff = Index i aus Array Ships[i] 
-														// Übergabe Richtung, in die gedrecht werden soll. Left=1 oder Right=2
+	bool Turn(int ShipNumber);							// Dreht ein Schiff
+														// Übergabe welches Schiff gedreht werden soll. ShipNumber = Index i aus Array Ships[i] 
 														// Kollisionsabfrage ob Drehen möglich, wenn ja:
 														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
 														// Rückgabe ob Drehen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
 
-	bool Move(int ShipNumber, MoveDirection Direction);	// Übergabe welches Schiff bewegt werden soll. Nummer Schiff = Index i aus Array Ships[i] 
+	bool Move(int ShipNumber, MoveDirection Direction);	// Bewegt eine Schiff 
+														// Übergabe welches Schiff bewegt werden soll. Nummer Schiff = Index i aus Array Ships[i] 
 														// Übergabe Richtung, in die bewegt werden soll. LeftMove, RightMove, UpMove, DownMove
 														// Kollisionsabfrage ob Drehen möglich, wenn ja:
 														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
@@ -44,17 +45,17 @@ public:
 
 
 
-	Position FindAttackShot(AttackResult LastAttackResult);// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
-														// auf die geschossen werden soll
-														// Übergabe von Ergebnis dees letzten eigenen Schusses (Treffer, Versenkt)
+	Position FindAttackShot(AttackResult LastAttackResult);	// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
+															// auf die geschossen werden soll
+															// Übergabe von Ergebnis des letzten eigenen Schusses (Treffer, Versenkt)
 
-	void DefensiveAction();								// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
-														// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
-														// Ruft ggf. Funktion Turn oder Move auf 
+	void DefensiveAction();									// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
+															// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
+															// Ruft ggf. Funktion Turn oder Move auf 
 
 	Player(int ModeSetShips);		// Konstruktor 
 									// Stößt Kontruktor für jedes Schiff an
-									// legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL
+									// legt Größe von Last3ShotsOfOpponent fest und initialisiert mit -1
 									// Wählt zufällig AttackStrategy und DefenseStrategy aus
 
 	void lex(string FileName);		// Ruft lexikalische Analyse auf

@@ -10,7 +10,7 @@ enum class TurnDirection{ LeftTurn, RightTurn };	// Richtung, in die ein Schiff 
 
 enum class MoveDirection{ Forward, Backward};	// Richtung, in die ein Schiff bewegt werden kann
 
-//struct Schiffsposition { Position linkeEckeOben; char ausrichtung; }; // Schiff muss zum Lokalisieren linke obere Ecke und Ausrichtung besitzen // kann gelöscht werden
+
 
 
 // Farben in der RGB - Darstellung
@@ -23,6 +23,6 @@ enum class MoveDirection{ Forward, Backward};	// Richtung, in die ein Schiff bew
 
 enum class DefendAction { Nothing, Move, Turn };	// Aktion, die für ein Schiff beim verteidigen ausgeführt werden soll: Bewegen oder Drehen
 
-struct AttackResult { bool Sunk; bool Hit; };		// Resultate beim einem Schuss. 
+struct AttackResult { bool Sunk; bool Hit; };		// Resultate bei einem Schuss. 
 													// Hit: Wurde ein Schiff getroofen;   Sunk: Wurde ein Schiff versenkt
 											

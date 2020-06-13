@@ -3,7 +3,8 @@
 
 void Statistic::add(PlayerHistory& GameHistory)
 {
-	//Fügt der Statistik für eine Angriffsstrategie Werte von einem Spiel hinzu 
+	// Fügt der Statistik einer Angriffsstrategie Werte von einem Spiel hinzu 
+	// Zunächst werden die Ergenbiswerte nur addiert 
 
 	MissedShots = MissedShots + GameHistory.MissedShots;
 	HitShots = HitShots + GameHistory.HitShots;
@@ -14,6 +15,8 @@ void Statistic::add(PlayerHistory& GameHistory)
 
 void Statistic::Calculate()
 {
+	// Berechnet Statistik für diese Angriffsstrategie
+
 	if(NumberOfGamesUsed != 0)
 	{ 
 		MissedShots = MissedShots / (float)NumberOfGamesUsed;	// Durchsnittliche verfehlte Schüsse pro Spiel

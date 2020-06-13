@@ -4,7 +4,7 @@
 void PlayerHistory:: Save(Player &PlayerHimself, Player& Opponent)
 {
 	// Speichert Ergenisse eines Spieles von einem Spieler ab		
-	// Übergabe des Speiers selbst, für den absgespeichert werden soll  
+	// Übergabe des Spielers selbst, für den absgespeichert werden soll  
 	// und Übergabe des Gegnsers, da bei ihm weitere Werte für diesen Spieler gespeichert sind (MissedShotsOfOpponent, HitSchotsOfOpponent, SunkShipsByOpponent) 
 
 	// Werte die beim Spieler selbst gespeichert sind, in die History abspeichern

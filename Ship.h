@@ -4,11 +4,11 @@
 using namespace std;
 
 
-class Ship
+class Ship											// ein Schiff auf dem Spielfeld
 {
 
 	public:
-		int Length;									//Anzahl der Felder, die ein Schiff lang ist
+		int Length;									// Anzahl der Felder, die ein Schiff lang ist
 		Position StartPos;							// Koordinate (1 Feld), an der sich Schiff aktuell befindet. Von dort aus belegt das Schiff (Length-1) Felder in Richtung Orientation
 		Direction Orientation;						// Richtung, in die Schiff von Startposition(StartPos) aus ausgerichtet ist; Es gibt nur nach rechts und nach unten
 		vector<bool> Status;						// Gibt an auf welchen Feldern des Schiffs das Schiff schon getroffen wurde; 0=kein Treffer; 1=Treffer
@@ -16,16 +16,19 @@ class Ship
 
 
 	public:
-		bool IsHit(Position Shot);	// Rückgabe: 1=Schiff wurde gehittet; 0=nicht geghittet
-									//ändert bei einem Hit Status-Vector
-									// Aufruf StillAlive
+		bool IsHit(Position Shot);	// Im Übergabeparameter Shot (Struct) werden die Koordinaten des Schusses (vom Gegner) übergeben
+									// Gibt an ob Schiff getroffen wurde: Rückgabe 1=Schiff wurde gehittet; 0=nicht geghittet
+									// ändert bei einem Hit den Status-Vector
+									// Aufruf Funktion StillAlive
 
 		void StillAlive();			// ändert Variable Sunk wenn nötig
+									// Prüft anhand des Statusvektors Status ob das Schiff schon an allen Feldern getroffen wurde, also ob es schon versenkt wurde
+									// Wenn es versenkt wurde, ändert es die Klassenvariable Sunk zu 1
 
-		bool AreYouThere(Position CriticalCoordinates);	// Übergabe: Koórdinaten, von denen geckeckt werden soll ob Schiff darauf steht
+		bool AreYouThere(Position CriticalCoordinates);	// Übergabe: Koordinaten, von denen geckeckt werden soll ob Schiff darauf steht
 														// Rückgabe: Befindet sich an diesen Koordinaten ein Schiff:  1=ja, 0=nein
 
-		Ship(int Len, Position &SPos, Direction Orient);		//Nur zum Testen //Konstruktor
+		Ship(int Len, Position &SPos, Direction Orient);		//Nur zum Testen //Parameter-Konstruktor
 																//initialsisiert ein Schiff mit übergebenen Werten: Length=Len, StartPos=SPos, Orientation=Orient
 
 		Ship();					// Standardkonstruktor, weil es ohne eine Fehlermeldung gab
