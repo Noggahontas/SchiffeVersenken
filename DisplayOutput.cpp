@@ -142,8 +142,6 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 	int Statusabfrage = 0;										// zu überprüfende Stelle des Schiffes
 	Position getroffenesFeld[2] = {};
 	
-	// Eckpunkt des Schiffes auf dem Spielfeld (Skalierung)
-	
 	if (AusrichtungSchiff == Direction::Right) // Schiffsausrichtung auf dem Spielfeld: waagrecht
 	{
 		// Schiffsposition muss mit Kaestchengroesse skaliert werden
@@ -160,10 +158,10 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 		x2 = x1 + Kaestchengroesse - 1;
 		y2 = y1 + (Schiffslaenge * Kaestchengroesse)-1;
 	}
-	// zuerst wird das gesamte Schiff in balu gezeichnet
+	// zuerst wird das gesamte Schiff in der gewünschten Farbe gezeichnet
 	rectangle(x1, y1, x2, y2, Farbe, Farbe);
 	
-	// danach wird geprüft, ob Schiff bereits getrofffen wurde
+	// danach wird geprüft, ob Schiff bereits getroffen wurde
 	for (int j = 0; j < Schiffslaenge; j++)
 	{
 		// Überprüfung ob Schiff an dieser Stelle bereits getroffen wurde [0 1 ... Schifflänge -1]
@@ -204,7 +202,7 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 	xx1 = x1 + Kaestchengroesse; yy1 = y1;
 	xx2 = x1; yy2 = y1 + Kaestchengroesse;
 
-	// Zeichenen eines Kreuzes
+	// Zeichnen eines Kreuzes
 	line(x1, y1, x2, y2, Farbe);
 	line(xx1, yy1, xx2, yy2, Farbe);
 }
@@ -223,7 +221,7 @@ bool DisplayOutput::Beschleunigung()
 	int textgroesse = Kaestchengroesse;
 
 	// Textbox zur Ausgabe des Buttons
-	textbox(Box[0].x, Box[0].y, Box[1].x, Box[1].y, textgroesse, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, "für Beschleunigung drücken"); updatescr();
+	textbox(Box[0].x, Box[0].y, Box[1].x, Box[1].y, textgroesse, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, "für Beschleunigung drücken"); 
 
 	// Abfragen auf Mouseclick
 	int klick = checkmouse(); 
@@ -240,7 +238,7 @@ bool DisplayOutput::Beschleunigung()
 	return beschleunigen;
 }
 
-bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
+void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
 {
 	int i = 0;									// Zählvariable für die for- Schleife
 	
@@ -338,6 +336,6 @@ bool DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	}
 
 	// Beschleunigung
-	bool schneller = Beschleunigung(); // soll später nicht mehr in der Ausgabe aufgerufen werden
-	return schneller;
+	//bool schneller = Beschleunigung(); // soll später nicht mehr in der Ausgabe aufgerufen werden
+	//return schneller;
 }

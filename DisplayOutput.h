@@ -20,7 +20,7 @@ public:
 	// 
 	// Player Spieler: Objekt der Klasse Player, beinhaltet Informationen zu den Schiffen etc. des Spielers
 	// int Farbe : Farbe der Schiffe des Spielers
-	bool Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2);
+	void Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2);
 
 	// einmaliger Aufruf zum Positionieren eines Grafikfensters
 	void Grafikfenster();
@@ -74,6 +74,5 @@ private:
 	//  Position Treffer : Koordinaten des Treffers 
 	//  int Farbe : Farbe des Treffers (Rot / Weiss)
 	void getroffenesFeld (Position EckpunktSpielfeld, Position Treffer, int Farbe);
-
 };
 
