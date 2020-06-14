@@ -43,7 +43,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	AttackShot = P[i].FindAttackShot(Result[i]);					// Durch ausgewählte Strategie des Spielers P[0] werden Koordinaten ausgewählt, auf die geschossen werden soll
 	Result[i] = P[Alternate(i)].ShotOn(AttackShot);					// Auf ausgewählte Koordinaten wird geschossen: Schuss auf Spielfeld von zweitem Spieler P[1] 
 	
-	//Pressed =
+	
 	if ((!FastPlayThrough))													// Nur wenn nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
 	{ 
 		Sleep(WaitTime); 											
@@ -103,7 +103,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 		{ 
 			Sleep(WaitTime);											
 										
-			// Angriff von Spieler i
+		// Angriff von Spieler i
 			cout << "Spieler " << i + 1 << " an der Reihe: Angriff \n";
 		}
 		AttackShot = P[i].FindAttackShot(Result[i]);					// Durch ausgewählte Strategie des Spielers werden Koordinaten ausgewählt, auf die geschossen werden soll

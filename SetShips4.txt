@@ -1,0 +1,10 @@
+Battleship (3,2) RIGHT
+Cruiser (3,5) RIGHT
+Cruiser (1,6) DOWN
+Destroyer (8,4) DOWN
+Destroyer (1,2) DOWN
+Destroyer (3,7) RIGHT
+Submarine (2,0) RIGHT
+Submarine (6,0) RIGHT
+Submarine (3,9) RIGHT
+Submarine (7,8) DOWN

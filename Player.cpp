@@ -562,9 +562,6 @@ void Player::DefensiveAction()
 
 	do
 	{
-		
-			
-			
 		DefenseStrategy1(&ShipNumber, &Action, &MoveDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir
 		
 		switch (Action)
@@ -592,15 +589,12 @@ void Player::DefensiveAction()
 
 
 Player::Player(int ModeSetShips) {
-	 // Konstruktor 
+	 // Parameterkonstruktor 
 	 // Stößt Konstruktor für jedes Schiff an
-	 // legt Größe von Last3ShotsOfOpponent fest und initialisiert mit NULL
+	 // legt Größe von Last3ShotsOfOpponent fest und initialisiert mit -1
 	 // Wählt zufällig AttackStrategy aus
 
 	// Einlesen der Initialisierungswerte der Schiffe aus Textdatei
-	
-	
-	
 
 	string NameDocSetShips;		// Name der Datei, die zum Setzen der Schiffe bei Spielbeginn genutzt werden soll
 	int NumberTextDocShips;		// Nummer der Datei zum Schiffe Setzen 1...4
@@ -613,16 +607,16 @@ Player::Player(int ModeSetShips) {
 			switch (NumberTextDocShips)
 			{
 				case 1: 
-					NameDocSetShips = "SetShips.txt"; 
+					NameDocSetShips = "SetShips1.txt"; 
 					break;
 				case 2: 
-					NameDocSetShips = "SetShips.txt";	// hier müssen noch die Dateinamen angepasst werden
+					NameDocSetShips = "SetShips2.txt";	// hier müssen noch die Dateinamen angepasst werden
 					break;
 				case 3:
-					NameDocSetShips = "SetShips.txt";
+					NameDocSetShips = "SetShips3.txt";
 					break;
 				case 4:
-					NameDocSetShips = "SetShips.txt";
+					NameDocSetShips = "SetShips4.txt";
 					break;
 				default:
 					cout << "Fehler bei NumberTextDocShips.txt";
@@ -630,7 +624,7 @@ Player::Player(int ModeSetShips) {
 			}
 			break;
 		case 2:		// Modus 2: Als Datei zum Schiffe setzen wird immer "SetShips.txt" genutzt
-			NameDocSetShips = "SetShips.txt";
+			NameDocSetShips = "SetShipsFix.txt";
 			break;
 		default:
 			cout << "Fehler bei ModeSetShips";
@@ -639,65 +633,6 @@ Player::Player(int ModeSetShips) {
 
 	lex(NameDocSetShips);		// Aufruf lexikalische Analyse
 
-	//Ships[0].Length = 5;
-	//Ships[0].StartPos = { 0,0 };
-	//Ships[0].Orientation = Direction::Down;
-	//Ships[0].Status.resize(Ships[0].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[0].Sunk = 0;							// Noch keine Treffer, noch nicht versenkt
-
-	//Ships[1].Length = 4;
-	//Ships[1].StartPos = { 4,2 };
-	//Ships[1].Orientation = Direction::Right;
-	//Ships[1].Status.resize(Ships[1].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[1].Sunk = 0;
-
-	//Ships[2].Length = 4;
-	//Ships[2].StartPos = { 8,6 };
-	//Ships[2].Orientation = Direction::Down;
-	//Ships[2].Status.resize(Ships[2].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[2].Sunk = 0;
-
-	//Ships[3].Length = 3;
-	//Ships[3].StartPos = { 0,7 };
-	//Ships[3].Orientation = Direction::Right;
-	//Ships[3].Status.resize(Ships[3].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[3].Sunk = 0;
-
-	//Ships[4].Length = 3;
-	//Ships[4].StartPos = { 2,3 };
-	//Ships[4].Orientation = Direction::Down;
-	//Ships[4].Status.resize(Ships[4].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[4].Sunk = 0;
-
-	//Ships[5].Length = 3;
-	//Ships[5].StartPos = { 5,4 };
-	//Ships[5].Orientation = Direction::Down;
-	//Ships[5].Status.resize(Ships[5].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[5].Sunk = 0;
-
-	//Ships[6].Length = 2;
-	//Ships[6].StartPos = { 3,0 };
-	//Ships[6].Orientation = Direction::Right;
-	//Ships[6].Status.resize(Ships[6].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[6].Sunk = 0;
-
-	//Ships[7].Length = 2;
-	//Ships[7].StartPos = { 9,0 };
-	//Ships[7].Orientation = Direction::Down;
-	//Ships[7].Status.resize(Ships[7].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[7].Sunk = 0;
-
-	//Ships[8].Length = 2;
-	//Ships[8].StartPos = { 9,3 };
-	//Ships[8].Orientation = Direction::Down;
-	//Ships[8].Status.resize(Ships[8].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[8].Sunk = 0;
-
-	//Ships[9].Length = 2;
-	//Ships[9].StartPos = { 3,9 };
-	//Ships[9].Orientation = Direction::Right;
-	//Ships[9].Status.resize(Ships[9].Length, 0);  // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-	//Ships[9].Sunk = 0;
 
 
 	for (int i = 0; i < 10; i++)
@@ -705,6 +640,8 @@ Player::Player(int ModeSetShips) {
 		Ships[i].Status.resize(Ships[i].Length, 0);  // Größe des Vektors anpassen. Alle Elemente von Status auf 0 setzen -> noch keine Treffer
 		Ships[i].Sunk = 0;							 // Noch keine Treffer, noch nicht versenkt
 	}
+
+
 
 	// Spieler 1 und Spieler 2 dürfen nicht dieselbe Angriffsstrategie haben!!! -> verhindern
 	static int Number_AttackStrategy_OtherPlayer = -1 ;			// Speichern der Strategiewahl (1...4) des anderen Spielers. Wenn noch keine Strategie für einen Spieler gewählt, dann = -1
@@ -734,7 +671,6 @@ Player::Player(int ModeSetShips) {
 	HitShotsOfOpponent = 0;
 	MissedShotsOfOpponent = 0;
 	SunkShipsByOpponent = 0;
-
 
 }
 
