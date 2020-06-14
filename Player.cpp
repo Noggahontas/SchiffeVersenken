@@ -557,7 +557,6 @@ void Player::DefensiveAction()
 	int ShipNumber;			// Nummer des Schiffes, das bewegt/ gedreht werden soll
 	DefendAction Action;	// Angabe ob gedreht oder bewegt werden soll oder gar nichts davon
 	MoveDirection MoveDir;	// Angabe in welche Richtung bewegt werden soll. Wenn gedreht werden soll, wird MoveDir ignoriert
-	TurnDirection TurnDir;	// Angabe in welche Richtung gedreht werden soll. Wenn bewegt werden soll, wird TurnDir ignoriert
 
 	bool ActionSuccessful = 1;	// Angabe ob Drehen/ Bewegen ausgeführt werden konnte
 
@@ -566,7 +565,7 @@ void Player::DefensiveAction()
 		
 			
 			
-		DefenseStrategy1(&ShipNumber, &Action, &MoveDir, &TurnDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir, TurnDir
+		DefenseStrategy1(&ShipNumber, &Action, &MoveDir );// Ermittelt Verteidigungsmove -> Schreibt entsprechende Werte in DefendAction, ShipNumber, MoveDir
 		
 		switch (Action)
 		{

@@ -18,7 +18,7 @@ drehen, bewegen oder nichts tun (was davon und Richtung: Zufall).
 
 
 
-void DefenseStrategy1(int *ShipNumber, DefendAction *Action, MoveDirection *MoveDir, TurnDirection *TurnDir)
+void DefenseStrategy1(int *ShipNumber, DefendAction *Action, MoveDirection *MoveDir)
 {
 	int rndAction = (rand() % 3);							// DefendAction (Nothing, Move, Turn) soll zufällig gewählt werden
 	int rndMoveDir = 0;										// Zufällige Bewegungsrichtung wählen
@@ -47,7 +47,6 @@ void DefenseStrategy1(int *ShipNumber, DefendAction *Action, MoveDirection *Move
 	case 2:													// Dritter Fall: ein Schiff soll sich drehen
 		*Action = DefendAction::Turn;						// DefendAction auf Turn setzen
 		*ShipNumber = (rand() % 10);						// zufälliges Schiff auswählen
-		*TurnDir = TurnDirection::LeftTurn;					// Dummy
 		break;
 	}
 	return;
