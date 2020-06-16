@@ -27,7 +27,7 @@ Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle
 	int dx, dy;
 	int differenz;
 	int faktor = (Startpunkt / 10);
-	int abstand = (index - 1) * 300;
+	int abstand = (index - 1) * 300; // Berechnen des Abstandes beider Spielfelder
 
 	// Definition der verschiedenen Textfelder im Spielfeld
 	// alle Texte sollen dieselbe Schriftgroesse haben
@@ -47,7 +47,6 @@ Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle
 	Zahlen.x = Startpunkt - faktor + abstand;
 	Zahlen.y = Startpunkt + (faktor*2);
 
-	// PROVISORISCHE LOESUNG Zahlenreihe
 	char* ZahlenArray[10];
 	ZahlenArray[0] = "1"; ZahlenArray[1] = "2"; ZahlenArray[2] = "3"; ZahlenArray[3] = "4"; ZahlenArray[4] = "5";
 	ZahlenArray[5] = "6"; ZahlenArray[6] = "7"; ZahlenArray[7] = "8"; ZahlenArray[8] = "9"; ZahlenArray[9] = "10";
@@ -123,8 +122,8 @@ void DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spiele
 	// Informationstext
 	char InfoSpieler[500];
 		snprintf(InfoSpieler, sizeof(InfoSpieler), 
-			"Spieler Nr. % d \n Verteidigungsstrategie Nr. %d \n Angriffsstrategie Nr. %d \n\n verfehlte Schüsse : %d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
-			,index,  Verteidigungsstrategie, Angriffsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
+			"Spieler Nr. % d \n Angriffsstrategie Nr. %d \n  Verteidigungsstrategie Nr. %d \n\n verfehlte Schüsse : %d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
+			,index, Angriffsstrategie, Verteidigungsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
 		textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, InfoSpieler); updatescr();
 }
@@ -207,38 +206,6 @@ void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer
 	line(xx1, yy1, xx2, yy2, Farbe);
 }
 
-/*
-bool DisplayOutput::Beschleunigung()
-{
-	// Positionierung des Buttons "schneller"
-	Position Box[2] = {};
-	Box[0].x = 2*Startpunkt + 25 *Kaestchengroesse; // in Relation zu der Spielfeldanordnung
-	Box[0].y = Startpunkt;
-
-	Box[1].x = Box[0].x + 10*Kaestchengroesse;
-	Box[1].y = Box[0].y + Kaestchengroesse +2;
-
-	// Schriftgroesse
-	int textgroesse = Kaestchengroesse;
-
-	// Textbox zur Ausgabe des Buttons
-	textbox(Box[0].x, Box[0].y, Box[1].x, Box[1].y, textgroesse, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, "für Beschleunigung drücken"); 
-
-	// Abfragen auf Mouseclick
-	int klick = checkmouse(); 
-	bool beschleunigen = false;
-
-	if (klick == 1) // Mouse betätigt
-	{
-		beschleunigen = true;
-	}
-	else if(klick == 0)	// Mouse nicht betätigt
-	{
-		beschleunigen = false;
-	}
-	return beschleunigen;
-}
-*/
 void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1, int FarbeSpieler2)
 {
 	int i = 0;									// Zählvariable für die for- Schleife
@@ -337,7 +304,4 @@ void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	}
 
 	updatescr();
-	// Beschleunigung
-	// bool schneller = Beschleunigung(); // soll später nicht mehr in der Ausgabe aufgerufen werden
-	//return schneller;
 }
