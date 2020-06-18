@@ -31,13 +31,13 @@ AttackResult Player::ShotOn(Position Shot)
 	int i = 0;
 	do		// Ausführen bis ein getroffenes Schiff gefunden wurde, oder bis alle Schiffe durchgeschaut wurden
 	{
-		Result.Hit = Ships[i].IsHit(Shot);			// Funktion IsHit gibt zurück ob dieses Schiff getroffen wurde
+		Result.Hit = Ships[i].IsHit(Shot);			// Funktion IsHit gibt zurück ob dieses Schiff getroffen wurde	// Speichern der Information ob ein Schiff durch disen Schuss getrofen wurde
 		i++;
-	} while ( (i < 10) & (Result.Hit != true) );	// in i steht jetzt (Nummer des Schiffes +1), das getroffen wurde. Wenn kein Schiff getroffen wurde i=10
+	} while ( (i < 10) & (Result.Hit != true) );	// in i steht jetzt (Nummer des Schiffes +1), das getroffen wurde
 
-	if (Result.Hit == true)
+	if (Result.Hit == true)							
 	{
-		Result.Sunk = Ships[i-1].Sunk;
+		Result.Sunk = Ships[i-1].Sunk;				// Speichern ob ein Schiff durch diesen Schuss versenkt wurde um diese information zurück zu geben		
 	}
 
 	// Mitzählen für den Gegner, je nach dem ob ein Schiff getroffen und evtl. versenkt wurde

@@ -30,7 +30,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	int FarbeSchiffe = BLAU;				// Farbe der Schiffe
 
 	
-	if (!FastPlayThrough)													// Nur wenn Schneller-Button nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
+	if (!FastPlayThrough)											// Nur wenn Schneller-Button nicht geklickt wurde sollen Wartezeit und Ausgabe eingebaut werden
 	{
 		Sleep(WaitTime); 											// Versetzt Programm für bestimmte Zeit (WaitTime) in einen inaktiven Modus
 		Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Graphische Ausgabe
@@ -68,6 +68,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 
 
 
+
 	while (!P[0].Lost & !P[1].Lost)	// Solange noch kein Spieler verloren hat, wird weitergespielt
 	{
 
@@ -75,7 +76,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 
 
 		// Prüfen ob Bwegen/Drehen noch erlaubt ist. Wenn bei jedem Spieler nur noch jewils 2 Schiffe übrig sind, darf nicht mehr bewegt weredn.
-		if( (P[i].SunkShipsByOpponent < 8) && (P[Alternate(i)].SunkShipsByOpponent < 8) )
+		if( (P[i].SunkShipsByOpponent < 8) || (P[Alternate(i)].SunkShipsByOpponent < 8) )
 		{
 			if (!FastPlayThrough)
 			{ 
@@ -95,7 +96,7 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			if (!FastPlayThrough)
 			{
 				// Bewegen nich mehr erlaubt
-				cout << "Es darf nicht mehr bewegt/gedreht werden, da jewils nur noch zwei Schiffe übrig sind \n";
+				cout << "Es darf nicht mehr bewegt/gedreht werden, da jeweils nur noch zwei Schiffe uebrig sind \n";
 			}
 		}
 

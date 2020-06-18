@@ -51,14 +51,14 @@ void user_main()
 	srand(static_cast<unsigned int>(time(nullptr)));	// PZG starten; Seed = time  -- nur ein einziges mal zu Programmstart
 
 	//Für die graphische Ausgabe
-	DisplayOutput Graphics;			// Übergabe --> Ngames()
+	DisplayOutput Graphics;								// Übergabe --> Ngames()
 	// Graphics.Kaestchengroesse = 20; 
 	int FarbeSchiffe = BLAU;
-	Position Bildschirm;										// Position des Grafikfensters auf dem Bildschirm
+	Position Bildschirm;								// Position des Grafikfensters auf dem Bildschirm
 	Bildschirm.x = 500;
 	Bildschirm.y = 250;
 	int Startpunkt = 50;
-	Graphics.Grafikfenster(); //Graphics.Grafikfenster(Bildschirm, Startpunkt); // Erstellen Grafikfenster: Test für einmaligen Aufruf // NEU: Graphics.Grafikfenster();
+	Graphics.Grafikfenster();							// Erstellen Grafikfenster
 
 	while (1)
 	{
