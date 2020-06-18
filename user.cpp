@@ -60,6 +60,7 @@ void user_main()
 	int Startpunkt = 50;
 	Graphics.Grafikfenster();							// Erstellen Grafikfenster
 
+
 	while (1)
 	{
 		NGames(Graphics);		// Durchführen von N Spielen  // Übergabe der DisplayOutput Klassen-Variable Graphics
