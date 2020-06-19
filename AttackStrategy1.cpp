@@ -16,15 +16,15 @@ Strategie gibt beim Aufruf für den x- und für den y-Wert jeweils eine Zufallszah
 */
 
 
-Position AttackStrategy1()
-{
-	Position new_Position = { };
-
-	new_Position.x = (rand() % 10);					// erzeugen einer Zufallszahl zwischen 0 und 9 für x und y
-	new_Position.y = (rand() % 10);
-
-	return new_Position;
-}
+//Position AttackStrategy1()
+//{
+//	Position new_Position = { };
+//
+//	new_Position.x = (rand() % 10);					// erzeugen einer Zufallszahl zwischen 0 und 9 für x und y
+//	new_Position.y = (rand() % 10);
+//
+//	return new_Position;
+//}
 
 
 

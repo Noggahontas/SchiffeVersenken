@@ -108,24 +108,6 @@ bool Ship::AreYouThere(Position CriticalCoordinates)
 
 
 
-
-//Nur zum Testen
-Ship::Ship(int Len, Position& SPos, Direction Orient) 
-{
-	//Konstruktor
-	//initialsisiert ein Schiff mit übergebenen Werten: Length=Len, StartPos=SPos, Orientation=Orient
-	//Nur zum Testen
-
-	Length = Len;
-	StartPos = SPos;
-	Orientation = Orient;
-	Sunk = 0; 
-	Status.resize(Len, 0);    // Alle Elemente von Status auf 0 setzen -> noch keine Treffer
-
-}
-
-
-
 Ship::Ship()
 {
 	Length = NULL;

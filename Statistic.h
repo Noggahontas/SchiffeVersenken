@@ -13,11 +13,27 @@ class Statistic							// Statistik für eine Angriffsstrategie
 		float ProbabilityOfWinning;				// Wahrscheinlich keit zu gewinnen in Prozent
 		int NumberOfGamesUsed;					// Wie oft die Strategie zum Einsatz kam 
 
-		void add(PlayerHistory& GameHistory);	// Fügt der Statistik für eine Angriffsstrategie Werte von einem Spiel hinzu 
 
-		void Calculate();						// Berechnet Statistik für diese Angriffsstrategie
+		/*
+			Funktion: Fügt der Statistik für eine Angriffsstrategie Werte von einem Spiel hinzu. Addieren der Ergebniswerte
+			Input: GameHistory: Ergebnisse aus einem Spiel für einen Spieler
+			Transienten: Alle Klassenvariablen
+		*/
+		void add(PlayerHistory& GameHistory);
 
-		Statistic();							// Standartkonstruktor
+
+		/*
+			Funktion: Berechnet Statistik für diese Angriffsstrategie
+			Transienten: Alle Klassenvariablen
+		*/
+		void Calculate();						
+
+
+		/*
+			Funktion: Standartkonstruktor, Initialsisireung
+			Transienten: Alle Klassenvariablen
+		*/
+		Statistic();					
 };
 
 

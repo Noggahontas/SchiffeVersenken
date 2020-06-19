@@ -1,3 +1,3 @@
 #pragma once
 
-Position AttackStrategy3();
+//Position AttackStrategy3();

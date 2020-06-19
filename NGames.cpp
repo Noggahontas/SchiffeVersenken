@@ -25,6 +25,9 @@ void NGames(DisplayOutput &Graphics)
 
 	int FastPlayThrough;									// Nutzereingabe: Schnelldurchlauf oder zum langsam Nachverfolgen
 
+	int WaitTime = 0;										// Nutzereingabe: Bei Schnelldurchlauf Wartezeit zwischen Zügen in ms
+
+
 	//Auswahl Nutzer zum Setzen der Schiffe bei Spielbeginn
 	cout << "\nMoeglichkeit 1:\t Datei zum Setzen der Schiffe wird bei jedem Spielbeginn\n";
 	cout << "\t\t und fuer jeden Spieler zufaellig gewaehlt -> Eingabe 1 \n";
@@ -42,18 +45,25 @@ void NGames(DisplayOutput &Graphics)
 	// Angabe Nutzen ob alles im Schnelldurchlauf oder zum langsam Nachverfolgen ablaufen soll
 	cout << "\n\nSoll das Spiel im Schnelldurchlauf erfolen? \nWenn ja, Eingabe 1 ansonsten Eingabe 0:\t";
 	cin >> FastPlayThrough;
-	while ((FastPlayThrough != 0) && (FastPlayThrough != 1))				// Nur 1 oder 2 als Eingabe erlaubt, Möglichkeit zur Korrektur
+	while ((FastPlayThrough != 0) && (FastPlayThrough != 1))				// Nur 0 oder 1 als Eingabe erlaubt, Möglichkeit zur Korrektur
 	{
 		cout << "\nEingabe ungueltig! Nur \"0\" oder \"1\" moeglich\n";
 		cout << "\nSchnelldurchlauf? (1 = ja, 0 = Nein):\t";
 		cin >> FastPlayThrough;
 	}
 
+	// Angabe Nutzer wie lange die Wartezeit beim langsamen Durchlauf sein soll
+	if (FastPlayThrough == 0)
+	{
+		cout << "\n\nGeben Sie die gewünschte Wartezeit zwischen Spielzuegen in ms an:\t";
+		cin >> WaitTime;
+	}
+
 
 	// Gewünschte Anzahl an Spielen spielen lassen und Ergebnisse speichern
 	for (int i = 0; i < NumberOfGames; i++)
 	{
-		OneGame(GameHistory.at(i), ModeSetShips, Graphics, FastPlayThrough);	// Ein Spiel wird ausgeführt 
+		OneGame(GameHistory.at(i), ModeSetShips, Graphics, FastPlayThrough, WaitTime);	// Ein Spiel wird ausgeführt 
 																				// Übergabe von i-tem Element des Vektors zum Speichern der Ergebnisse am Ende eines Spiels 
 	}
 

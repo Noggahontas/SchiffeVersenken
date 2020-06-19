@@ -16,23 +16,12 @@ using namespace std;
 
 #include "math.h"
 
-// Includes für Klassen Ship, Player, PlayerHistory
-//#include <vector>
-//#include "Ship.h"
-//#include "Global_Definitions.h" // hier können alle Structs etc rein, die wir quer durch unsre Dateien brauchen; da einbinden, wo sie gebraucht werden!
-//#include "Player.h"
-//#include "OneGame.h"
-//#include "PlayerHistory.h"
+// Includes für Spielablauf
 #include "NGames.h"
 
 // Includes für Strategien
 #include <time.h>
-//#include "Global_Definitions_Strategies.h"
-//#include "AttackStrategy1.h"
-//#include "AttackStrategy2.h"
-//#include "AttackStrategy3.h"
-//#include "AttackStrategy4.h"
-//#include "DefenseStrategy1.h"
+
 
 
 // Include fuer Ausgabe des Graphikfensters
@@ -42,7 +31,9 @@ using namespace std;
 
 
 
-
+/*
+Funktion: Rahmen für den gesamten Programmablauf
+*/
 void user_main()
 {
 	// Rahmen für den gesamten Programmablauf

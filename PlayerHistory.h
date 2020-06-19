@@ -13,8 +13,14 @@ public:
 	int SunkShips;			// Anzahl der Schiffe, die der Spieler in diesem Spiel versenkt hat
 	bool Lost;				// Angabe ob der Spieler dieses Spiel verloren hat: true = verloren
 
-	void Save(Player& PlayerHimself, Player& Opponent);		// Speichert Ergenisse eines Spieles von einem Spieler ab		
-															// Übergabe des Speiers selbst, für den absgespeichert werden soll  
-															// und Übergabe des Gegnsers, da bei ihm weitere Werte (MissedShotsOfOpponent, HitSchotsOfOpponent, SunkShipsByOpponent) 
+
+
+	/*
+		Funktion: Speichert Ergenisse eines Spieles von einem Spieler ab
+		Input:	- PlayerHimself: Spieler selbst, für den absgespeichert werden soll
+				- Opponent: Gegnsers, da bei ihm weitere Werte (MissedShotsOfOpponent, HitSchotsOfOpponent, SunkShipsByOpponent) gespeichert sind
+		Transienten: alle Klassenvariablen
+	*/
+	void Save(Player& PlayerHimself, Player& Opponent);		
 };
 

@@ -4,6 +4,7 @@
 #include <vector>
 using namespace std;
 #include <string>
+#include "Global_Definitions_Strategies.h"
 
 
 class Player
@@ -20,45 +21,112 @@ public:
 	int SunkShipsByOpponent;				// Hier wird gezählt wie viele Schiffe (von diesem Spieler) der Gegner in diesem Spiel versenkt hat
 
 
+	// Für die Angriffsstrategien
+	Position SaveCoordinates;
+	int AttStrategy2Rounds;
+	bool AttStrategy3DirectionSet;
+	AttackDirection AttStrategy3_4Direction;
+	bool AttStartegy4AlreadyShot;
+	bool AttStrategy4DirectionChoice;
+	bool AttStarategy4FieldBorder;
+	Position AttStrategy4FirstHit;
+
 
 public:
-	AttackResult ShotOn(Position Shot);		// Schuss von Gegner auf Koordinaten Shot	
-											// ändert Last3ShotsOfOpponent
-											// Rückgabe als Strukt 
-											// Gibt zurück ob ein Schiff getroffen wurde: Hit=1=getroffen, Hit=0=nicht getroffen
-											// Gibt zurück ob ein Schiff versenkt wurde: Sunk=1=versenkt, Sunk=0=nicht versenkt
+/*
+	Funktion: Schuss von Gegner auf Koordinaten Shot ausführen
+	Input:	- ShotOn: Koordinaten, auf die der Gegner schießt
+	Transienten: Last3ShotsOfOpponent, HitShotsOfOpponent, MissedShotsOfOpponent, SunkShipsByOpponent
+	Output: Als Struct AttackResult Information ob ein Schiff getroffen wurde und ob ein Schiff versenkt wurde
+*/
+	AttackResult ShotOn(Position Shot);		
 
-	bool Turn(int ShipNumber);							// Dreht ein Schiff
-														// Übergabe welches Schiff gedreht werden soll. ShipNumber = Index i aus Array Ships[i] 
-														// Kollisionsabfrage ob Drehen möglich, wenn ja:
-														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
-														// Rückgabe ob Drehen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
 
-	bool Move(int ShipNumber, MoveDirection Direction);	// Bewegt eine Schiff 
-														// Übergabe welches Schiff bewegt werden soll. Nummer Schiff = Index i aus Array Ships[i] 
-														// Übergabe Richtung, in die bewegt werden soll. LeftMove, RightMove, UpMove, DownMove
-														// Kollisionsabfrage ob Drehen möglich, wenn ja:
-														// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
-														// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0	
-
-	void CheckIfLost();									// Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost		
+	/*
+		Funktion: Dreht ein Schiff wenn möglich (Kollisionsabfrage)
+		Input:	- ShipNumber: welches Schiff gedreht werden soll. Index i aus Array Ships[i] 
+		Transienten: Ship[ShipNumber].StartPos, Ship[ShipNumber].Direction
+		Output: Angabe ob Drehen möglich/ erfolgreich war
+	*/
+	bool Turn(int ShipNumber);							
 
 
 
-	Position FindAttackShot(AttackResult LastAttackResult);	// Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück,
-															// auf die geschossen werden soll
-															// Übergabe von Ergebnis des letzten eigenen Schusses (Treffer, Versenkt)
+	/*
+		Funktion: Bewegt ein Schiff  wenn möglich (Kollisionsabfrage)
+		Input:	- ShipNumber: welches Schiff bewegt werden soll. Index i aus Array Ships[i]
+		Transienten: Ship[ShipNumber].StartPos, Ship[ShipNumber].Direction
+		Output: Angabe ob Bewegen möglich/ erfolgreich war
+	*/
+	bool Move(int ShipNumber, MoveDirection Direction);	
 
-	void DefensiveAction();									// Ermittelt je nach gewählter Angriffsstrategie einen Verteidigungsmove: 
-															// Bewegen oder Drehen und welches Schiff, oder auch gar nichts
-															// Ruft ggf. Funktion Turn oder Move auf 
 
-	Player(int ModeSetShips);		// Konstruktor 
-									// Stößt Kontruktor für jedes Schiff an
-									// legt Größe von Last3ShotsOfOpponent fest und initialisiert mit -1
-									// Wählt zufällig AttackStrategy und DefenseStrategy aus
 
+	/*
+		Funktion: Prüft ob alle Schiffe eines Spielers versenkt wurden und aktualisiert ggf. Variable Lost	
+		Input:Ships[10]
+		Transienten: Lost	
+	*/
+	void CheckIfLost();									
+
+
+	/*
+		Funktion: Gibt je nach gewählter Angriffsstrategie (AttackStrategy) eines Spielers Koordinaten zurück, auf die geschossen werden soll
+		Input:	LastAttackResult: Ergebnis des letzten eigenen Schusses (Treffer, Versenkt)
+		Output: Koordinaten, auf die geschossen werden soll
+	*/
+	Position FindAttackShot(AttackResult LastAttackResult);	
+
+
+	/*
+		Funktion:	- Ermittelt je nach gewählter Verteidigungsstrategie einen Verteidigungsmove: Bewegen oder Drehen und welches Schiff, oder auch gar nichts
+					- Ruft ggf. Funktion Turn oder Move auf 
+	*/
+	void DefensiveAction();									
+
+
+	/*
+		Funktion: Konstruktor mit Parameter
+		Input:	ModeSetShips: Modus für Auswählen der Text-Dateien zum Schiffe setzen
+		Transienten: Alle Klassenvariablen initialisieren
+	*/
+	Player(int ModeSetShips);		
+
+
+	/*
+		Funktion: 
+		Input:	
+				
+		Transienten: 
+		Output: 
+	*/
 	void lex(string FileName);		// Ruft lexikalische Analyse auf
+
+
+
+
+	Position AttackStrategy1();
+
+
+
+
+	Position AttackStrategy2();
+
+
+
+
+	Position AttackStrategy3();
+
+
+
+
+	Position AttackStrategy4(bool* LastShotHit, bool* sunk);
+
+
+
+
+
+	void DefenseStrategy1(int* ShipNumber, DefendAction* Action, MoveDirection* MoveDir);
 														
 };
 

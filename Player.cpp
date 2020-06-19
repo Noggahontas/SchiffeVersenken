@@ -3,14 +3,15 @@
 #include "Player.h"
 #include <iostream>
 #include <fstream>
-#include "AttackStrategy1.h"
-#include "AttackStrategy2.h"
-#include "AttackStrategy3.h"
-#include "AttackStrategy4.h"
+//#include "AttackStrategy1.h"
+//#include "AttackStrategy2.h"
+//#include "AttackStrategy3.h"
+//#include "AttackStrategy4.h"
 #include "DefenseStrategy1.h"
 #include <time.h>	// Für Generierung Zufallszahlen
 using namespace std;
 #include "PlayerLexan.h"
+#include "Global_Definitions_Strategies.h"
 
 
 AttackResult Player::ShotOn(Position Shot)
@@ -672,9 +673,15 @@ Player::Player(int ModeSetShips) {
 	MissedShotsOfOpponent = 0;
 	SunkShipsByOpponent = 0;
 
+	SaveCoordinates = { };
+	AttStrategy2Rounds = 0;
+	AttStrategy3DirectionSet = false;
+	AttStrategy3_4Direction = AttackDirection::N;
+	AttStartegy4AlreadyShot = false;
+	AttStrategy4DirectionChoice = false;
+	AttStarategy4FieldBorder = false;
+	AttStrategy4FirstHit = { };
 }
-
-
 
 
 
@@ -707,3 +714,627 @@ void Player::lex(string FileName)
 
 
 
+
+
+Position Player::AttackStrategy1()
+{
+	Position new_Position = { };
+
+	new_Position.x = (rand() % 10);					// erzeugen einer Zufallszahl zwischen 0 und 9 für x und y
+	new_Position.y = (rand() % 10);
+
+	return new_Position;
+}
+
+
+
+
+Position Player::AttackStrategy2()
+{
+	int &Strategy_Rounds = AttStrategy2Rounds;		// Enthält die Nummer des aktuellen Durchlaufes
+
+	Position &Pos = SaveCoordinates;				// beinhaltet die vorherigen Angriffskoordinaten 
+													// und für die Rückgabe die neu bestimmen Koordinaten
+
+
+	if ((Pos.x == NULL) && (Pos.y == NULL))			// Am Ende des letzten Durchlaufs muss von {0,0} zu {0,3} gewechselt werden
+	{
+		Pos.x = 0;
+		Pos.y = 3;
+		return Pos;
+	}
+
+	switch (Strategy_Rounds)						// Jeder Durchlauf hat unterschiedliche Start-/Endpunkte
+	{
+	case 0:											// Erster Durchlauf
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
+			if (Pos.x == 3)							// Endpunkt der ersten diagonalen Linie bei {3,0} -> return neuer Startpunkt 
+			{
+				Pos = { 0,7 };						// Startpunkt der neuen diagonalen Linie
+				return Pos;
+			}
+			else if (Pos.x == 7)					// Endpunkt der zweiten diagonalen Linie bei {0,7} -> return neuer Startpunkt
+			{
+				Pos = { 2,9 };						// Startpunkt der neuen diagonalen Linie
+				return Pos;
+			}
+			else if (Pos.y == 2)					// Endpunkt der dritten diagonalen Linie bei {9,2} -> return neuer Startpunkt
+			{
+				Pos = { 6,9 };						// Startpunkt der neuen diagonalen Linie
+				return Pos;
+			}
+			else if (Pos.y == 6)					// Endpunkt der vierten diagonalen Linie bei {9,6} -> return neuer Startpunkt
+			{
+				Pos = { 0,2 };						// Startpunkt der neuen diagonalen Linie
+				Strategy_Rounds = 1;				// Zweiter Durchlauf beim nächsten Aufruf
+				return Pos;
+			}
+		}
+		else
+		{
+			Pos.x = Pos.x + 1;						// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
+			Pos.y = Pos.y - 1;
+			return Pos;
+		}
+	case 1:
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
+			if (Pos.x == 2)							// Endpunkt der ersten diagonalen Linie {0,9} -> return neuer Startpunkt
+			{
+				Pos = { 0,6 };						// Startpunkt der neuen diagonalen Linie
+				return Pos;
+			}
+			else if (Pos.x == 6)
+			{
+				Pos = { 1,9 };
+				return Pos;
+			}
+			else if (Pos.y == 1)
+			{
+				Pos = { 5,9 };
+				return Pos;
+			}
+			else if (Pos.y == 5)
+			{
+				Pos = { 9,9 };
+				return Pos;
+			}
+			else if (Pos.y == 9)
+			{
+				Pos = { 0,1 };
+				Strategy_Rounds = 2;				// Dritter Durchlauf beim nächsten Aufruf
+				return Pos;
+			}
+		}
+		else
+		{
+			Pos.x = Pos.x + 1;						// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
+			Pos.y = Pos.y - 1;
+			return Pos;
+		}
+	case 2:
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
+			if (Pos.x == 1)
+			{
+				Pos = { 0,5 };
+				return Pos;
+			}
+			else if (Pos.x == 5)
+			{
+				Pos = { 0,9 };
+				return Pos;
+			}
+			else if (Pos.y == 0)
+			{
+				Pos = { 4,9 };
+				return Pos;
+			}
+			else if (Pos.y == 4)
+			{
+				Pos = { 8,9 };
+				return Pos;
+			}
+			else if (Pos.y == 8)
+			{
+				Pos.x = 0;
+				Pos.y = 4;
+				Strategy_Rounds = 3;				// vierter Durchlauf beim nächsten Aufruf
+				return Pos;
+			}
+		}
+		else
+		{
+			Pos.x = Pos.x + 1;						// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
+			Pos.y = Pos.y - 1;
+			return Pos;
+		}
+	case 3:
+		if ((Pos.x == 9) || (Pos.y == 0))			// Prüfen der ersten Reihe (y=0) oder der letzten Spalte (x=9), 
+		{											// da dort das Spielfeld endet und von neuem Punkt aus gestartet werden soll.
+			if (Pos.x == 4)
+			{
+				Pos = { 0,8 };
+				return Pos;
+			}
+			else if (Pos.x == 5)
+			{
+				Pos = { 0,9 };
+				return Pos;
+			}
+			else if (Pos.x == 8)
+			{
+				Pos = { 3,9 };
+				return Pos;
+			}
+			else if (Pos.y == 3)
+			{
+				Pos = { 7,9 };
+				return Pos;
+			}
+			else if (Pos.y == 7)
+			{
+				Pos.x = 0;
+				Pos.y = 0;
+				Strategy_Rounds = 0;			// Am Ende des vierten Durchlaufs wird wieder mit dem ersten Durchlauf
+				return Pos;						// im nächsten Aufruf gestartet
+			}
+		}
+		else
+		{
+			Pos.x = Pos.x + 1;					// Angriffsrichtung läuft diagonal rechts (x+1) hoch (y-1)
+			Pos.y = Pos.y - 1;
+			return Pos;
+		}
+	}
+
+	return Pos;
+}
+
+
+
+
+
+Position Player::AttackStrategy3()
+{
+	AttackDirection &Richtung = AttStrategy3_4Direction;				// Für die Richtung, in die geschossen werden soll
+	bool &Direction = AttStrategy3DirectionSet;						// notwendig zum unterscheiden zwischen Situation {NULL,NULL} und {0,0}
+
+	Position& Pos = SaveCoordinates;	// beinhaltet die vorherige und dann die neu berechneten Koordinaten
+
+	// Der erste Schuss von jedem Durchlauf startet bei {0,0} und hat als Richtung "Süden" ausgewählt
+	if (((Pos.x == NULL) && (Pos.y == NULL) && (Direction == false)) || ((Pos.x == 5) && (Pos.y == 4)))
+	{
+		Pos.x = 0;
+		Pos.y = 0;
+		Richtung = AttackDirection::S;
+		Direction = true;
+		return Pos;
+	}
+
+
+	// Alle Koordinaten, die mit einem Richtungswechsel zusammenhängen (jeweils die Eckpunkte)
+	Position S_to_E[5] = { {0,9} , {1,8} , {2,7} , {3,6} , {4,5} };		// Süd-Ost Richtungswechsel
+	Position E_to_N[5] = { {5,5} , {6,6} , {7,7} , {8,8} , {9,9} };		// Ost-Nord Richtungswechsel
+	Position N_to_W[5] = { {6,3} , {7,2} , {8,1} , {9,0} };				// Nord-West Richtungswechsel
+	Position W_to_S[5] = { {1,0} , {2,1} , {3,2} , {4,3} };				// West-Süd Richtungswechsel
+
+	// letzter Schuss mit den Eckpunkt-Koordinaten vergleichen, falls erreicht -> Richtungswechsel
+	// Richtungswechsel von Süden nach Osten oder von Osten zu Norden prüfen
+	for (int ii = 0; ii < 5; ii++)
+	{
+		if ((Pos.x == S_to_E[ii].x) && (Pos.y == S_to_E[ii].y)) { Richtung = AttackDirection::E; break; }
+		else if ((Pos.x == E_to_N[ii].x) && (Pos.y == E_to_N[ii].y)) { Richtung = AttackDirection::N; break; }
+	}
+	// Richtungswechsel von Norden nach Westen oder von Westen nach Süden prüfen
+	for (int ii = 0; ii < 4; ii++)
+	{
+		if ((Pos.x == N_to_W[ii].x) && (Pos.y == N_to_W[ii].y)) { Richtung = AttackDirection::W; break; }
+		else if ((Pos.x == W_to_S[ii].x) && (Pos.y == W_to_S[ii].y)) { Richtung = AttackDirection::S; break; }
+	}
+
+
+	// Abhängig von der Angriffsrichtung werden neue Koordinaten berechnet
+	switch (Richtung)
+	{
+	case AttackDirection::S:					// Angriffsrichtung ist Süden (z.B. die erste Spalte bei x=0)
+	{
+		Pos.x = Pos.x;							// x-Wert bleibt gleich
+		Pos.y = Pos.y + 1;						// y-Wert wird inkrementiert
+		return Pos;
+		break;
+	}
+	case AttackDirection::E:					// Angriffsrichtung ist Osten (z.B. die letzte Zeile bei y=9)
+	{
+		Pos.x = Pos.x + 1;
+		Pos.y = Pos.y;
+		return Pos;
+		break;
+	}
+	case AttackDirection::N:					// Angriffsrichtung ist Norden (z.B. die letzte Spalte bei x=9)
+	{
+		Pos.x = Pos.x;
+		Pos.y = Pos.y - 1;
+		return Pos;
+		break;
+	}
+	case AttackDirection::W:					// Angriffsrichtung ist Westen (z.B. die erste Zeile bei y=0)
+	{
+		Pos.x = Pos.x - 1;
+		Pos.y = Pos.y;
+		return Pos;
+		break;
+	}
+	default:
+	{
+		cout << "AttackStrategy2: Da stimmt was nicht!" << endl;
+	}
+	}
+	return Pos;
+}
+
+
+
+
+// Teil von AttackStrategy 4
+
+// Ausgelagerte "Berechnung" der nächsten Koordinaten:
+
+// Schüsse nach Norden ändern den x-Wert nicht, der y-Wert wird dekrementiert: x=x und y=y-1
+Position ShootNorth(Position* previous_Position)
+{
+	Position new_Pos = {};
+	new_Pos.x = previous_Position->x;
+	new_Pos.y = previous_Position->y - 1;
+	return new_Pos;
+}
+
+// Schüsse nach Süden ändern den x-Wert nicht, der y-Wert wird inkrementiert: x=x und y=y+1
+Position ShootSouth(Position* previous_Position)
+{
+	Position new_Pos = {};
+	new_Pos.x = previous_Position->x;
+	new_Pos.y = previous_Position->y + 1;
+	return new_Pos;
+}
+
+// Schüsse nach Osten ändern den y-Wert nicht, der x-Wert wird inkrementiert: y=y und x=x+1
+Position ShootEast(Position* previous_Position)
+{
+	Position new_Pos = {};
+	new_Pos.x = previous_Position->x + 1;
+	new_Pos.y = previous_Position->y;
+	return new_Pos;
+}
+// Schüsse nach Westen ändern den y-Wert nicht, der x-Wert wird dekrementiert: y=y und x=x-1
+Position ShootWest(Position* previous_Position)
+{
+	Position new_Pos = {};
+	new_Pos.x = previous_Position->x - 1;
+	new_Pos.y = previous_Position->y;
+	return new_Pos;
+}
+
+// Berechnung neuer Zufallskoordinaten (x-,y-Werte zwischen 0 und 9):
+Position rndCoordinates()
+{
+	Position new_pos = {};
+	new_pos.x = (rand() % 10);
+	new_pos.y = (rand() % 10);
+	return new_pos;
+}
+
+
+Position Player::AttackStrategy4(bool* LastShotHit, bool* sunk)
+{
+	Position& Pos = SaveCoordinates;				// Beinhaltet die Koordinaten des vorherigen Schusses bzw nach der Berechnung die neuen Angriffskoordinaten
+	bool &alreadyShot = AttStartegy4AlreadyShot;	// Wenn schonmal geschossen wurde (true) -> für bestimmte Abfragen
+
+	AttackDirection &Direction = AttStrategy3_4Direction;							// zeigt die Angriffsrichtung an für den nächsten
+	bool &DirectionChoice = AttStrategy4DirectionChoice;		// zur Unterscheidung zwischen neuen rnd-Koordinaten und Richtungswechselabfrage
+
+	bool &FieldBorder = AttStarategy4FieldBorder;			// Kollision mit dem Spielfeldrand muss gesondert behandelt werden
+
+	Position &first_hit = AttStrategy4FirstHit;				// merken des ersten Schusses (die ersten rnd-Koordinaten bei jeder Suchfolge)
+
+
+	// Erster Schuss (Bedingungen: x und y = NULL) -> rnd-Koordinaten zurückgeben
+	// ODER
+	// Ging vorherige Schuss daneben UND es wurde schon geschossen UND Richtung noch nicht gewählt -> neue rnd-Koordinaten zurückgeben
+	// ODER
+	// Der vorherhige Schuss hat ein Schiff versenkt -> neue rnd-Koordinaten zurückgeben
+	if (((Pos.x == NULL) && (Pos.y == NULL)) || ((*LastShotHit == false) && (alreadyShot == true) && (!DirectionChoice)) || (*sunk == true))
+	{
+		if (*sunk == true)							// Falls das angegriffene Schiff des vorherigen Schusses versenkt wirde
+		{											// werden bestimmte Hilfsvariablen zurückgesetzt
+			DirectionChoice = false;
+		}
+		Direction = AttackDirection::N;				// erste Angriffsrichtung ist immer Norden
+		Pos = rndCoordinates();						// Zufallskoordinaten generieren
+		alreadyShot = true;							// Hilfsvariable setzen
+		first_hit = Pos;							// Zufalskoordinaten werden in first_hit geschrieben -> wird beim Richtungswechsel benötigt
+		return Pos;									// neue Angriffskoordinaten zurückgeben
+	}
+
+	// Waren Zufallskoordinaten ein Treffer UND es wurde auch geschossen UND die Angriffsrichtung wurde gewählt,
+	// dann kann die "Schiffsuche" starten (zuerst Richtung Norden)
+	if ((*LastShotHit == true) && (alreadyShot == true) && (!DirectionChoice))
+	{
+		Direction = AttackDirection::N;
+		DirectionChoice = true;
+	}
+
+
+
+	// Wenn der letzte Schuss nicht getroffen hat, aber geschossen wurde, muss die Richtung gewechselt werden, 
+	// abhängig von der aktuell aktiven Richtung. 
+	// (Wenn z.B. beim schießen in Richtung Süden ein Schuss daneben geht, 
+	// muss die Richtung nach Osten gewechselt werden.)
+	if (((*LastShotHit == false) && (alreadyShot)))
+	{	// Wenn die Angriffsrichtung bisher Norden war oder die nächsten Koordinaten ausserhalb des nördlichen Randes (y<0) landen,
+		// muss die Richtung nach Süden wechseln
+		if ((Direction == AttackDirection::N) || ((Direction == AttackDirection::N) && ((Pos.y - 1) < 0)))
+		{
+			if (FieldBorder)									// vorheriger Schuss war auf einem Feldrand (FieldBorder = true) 
+			{													// (wird hier vermutlich nicht nötig sein, da vor Norden nur Zufallswahl kommt) 
+				FieldBorder = false;							// Zurücksetzen der Hilfsvariable 
+				Pos = ShootNorth(&first_hit);					// nördlich der ersten Koordinaten schießen
+				return Pos;
+			}
+			else if ((first_hit.y + 1) <= 9)					// Kollision des nächsten Schusses mit südlichem Rand prüfen,
+			{													// weil der Richtungswechsel nach Süden. Wenn Rand nicht erreicht -> i.O
+				Direction = AttackDirection::S;					// Angriffsrichtung zu Süden wechseln
+				Pos = ShootSouth(&first_hit);					// südlich der ersten Koordinaten schießen
+				return Pos;
+			}
+			else												// Wäre der nächste Schuss ausserhalb des Spielfeldes
+			{													// -> südlicher Spielfeldrand erreicht
+				Direction = AttackDirection::E;					// die neue Angriffsrichtung ist Osten
+				Pos = ShootEast(&first_hit);					// östlich der ersten Koordinaten schiessen
+				return Pos;
+			}
+		}
+		// Wenn die Angriffsrichtung bisher Süden war oder die nächsten Koordinaten ausserhalb des südlichen Randes (y>9) landen,
+		// muss die Richtung nach Osten wechseln
+		else if ((Direction == AttackDirection::S) || ((Direction == AttackDirection::S) && ((Pos.y + 1) > 9)))
+		{
+			if (FieldBorder)									// vorheriger Schuss war auf einem Feldrand (FieldBorder = true) 
+			{
+				FieldBorder = false;							// zurücksetzen der Hilfsvariable
+				Pos = ShootSouth(&first_hit);					// südlich der ersten Koordinaten schießen
+				return Pos;
+			}
+			else if (first_hit.x + 1 <= 9)						// Kollision des nächsten Schusses mit östlichen Rand prüfen,
+			{													// weil der Richtungswechsel nach Osten. Wenn Rand nicht erreicht -> i.O
+				Direction = AttackDirection::E;					// Angriffsrichtung zu Osten wechseln
+				Pos = ShootEast(&first_hit);					// östlich der ersten Koordinaten schießen
+				return Pos;
+			}
+			else												// Wäre der nächste Schuss ausserhalb des Spielfeldes
+			{													// -> östlicher Spielfeldrand erreicht
+				Direction = AttackDirection::W;					// Angriffsrichtung zu Westen wechseln
+				Pos = ShootWest(&first_hit);					// westlich der ersten Koordinaten schießen
+				return Pos;
+			}
+		}
+		// Wenn die Angriffsrichtung bisher Osten war oder die nächsten Koordinaten ausserhalb des östlichen Randes (x>9) landen,
+		// muss die Richtung nach Westen wechseln
+		else if ((Direction == AttackDirection::E) || ((Direction == AttackDirection::E) && ((Pos.x + 1) > 9)))
+		{
+			if (FieldBorder)									// vorheriger Schuss war auf einem Feldrand (FieldBorder = true)
+			{
+				FieldBorder = false;							// zurücksetzen der Hilfsvariable
+				Pos = ShootEast(&first_hit);					// östlich der ersten Koordinaten schießen
+				return Pos;
+			}
+			else if (first_hit.x - 1 >= 0)						// Kollision des nächsten Schusses mit westlichen Rand prüfen,
+			{													// weil der Richtungswechsel nach Westen. Wenn Rand nicht erreicht -> i.O
+				Direction = AttackDirection::W;					// Angriffsrichtung zu Westen wechseln
+				Pos = ShootWest(&first_hit);					// westlich der ersten Koordinaten schießen
+				return Pos;
+			}
+			else												// Wäre der nächste Schuss ausserhalb des Spielfeldes
+			{
+				Direction = AttackDirection::N;					// Angriffsrichtung zu Norden wechseln
+				alreadyShot = false;							// zurücksetzen der Hilfsvariablen
+				DirectionChoice = false;						// zurücksetzen der Hilfsvariablen
+				Pos = rndCoordinates();							// neue Zufallskoordinaten generieren
+				alreadyShot = true;
+				first_hit = Pos;								// neue Koordinaten für den ersten Schuss
+				return Pos;
+
+			}
+		}
+		// Wenn die Angriffsrichtung bisher Westen war oder die nächsten Koordinaten ausserhalb des westlichen Randes (x<0) landen,
+		// muss die Richtung nach Norden wechseln und neue Zufallskoordinaten generiert werden
+		else if ((Direction == AttackDirection::W) || ((Direction == AttackDirection::W) && ((Pos.x - 1) < 0)))
+		{
+			if (FieldBorder)									// vorheriger Schuss war auf einem Feldrand (FieldBorder = true)
+			{
+				FieldBorder = false;							// zurücksetzen der Hilfsvariablen
+				Pos = ShootWest(&first_hit);					// westlich der ersten Koordinaten schießen
+				return Pos;
+			}
+			else												// Wurde schon nach Westen geschossen und das ging daneben
+			{													// werden neue Zufallskoordinaten generitert
+				alreadyShot = false;							// zurücksetzen der Hilfsvariablen
+				Direction = AttackDirection::N;					// Angriffsrichtung zu Norden wechseln
+				DirectionChoice = false;						// zurücksetzen der Hilfsvariablen
+
+				Pos = rndCoordinates();							// Zufallskoordinaten generieren
+				alreadyShot = true;
+				first_hit = Pos;
+				return Pos;
+			}
+		}
+	}
+
+	// Schiff suchen: 
+	// Der letzter Schuss war ein Treffer UND es wurde schon geschossen
+	if ((*LastShotHit == true) && (alreadyShot == true))
+	{
+		// Die aktuelle Richtung ist Norden -> Schuss auf das Feld nördlich
+		if ((Direction == AttackDirection::N))
+		{
+			if (FieldBorder)						// vorheriger Schuss war auf einem Feldrand (FieldBorder = true)
+			{										// (wird hier vermutlich nicht nötig sein, da vor Norden nur Zufallswahl
+				Pos = ShootNorth(&first_hit);		// nördlich der ersten Koordinaten schießen
+				FieldBorder = false;				// zurücksetzen der Hilfsvariablen
+				return Pos;
+			}
+			else if ((Pos.y - 1) > 0)				// Liegt der nächste Schuss innerhalb des Spiefeldes und nicht am nördlichen Rand?
+			{
+				Pos = ShootNorth(&Pos);				// nördlich der letzten Koordinaten schießen
+				return Pos;
+			}
+			else if ((Pos.y - 1) == 0)				// Liegt der nächste Schuss AUF dem nördlichen Rand? 
+			{
+				Pos = ShootNorth(&Pos);				// nördlich der letzten Koordinaten schießen
+				Direction = AttackDirection::S;		// Richtung zach Süden wechseln
+				FieldBorder = true;					// Hilfsvariable für "Feldrand erreicht" setzen
+				return Pos;
+			}
+			else if (Pos.y == 0)					// Liegt der letzte Schuss AUF dem nördlichen Rand?
+			{
+				Pos = ShootSouth(&first_hit);		// südlich der ersten Koordinaten schießen
+				Direction = AttackDirection::S;		// Richtung nach Süden wechseln
+				return Pos;
+			}
+		}
+		// Die aktuelle Richtung ist Süden -> Schuss auf das Feld südlich
+		else if ((Direction == AttackDirection::S))
+		{
+			if (FieldBorder)						// vorheriger Schuss war auf einem Feldrand (FieldBorder = true)
+			{
+				Pos = ShootSouth(&first_hit);		// südlich der ersten Koordinaten schießen
+				FieldBorder = false;				// zurücksetzen der Hilfsvariablen
+				return Pos;
+			}
+			else if ((Pos.y + 1) < 9)				// Liegt der nächste Schuss innerhalb des Spielfeldes und nicht am südlichen Rand?
+			{
+				Pos = ShootSouth(&Pos);				// südlich der letzten Koordinaten schießen
+				return Pos;
+			}
+			else if ((Pos.y + 1) == 9)				// Liegt der nächste Schuss AUF dem südlichen Rand?
+			{
+				Pos = ShootSouth(&Pos);				// südlich der letzten Koordinaten schießen
+				Direction = AttackDirection::E;		// Richtung nach Osten wechseln
+				FieldBorder = true;					// Hilfsvariable für "Feldrand erreicht" setzen
+				return Pos;
+			}
+			else if (Pos.y == 9)					// Liegt der letzte Schuss AUF dem südlichen Rand?
+			{
+				if (Pos.x < 9)						// Liegt der letzte Schuss innerhalb des Spielfeldes (nicht am östlichen Rand)?
+				{
+					Pos = ShootEast(&first_hit);	// östlich der ersten Koordinaten schießen
+					Direction = AttackDirection::E;	// Richtung nach Osten wechseln
+					return Pos;
+				}
+				else if (Pos.x == 9)				// Liegt der letzte Schuss AUF dem östlichen Rand?
+				{
+					Pos = ShootWest(&first_hit);	// westlich der ersten Koordinaten schießen
+					Direction = AttackDirection::W;	// Richtung nach Westen wechseln
+					return Pos;
+				}
+			}
+		}
+		// Die aktuelle Richtung ist Osten -> Schuss auf das Feld östlich
+		else if ((Direction == AttackDirection::E))
+		{
+			if (FieldBorder)						// vorheriger Schuss war auf einem Feldrand (FieldBorder = true)
+			{
+				Pos = ShootEast(&first_hit);		// östlich der ersten Koordinaten schießen
+				FieldBorder = false;				// zurücksetzen der Hilfsvariable
+				return Pos;
+			}
+			else if ((Pos.x + 1) < 9)				// Liegt der nächste Schuss innerhalb des Spielfeldes und nicht am östlichen Rand?
+			{
+				Pos = ShootEast(&Pos);				// östlich der letzten Koordinaten schießen
+				return Pos;
+			}
+			else if ((Pos.x + 1) == 9)				// Liegt der nächste Schuss AUF dem östlichen Rand?
+			{
+				Pos = ShootEast(&Pos);				// östlich der letzten Koordinaten schießen
+				Direction = AttackDirection::W;		// Richtung nach Westen wechseln
+				FieldBorder = true;					// Hilfsvariable für "Feldrand erreicht" setzen
+				return Pos;
+			}
+			else if (Pos.x == 9)					// Liegt der letzte Schuss AUF dem östlichen Rand?
+			{
+				Pos = ShootWest(&first_hit);		// westlich der ersten Koordinaten schießen
+				Direction = AttackDirection::W;		// Richtung nach Westen wechseln
+				return Pos;
+			}
+		}
+		// Die aktuelle Richtung ist Westen -> Schuss auf das Feld westlich
+		else if ((Direction == AttackDirection::W))
+		{
+			if (FieldBorder)						// vorheriger Schuss war auf einem Feldrand (FieldBorder = true)
+			{
+				Pos = ShootWest(&first_hit);		// westlich der ersten Koordinaten schießen
+				FieldBorder = false;				// zurücksetzen der Hilfsvariable
+				return Pos;
+			}
+			else if ((Pos.x - 1) > 0)				// Liegt der nächste Schuss innerhalb des Spielfeldes und nicht am westlichen Rand?
+			{
+				Pos = ShootWest(&Pos);				// westlich der letzten Koordinaten schießen
+				return Pos;
+			}
+			else if ((Pos.x - 1) == 0)				// Liegt der nächste Schuss AUF dem westlichen Rand?
+			{
+				Pos = ShootWest(&Pos);				// westlich der letzten Koordinaten schießen
+				return Pos;
+			}
+			else if (Pos.x == 0)					// Liegt der letzte Schuss AUF dem westlichen Rand?
+			{
+				Pos = rndCoordinates();				// neue Zufallskoordinaten generieren
+				first_hit = Pos;					// neue erste Koordinaten
+				alreadyShot = true;					// Hilfsvariablen setzen
+				DirectionChoice = false;			// zurücksetzen von Hilfsvariablen 
+				Direction = AttackDirection::N;		// Richtung nach Norden wechseln
+
+			}
+		}
+	}
+	return Pos;
+}
+
+
+
+
+
+
+void Player::DefenseStrategy1(int* ShipNumber, DefendAction* Action, MoveDirection* MoveDir)
+{
+	int rndAction = (rand() % 3);							// DefendAction (Nothing, Move, Turn) soll zufällig gewählt werden
+	int rndMoveDir = 0;										// Zufällige Bewegungsrichtung wählen
+
+	switch (rndAction)
+	{
+	case 0:													// Erster Fall: nichts tun
+		*Action = DefendAction::Nothing;					// DefendAction auf Nothing setzen
+		break;
+
+	case 1:													// Zweiter Fall: ein Schiff soll sich bewegen
+		*Action = DefendAction::Move;						// DefendAction auf Move setzen
+		*ShipNumber = (rand() % 10);						// zufälliges Schiff auswählen
+		rndMoveDir = (rand() % 2);							// zufällige Richtungswahl
+		switch (rndMoveDir)
+		{
+		case 0:											// Erster Fall: Vorwärts bewegen
+			*MoveDir = MoveDirection::Forward;
+			break;
+		case 1:											// Zweiter Fall: Rückwärts bewegen
+			*MoveDir = MoveDirection::Backward;
+			break;
+		}
+		break;
+
+	case 2:													// Dritter Fall: ein Schiff soll sich drehen
+		*Action = DefendAction::Turn;						// DefendAction auf Turn setzen
+		*ShipNumber = (rand() % 10);						// zufälliges Schiff auswählen
+		break;
+	}
+	return;
+}
