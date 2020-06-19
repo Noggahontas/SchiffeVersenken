@@ -8,10 +8,13 @@
 #include <iostream>
 #include <stdio.h>
 
+
+
+
 void DisplayOutput::Grafikfenster()
 {
 	// Hoehe und Breite des Graphikfensters
-	int breite = (20 * Kaestchengroesse) + (4 * Startpunkt);//(10 * Startpunkt) + 150;
+	int breite = (20 * Kaestchengroesse) + (4 * Startpunkt);
 	int hoehe = (16 * Kaestchengroesse) + (2 * Startpunkt);
 
 	// Erstellen des Graphikfensters
@@ -22,11 +25,11 @@ void DisplayOutput::Grafikfenster()
 
 Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
-	int const N = 4;	
-	int i;
-	int dx, dy;
-	int differenz;
-	int faktor = (Startpunkt / 10);
+	int const N = 4;				 // Definition einer festen Array-Groesse
+	int i;							 // Zaehlvariable der for- Schleife
+	int dx, dy;						 // Hilfsvariablen zur Abstandberechnung der Buchstaben bzw Zahlen zueinander
+	int differenz;					 // Abstand der gezeichneten Spielfeldlinien
+	int faktor = (Startpunkt / 10);  // Abstand der Buchstaben / Zahlenreihen vom Spielfeld
 	int abstand = (index - 1) * 300; // Berechnen des Abstandes beider Spielfelder
 
 	// Definition der verschiedenen Textfelder im Spielfeld
@@ -125,7 +128,8 @@ void DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spiele
 			"Spieler Nr. % d \n Angriffsstrategie Nr. %d \n  Verteidigungsstrategie Nr. %d \n\n verfehlte Schüsse : %d \n getroffene Schüsse : %d \n versenkte Schiffe : %d"
 			,index, Angriffsstrategie, Verteidigungsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
-		textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, InfoSpieler); updatescr();
+		textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, InfoSpieler); 
+		updatescr();
 }
 
 void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Farbe)
@@ -188,12 +192,12 @@ void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, in
 	}
 }
 
-void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Treffer,int Farbe)
+void DisplayOutput::getroffenesFeld(Position EckpunktSpielfeld, Position Schuss,int Farbe)
 {
 	int x1 = 0, x2 = 0, xx1 = 0, xx2 = 0, y1 = 0, y2 = 0, yy1 = 0, yy2 = 0;
 	// Skalierung des Ausgangspunktes an das Spielfeld
-	x1 = EckpunktSpielfeld.x + Treffer.x*Kaestchengroesse; 
-	y1 = EckpunktSpielfeld.y + Treffer.y*Kaestchengroesse;
+	x1 = EckpunktSpielfeld.x + Schuss.x*Kaestchengroesse;
+	y1 = EckpunktSpielfeld.y + Schuss.y*Kaestchengroesse;
 
 	x2 = x1 + Kaestchengroesse; 
 	y2 = y1 + Kaestchengroesse;
@@ -218,6 +222,9 @@ void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	Position Schuss1_2, Schuss2_2, Schuss3_2;	// letzten 3 Schuesse des Gegners (Spieler 2)
 
 	Ship Schiff_1, Schiff_2;					// Schiff_1 : Schiff Spieler 1, Schiff_2 : Schiff Spieler 2
+
+	int Schiff_1_Kontrolle;						// Status des Schiffes(gesunken / nicht gesunken) des 1. Spielers
+	int Schiff_2_Kontrolle;						// Status des Schiffes(gesunken / nicht gesunken) des 2. Spielers
 
 	// Aufräumen
 	clrscr(); 
@@ -258,8 +265,8 @@ void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 		Schiff_2 = Spieler2.Ships[i];
 
 		// Lebendkontrolle
-		int Schiff_1_Kontrolle = Schiff_1.Sunk;
-		int Schiff_2_Kontrolle = Schiff_2.Sunk;
+		Schiff_1_Kontrolle = Schiff_1.Sunk;
+		Schiff_2_Kontrolle = Schiff_2.Sunk;
 
 		// zuerst die Schiffe und dann die getroffenen Felder zeichnen, sonst werde die Kreuze übermalt
 		// Schiff von Spieler 1
@@ -294,7 +301,7 @@ void DisplayOutput::Ausgabe(Player Spieler1, Player Spieler2, int FarbeSpieler1,
 	{
 		getroffenesFeld(Ecke_2, Schuss1_2, ROT); 			// letzter Schuss des Gegeners wird in Rot angezeigt
 	}
-	if (Schuss2_2.x >= 0 && Schuss2_2.y)
+	if (Schuss2_2.x >= 0 && Schuss2_2.y >= 0)
 	{
 		getroffenesFeld(Ecke_2, Schuss2_2, SCHWARZ);
 	}
