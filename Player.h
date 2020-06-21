@@ -93,39 +93,70 @@ public:
 	Player(int ModeSetShips);		
 
 
-	/*
-		Funktion: 
-		Input:	
-				
-		Transienten: 
-		Output: 
-	*/
+	
 	void lex(string FileName);		// Ruft lexikalische Analyse auf
 
 
 
-
+	/*
+		Funktion:		Generieren neuer Angriffskoordinaten (Zufall)
+		Input:			-
+		Transienten:	new_Position
+		Output:			new_Position: die neuen anzugreifenden Koordinaten
+	*/
 	Position AttackStrategy1();
 
 
 
-
+	/*
+		Funktion:		Generieren neuer Angriffskoordinaten (diagonale Linien)
+		Input:			-
+		Transienten:	Strategy_Rounds: Zähler für Durchläufe
+						SaveCoordinates: die letzten Koordinaten
+		Output:			Pos: neue Angriffskoordinaten
+	*/
 	Position AttackStrategy2();
 
 
 
+	/*
+		Funktion:		Generieren neuer Angriffskoordinaten (Spirale)
+		Input:			-
 
+		Transienten:	AttStrategy3_4Directions: Richtung des Angriffs
+		Output:			Pos: neue Angriffskoordinaten
+	*/
 	Position AttackStrategy3();
 
 
 
-
+	/*
+		Funktion:			Generieren neuer Angriffskoordinaten
+		Input:				LastShotHit: Information, ob der letzte eigene Schuss ein Treffer war
+							sunk: Information, ob das Schiff, das mit dem letzten Angriff angegriffen wurde, gesunken ist
+		Transienten:		SaveCoordinates: die letzten Koordinaten
+							alreadyShot/AttStrategy4AlreadyShot: Information, ob schon geschossen wurde
+							Direction/AttStrategy3_4Direction: Richtung des Angriffs
+							DirectionChoice/AttStrategy4DirectionChoice: Information, ob eine Richtung gewählt wurde
+							FieldBorder/AttStrategy4FieldBorder: Information zur Spielfeldrandkollision
+							first_hit/AttStrategy4FirstHit: Zufallskoordinaten, falls der erste Schuss ein Treffer war
+		Output:				Pos: neue Angriffskoordinaten
+	*/
 	Position AttackStrategy4(bool* LastShotHit, bool* sunk);
 
 
 
 
-
+	/*
+		Funktion:			Wählen der Art der Verteidigungsaktion
+		Input:				ShipNumber: Nummer des Schiffs
+							Action: Art der Aktion, die durchgeführt werden soll (nichts, bewegen, drehen)
+							MoveDir: Bewegungsrichtung
+		Transienten:		ShipNumber
+							Action
+							MoveDir
+		Output:				-
+	*/
 	void DefenseStrategy1(int* ShipNumber, DefendAction* Action, MoveDirection* MoveDir);
 														
 };
