@@ -29,9 +29,9 @@ void NGames(DisplayOutput &Graphics)
 
 
 	//Auswahl Nutzer zum Setzen der Schiffe bei Spielbeginn
-	cout << "\nMoeglichkeit 1:\t Datei zum Setzen der Schiffe wird bei jedem Spielbeginn\n";
-	cout << "\t\t und fuer jeden Spieler zufaellig gewaehlt -> Eingabe 1 \n";
-	cout << "Moeglichkeit 2: Fuer jedes Spiel und beide Spieler immer eine bestimmte \n";
+	cout << "\nMoeglichkeit 1:\tDatei zum Setzen der Schiffe wird bei jedem Spielbeginn\n";
+	cout << "\t\tund fuer jeden Spieler zufaellig gewaehlt -> Eingabe 1 \n";
+	cout << "Moeglichkeit 2:\tFuer jedes Spiel und beide Spieler immer eine bestimmte \n";
 	cout << "\t\tDatei (\"SetShipsFix.txt\") fuer die Startpositionen der Schiffe nutzen -> Eingabe 2 \n";
 	cout << "\nZur Auswahl Nummer der Moeglichkeit eingeben (1, 2):\t ";
 	cin >> ModeSetShips;
@@ -55,7 +55,7 @@ void NGames(DisplayOutput &Graphics)
 	// Angabe Nutzer wie lange die Wartezeit beim langsamen Durchlauf sein soll
 	if (FastPlayThrough == 0)
 	{
-		cout << "\n\nGeben Sie die gewünschte Wartezeit zwischen Spielzuegen in ms an:\t";
+		cout << "\n\nGeben Sie die gewuenschte Wartezeit zwischen Spielzuegen in ms an:\t";
 		cin >> WaitTime;
 	}
 
