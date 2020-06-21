@@ -152,9 +152,9 @@ public:
 		Input:				ShipNumber: Nummer des Schiffs
 							Action: Art der Aktion, die durchgeführt werden soll (nichts, bewegen, drehen)
 							MoveDir: Bewegungsrichtung
-		Transienten:		ShipNumber
-							Action
-							MoveDir
+		Transienten:		ShipNumber (Teil der Funktion DefensiveAction)
+							Action (Teil der Funktion DefensiveAction)
+							MoveDir (Teil der Funktion DefensiveAction)
 		Output:				-
 	*/
 	void DefenseStrategy1(int* ShipNumber, DefendAction* Action, MoveDirection* MoveDir);

@@ -1044,7 +1044,7 @@ Position Player::AttackStrategy4(bool* LastShotHit, bool* sunk)
 	// Ging vorherige Schuss daneben UND es wurde schon geschossen UND Richtung noch nicht gewählt -> neue rnd-Koordinaten zurückgeben
 	// ODER
 	// Der vorherhige Schuss hat ein Schiff versenkt -> neue rnd-Koordinaten zurückgeben
-	if (((Pos.x == NULL) && (Pos.y == NULL)) || ((*LastShotHit == false) && (alreadyShot == true) && (!DirectionChoice)) || (*sunk == true))
+	if (((Pos.x == NULL) && (Pos.y == NULL) && (alreadyShot == false)) || ((*LastShotHit == false) && (alreadyShot == true) && (!DirectionChoice)) || (*sunk == true))
 	{
 		if (*sunk == true)							// Falls das angegriffene Schiff des vorherigen Schusses versenkt wirde
 		{											// werden bestimmte Hilfsvariablen zurückgesetzt
