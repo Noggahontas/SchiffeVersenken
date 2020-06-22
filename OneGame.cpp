@@ -12,13 +12,12 @@ bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 {
 
 	Player P[2]{ (ModeSetShips), (ModeSetShips) };			// Spieler werden erstellt -> Parameterkonstruktor
-	P[0].AttackStrategy = 3;
-	P[1].AttackStrategy = 3;
 
-	/*if (P[0].ReadInError == true || P[0].ReadInError == true)	//Falls beim Einlesen der Dateien zum Schiffe setzen ein Fehler passiert ist, Abbrechen der Funktion
+	if (P[0].ReadInError == true || P[1].ReadInError == true)	//Falls beim Einlesen der Dateien zum Schiffe setzen ein Fehler passiert ist, Abbrechen der Funktion
 	{
 		return true;		// Es ist ein Fehler passiert, Datei hatte falsches Einleseformat
-	}*/
+	}
+	
 	Position AttackShot;					// Koordinaten für Schuss beim Angreifen werden hier gespeichert
 	AttackResult Result[2] = {false,false};	// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt

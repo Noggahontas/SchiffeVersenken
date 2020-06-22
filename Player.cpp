@@ -632,7 +632,7 @@ Player::Player(int ModeSetShips) {
 			break;
 	}
 
-	lex(NameDocSetShips);		// Aufruf lexikalische Analyse
+	lex(NameDocSetShips);		// Aufruf lexikalische Analyse, Rückgabe ob es beim Einlesen einen Fehler gab
 
 
 
@@ -702,13 +702,22 @@ void Player::lex(string FileName)
 	}
 	//cout << "Open: " << inputFileName << endl;
 
+	int CheckReadInError;
+
 	CParser obj;
 	obj.InitParse(inputFile, stderr, stdout);
-	obj.yyparse(this);
+	CheckReadInError = obj.yyparse(this);										// Rückgabe -1 wenn Fehler beim Einlesen (falsches Einleseformat)
 
 	fclose(inputFile);
 
-	return;
+	if (CheckReadInError == -1)													// Fehler
+	{
+		ReadInError = true;
+	}
+	else if (CheckReadInError == 0)												// Kein Fehler
+	{
+		ReadInError = false;
+	}
 }
 
 

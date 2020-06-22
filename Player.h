@@ -20,6 +20,7 @@ public:
 	int HitShotsOfOpponent;					// Hier wird während eines Spiels mitgezählt wie viele Schüsse der Gegner schon getroffen hat
 	int SunkShipsByOpponent;				// Hier wird gezählt wie viele Schiffe (von diesem Spieler) der Gegner in diesem Spiel versenkt hat
 
+	bool ReadInError;						// Angabe ob es beim Einlesen der Textdateien zum Schiffe setzen einen Fehler gab
 
 	// Für die Angriffsstrategien
 	Position SaveCoordinates;
