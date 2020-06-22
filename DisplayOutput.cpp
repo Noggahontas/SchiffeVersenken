@@ -129,14 +129,14 @@ void DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spiele
 			,index, Angriffsstrategie, Verteidigungsstrategie, verfehlteSchuesse, getroffeneSchuesse, versenkteSchiffe);
 
 		textbox(Legende[0].x, Legende[0].y, Legende[1].x, Legende[1].y, 15, SCHWARZ, SCHWARZ, WEISS, CENTER_ALIGN, InfoSpieler); 
-		updatescr();
+		//updatescr();
 }
 
 void DisplayOutput::DarstellungSchiff(Position EckpunktSpielfeld,Ship Schiff, int Farbe)
 {
 	int Schiffslaenge = Schiff.Length;						// Schiffslaenge des darzustellenden Schiff
 	Direction AusrichtungSchiff = Schiff.Orientation;		// Ausrichtung des Schiffs auf dem Spielfeld
-	Position Schiffsposition = Schiff.StartPos;				// Position des darzustellenden Schifs auf dem Spielfeld
+	Position Schiffsposition = Schiff.StartPos;				// Position des darzustellenden Schiffs auf dem Spielfeld
 
 	int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
 
