@@ -19,9 +19,11 @@ using namespace std;
  */
 enum lexstate { L_START, L_INT, L_IDENT };
 
+const int ERROR1 = 2;
 const int IDENTIFIER = 4;
 const int INTEGER1 = 5;
-const int TOKENSTART = 300;
+const int TOKENSTART = 305;
+const int Orientation = 400;
 
 //class CParser
 //{
@@ -59,15 +61,16 @@ void CParser::Load_tokenentry(string str, int index)
 }
 void CParser::IP_init_token_table()
 {
-	Load_tokenentry("IDENTIFIER", 4);
-	Load_tokenentry("INTEGER1", 5);
+	Load_tokenentry("RIGHT", 400);	Load_tokenentry("right", 400);	Load_tokenentry("Right", 400);
+	Load_tokenentry("DOWN", 401);	Load_tokenentry("down", 401);	Load_tokenentry("Down", 401);
 
 	int ii = TOKENSTART;
-	Load_tokenentry("AND", ii++);
-	Load_tokenentry("OR", ii++);
-	Load_tokenentry("Begin", ii++);
-	Load_tokenentry("End", ii++);
-}
+
+	Load_tokenentry("Battleship", ii);	Load_tokenentry("battleship", ii);	Load_tokenentry("BATTLESHIP", ii);	ii--;
+	Load_tokenentry("Cruiser", ii);		Load_tokenentry("cruiser", ii);		Load_tokenentry("CRUISER", ii);		ii--;
+	Load_tokenentry("Destroyer", ii);	Load_tokenentry("destroyer", ii);	Load_tokenentry("DESTROYER", ii);	ii--;
+	Load_tokenentry("Submarine", ii);	Load_tokenentry("submarine", ii);	Load_tokenentry("SUBMARINE", ii);	ii--;
+} 
 //------------------------------------------------------------------------
 
 void CParser::pr_tokentable()
@@ -88,76 +91,71 @@ void CParser::pr_tokentable()
 
 int	CParser::yyparse(Player *iptat)								// Bekommt als Parameter den Pointer auf das Objekt in dem Lexan aufgerufen wird
 {
-	bool altKoordinates = 0;									// alternierende Hilfsvariable zum Umschalten zwischen x- und y-Wert
-	bool altNameDirection = 0;									// alternierende Hilfsvariable zum Unterscheiden von Schiffsname und Ausrichtung
-	int ShipNo = 0;												// Schiffsnummerierung
 
-	int tok;
+	int tok = 0;
+	bool alt = true;											// alternieren zwischen x- und y-Positionswert
+	int ShipNo = 0;												// Schiffsnummerierung
+	int BattleshipCounter = 0, CruiserCounter = 0, DestroyerCounter = 0, SubmarineCounter = 0; // Zähler für die Schiffsarten
 	/*
 	*	Go parse things!
 	*/
 	while ((tok = yylex()) != 0) {
-		if (tok == INTEGER1)
+		if (tok == ERROR1)
+		{
+			printf("\nFehler beim Eingabeormat der Datei. Auf Gross- und Kleinschreibung, sowie die richtige Wortwahl achten! \n"); return -1;
 
-			if (altKoordinates == 0)
-			{
-				iptat->Ships[ShipNo].StartPos.x = yylval.i;		// schreibt die ausgelesene x-Startposition in den x-Wert des Schiffs
-				altKoordinates = 1;
-			}
-			else
-			{
-				iptat->Ships[ShipNo].StartPos.y = yylval.i;		// schreibt die ausgelesene y-Startposition in den y-Wert des Schiffs
-				altKoordinates = 0;
-			}
-
+		}
 		else
-			if (tok == IDENTIFIER)
-				if (altNameDirection == 0)
+			if (tok == INTEGER1)
+			{
+				switch (alt)
 				{
-					altNameDirection = 1;
-					
-					if (yylval.s == "Battleship")				// wird "Battleship" ausgelesen...
-					{
-						iptat->Ships[ShipNo].Length = 5;		// bekommt das erste Schiff die Länge 5
-					}
-					else if (yylval.s == "Cruiser")				// wird "Cruiser" ausgelesen...
-					{
-						ShipNo += 1;
-						iptat->Ships[ShipNo].Length = 4;		// bekommt das zweite und dritte Schiff die Länge 4
-					}
-					else if (yylval.s == "Destroyer")
-					{
-						ShipNo += 1;
-						iptat->Ships[ShipNo].Length = 3;
-					}
-					else if (yylval.s == "Submarine")
-					{
-						ShipNo += 1;
-						iptat->Ships[ShipNo].Length = 2;
-					}
-
-
+				case true: iptat->Ships[ShipNo].StartPos.x = yylval.i; alt = 0; break;
+				case false: iptat->Ships[ShipNo].StartPos.y = yylval.i;	 alt = 1; break;
+				default: printf("Fehler beim Format der Datei (Startposition)!\n"); return -1;
 				}
-				else
-				{
-					altNameDirection = 0;
-					if (yylval.s == "RIGHT")					// wird "RIGHT" ausgelesen, wird die Richtung des entsprechenden Schiffs auf Right gesetzt
-					{
-						iptat->Ships[ShipNo].Orientation = Direction::Right;
-					}
-					else if (yylval.s == "DOWN")				// wird "DOWN" ausgelesen, wird die Richtung des entsprechenden Schiffs auf Down gesetzt
-					{
-						iptat->Ships[ShipNo].Orientation = Direction::Down;
-					}
-					
-				}
-
+			}
 			else
-				if (tok >= TOKENSTART)
-					printf("a: %s ", IP_revToken_table[tok].c_str());
+			{
+				if (tok >= (TOKENSTART - 5))
+				{
+					if (tok > TOKENSTART)
+					{
+						switch (tok)
+						{
+							case 400: iptat->Ships[ShipNo].Orientation = Direction::Right; break; // RIGHT
+							case 401: iptat->Ships[ShipNo].Orientation = Direction::Down; break; // DOWN
+							default: printf("Fehler beim Format der Datei (Richtungswahl: Right oder Down)!\n"); return -1;
+						}
+
+					}
+					else if (tok <= TOKENSTART)
+					{
+						switch (tok)
+						{
+						case 305: 
+							if (BattleshipCounter < 1){ iptat->Ships[ShipNo].Length = (tok - 300); BattleshipCounter += 1;}
+							else{ printf("Fehler beim Format der Datei (max. ein Battleship)!\n"); return -1;}
+							break;
+						case 304: 
+							if (CruiserCounter < 2){ ShipNo += 1; iptat->Ships[ShipNo].Length = (tok - 300); CruiserCounter += 1;}
+							else{ printf("Fehler beim Format der Datei (max. zwei Cruiser)!\n"); return -1;}
+							break;
+						case 303: 
+							if (DestroyerCounter < 3){ ShipNo += 1; iptat->Ships[ShipNo].Length = (tok - 300); DestroyerCounter += 1;}
+							else{ printf("Fehler beim Format der Datei (max. drei Destroyer)!\n"); return -1;}
+							break;
+						case 302: 
+							if (SubmarineCounter < 4){ ShipNo += 1; iptat->Ships[ShipNo].Length = (tok - 300); SubmarineCounter += 1;}
+							else{ printf("Fehler beim Format der Datei (max. vier Submarines)!\n"); return -1;}
+							break;
+						default: printf("Fehler beim Format der Datei (Schiffsart)!\n"); return -1;
+						}
+					}
+				}
+			}
 	}
 	return 0;
-
 }
 //------------------------------------------------------------------------
 
@@ -283,7 +281,7 @@ int CParser::yylex()
 				return (c);
 			}
 			else {
-				return (IDENTIFIER);
+				return (ERROR1); // IDENTIFIER);
 			}
 
 		default: printf("***Fatal Error*** Wrong case label in yylex\n");
