@@ -61,10 +61,16 @@ void NGames(DisplayOutput &Graphics)
 
 
 	// Gewünschte Anzahl an Spielen spielen lassen und Ergebnisse speichern
+	bool ReadInError;										//Angabe ob beim Einlesen der Dateien zum Schiffe setzen ein Fehler passiert ist
 	for (int i = 0; i < NumberOfGames; i++)
 	{
-		OneGame(GameHistory.at(i), ModeSetShips, Graphics, FastPlayThrough, WaitTime);	// Ein Spiel wird ausgeführt 
+		ReadInError = OneGame(GameHistory.at(i), ModeSetShips, Graphics, FastPlayThrough, WaitTime);	// Ein Spiel wird ausgeführt 
 																				// Übergabe von i-tem Element des Vektors zum Speichern der Ergebnisse am Ende eines Spiels 
+
+		if (ReadInError == true)	// Wenn beim Einlesen Fehler passiert ist, Abbrechen der Funktion												
+		{
+			return;
+		}
 	}
 
 

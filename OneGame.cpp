@@ -8,11 +8,17 @@
 #include "PlayerHistory.h"
 
 
-void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Graphics, bool FastPlayThrough, int WaitTime)
+bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Graphics, bool FastPlayThrough, int WaitTime)
 {
 
 	Player P[2]{ (ModeSetShips), (ModeSetShips) };			// Spieler werden erstellt -> Parameterkonstruktor
+	P[0].AttackStrategy = 3;
+	P[1].AttackStrategy = 3;
 
+	/*if (P[0].ReadInError == true || P[0].ReadInError == true)	//Falls beim Einlesen der Dateien zum Schiffe setzen ein Fehler passiert ist, Abbrechen der Funktion
+	{
+		return true;		// Es ist ein Fehler passiert, Datei hatte falsches Einleseformat
+	}*/
 	Position AttackShot;					// Koordinaten für Schuss beim Angreifen werden hier gespeichert
 	AttackResult Result[2] = {false,false};	// Angabe ob vom Schuss AttackShot ein Schiff getroffen wurde:  Result.Hit: 1 = ein Schiff wurde getroffen,  0 = kein Schiff getroffen
 											// Angabe ob vom Schuss AttackShot ein Schiff versenkt wurde:  Result.Sunk: 1 = ein Schiff wurde versenkt, 0 = kein Schiff versenkt
@@ -160,6 +166,6 @@ void OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	GameResult[0].Save(P[0], P[1]);				
 	GameResult[1].Save(P[1], P[0]);
 
-
+	return false;
 }
 
