@@ -10,7 +10,7 @@ bool Ship::IsHit(Position Shot)
 	// ändert bei einem Hit den Status-Vector
 	// Aufruf Funktion StillAlive
 
-	bool Hit = 0;		// Zwischenspeichern der Feststellung, dass Schiff getroffen wurde
+	bool Hit = 0;		// Zwischenspeichern der Feststellung, dass Schiff getroffen wurde		
 
 	if (Orientation == Direction::Right)	// Schiff ist von Startposition aus gesehen nach rechts ausgerichtet (x-Richtung)
 	{
@@ -70,7 +70,7 @@ void Ship::StillAlive()
 
 
 
-bool Ship::AreYouThere(Position CriticalCoordinates)
+bool Ship::AreYouThere(Position CriticalCoordinates)		
 {
 	// Übergabe: Koordinaten, von denen gecheckt werden soll ob Schiff darauf steht
 	// Rückgabe: Befindet sich an diesen Koordinaten das Schiff:  1=ja, 0=nein

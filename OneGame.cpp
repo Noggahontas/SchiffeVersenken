@@ -5,7 +5,7 @@
 #include <Windows.h>		// benötogt für Funktion sleep()
 #include <iostream>
 #include "DisplayOutput.h"
-#include "PlayerHistory.h"
+#include "PlayerHistory.h"	
 
 
 bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Graphics, bool FastPlayThrough, int WaitTime)
@@ -94,7 +94,7 @@ bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			if (!FastPlayThrough)
 			{
 				// Bewegen nich mehr erlaubt
-				cout << "Es darf nicht mehr bewegt/gedreht werden, da jeweils nur noch zwei Schiffe uebrig sind \n";
+				cout << "Es darf nicht mehr bewegt/gedreht werden, da jeweils nur noch zwei oder weniger Schiffe uebrig sind \n";
 			}
 		}
 
@@ -131,6 +131,8 @@ bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			Sleep(WaitTime); 											
 		}
 	}
+
+
 
 	if (!FastPlayThrough)													// Nur wenn Modus = langsam sollen Wartezeit und Ausgabe eingebaut werden
 	{

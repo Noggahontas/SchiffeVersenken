@@ -89,7 +89,7 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 	// Übergabe Richtung, in die bewegt werden soll: Forward oder Backward. ein Schiff kann nur in Längsrichtung bewegt werden
 	// Kollisionsabfrage ob Bewegen möglich, wenn ja:
 	// Ändert Startposition (StartPos) und Ausrichtung (Direction) von Schiff
-	// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0
+	// Rückgabe ob Bewegen möglich/erfolgreich war. Geklappt=1, Nicht geklappt=0			xxxxxä yyyyy
 
 	
 
@@ -112,11 +112,11 @@ bool Player::Move(int ShipNumber, MoveDirection Direction)
 		}
 	}
 
-	if (Direction == MoveDirection::Forward)		// Wenn Schiff sich vorwärts bewegen soll 
+	if (Direction == MoveDirection::Forward)		// Wenn Schiff sich vorwärts bewegen soll
 	{	
 		if (Ships[ShipNumber].Orientation == Direction::Right)	// Wenn Schiff nach rechts ausgerichtet ist (von StartPos aus)
 		{					
-			// x-Koordinate wird durch Bewegen um 1 erhöht -> Koordinaten, die geprüft werden müssen:
+			// x-Koordinate wird durch Bewegen um 1 erhöht -> Koordinaten, die geprüft werden müssen:		xxxö
 			// aktuelle Startposition x-Koord. + (Länge Schiff-1) = x-Koordinate von aktuellem letzten Feld des Schiffs 
 			// aktuelles letztes Feld Schiff + um 1 Bewegen = neue x-Koordinate, die Schiff durch Bewegen belegen würde
 			// an y-Koordinate ändert sich nichts
@@ -328,9 +328,9 @@ bool Player::Turn(int ShipNumber)
 	if (Ships[ShipNumber].Orientation == Direction::Right)	// Wenn das Schiff vor dem Drehen nach rechts ausgerichtet ist
 	{
 		NewOrientation = Direction::Down;					// Ein Schiff, das nach rechts ausgerichtet ist, wird immer im Uhrzeigersinn gedreht -> neue Ausrichtung nach unten
-
-		// Neue Startposition nach dem Drehen bestimmen. In Abhängigkeit derLänge des Schiffs
-		if (Ships[ShipNumber].Length == 2)		// Wenn Schiff die Länge 2 hat						
+																									   //x
+		// Neue Startposition nach dem Drehen bestimmen. In Abhängigkeit derLänge des Schiffs	xx		xxx
+		if (Ships[ShipNumber].Length == 2)		// Wenn Schiff die Länge 2 hat					x		 x	
 		{
 			CriticalStartCoordinates = { Ships[ShipNumber].StartPos.x, Ships[ShipNumber].StartPos.y };	// dann bleibt die Startposition gleich, nur Ausrichtung ändert sich
 		}
@@ -572,7 +572,6 @@ void Player::DefensiveAction()
 			break;
 		case DefendAction::Move:
 			ActionSuccessful = Move(ShipNumber, MoveDir);
-			ActionSuccessful = 1;
 			break;
 		case DefendAction::Turn:
 			ActionSuccessful = Turn(ShipNumber);
@@ -632,7 +631,7 @@ Player::Player(int ModeSetShips) {
 			break;
 	}
 
-	lex(NameDocSetShips);		// Aufruf lexikalische Analyse, Rückgabe ob es beim Einlesen einen Fehler gab
+	lex(NameDocSetShips);		// Aufruf lexikalische Analyse
 
 
 
