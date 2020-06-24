@@ -43,7 +43,7 @@ void NGames(DisplayOutput &Graphics)
 	}
 	
 	// Angabe Nutzen ob alles im Schnelldurchlauf oder zum langsam Nachverfolgen ablaufen soll
-	cout << "\n\nSoll das Spiel im Schnelldurchlauf erfolen? \nWenn ja, Eingabe 1 ansonsten Eingabe 0:\t";
+	cout << "\n\nSoll das Spiel im Schnelldurchlauf erfolgen? \nWenn ja, Eingabe 1 ansonsten Eingabe 0:\t";
 	cin >> FastPlayThrough;
 	while ((FastPlayThrough != 0) && (FastPlayThrough != 1))				// Nur 0 oder 1 als Eingabe erlaubt, Möglichkeit zur Korrektur
 	{
