@@ -15,6 +15,12 @@ void NGames(DisplayOutput &Graphics)
 	// Speichern der Ergebnisse von jedem Spiel für beide Spieler
 	// Nachdem alle Spiele gespielt wurden, wird eine Statistik für jede Angriffsstrategie erstellt Übergabe der DisplayOutput Klassen-Variable Graphics als Referenz, notwendig für die Ausgabe
 
+	int check = 0;
+	while (check == 0)
+	{
+		check = Graphics.Screen('S');
+	}
+	check = 1;
 
 	int NumberOfGames;										// Nutzereingabe: Anzahl der Spiele, die gespielt werden sollen
 	cout << "Wie viele Spiele sollen gespielt werden?\t";
@@ -106,7 +112,10 @@ void NGames(DisplayOutput &Graphics)
 		cout << "Durchnittliche verfehlte Schuesse pro Spiel: " << fixed << AttackStrategy[i].MissedShots << "\n";
 		cout << "Anzahl der Spiele, in der genutzt wurde: " << AttackStrategy[i].NumberOfGamesUsed << "\n\n";
 	}
-
-
+	check = 0;
+	while (check == 0)
+	{
+		check = Graphics.Screen('E');
+	}
 }
 

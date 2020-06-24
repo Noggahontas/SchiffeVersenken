@@ -25,13 +25,23 @@ public:
 
 	
 	/*
-	Funktion:		Funktion zum einmaligen Aufruf für Positionierungnd Dimensionierung des Grafikfensters
+	Funktion:		Funktion zum einmaligen Aufruf für Positionierung und Dimensionierung des Grafikfensters
 	Input:			-
 	Globals:		-
 	Transienten:	-
 	Output:			-
 	*/
 	void Grafikfenster();
+
+
+	/*
+	Funktion:		Funktion zum einmaligen Aufruf für Screen am Anfang / Ende eines Spieles
+	Input:			char indikator: S = Start, E = Ende
+	Globals:		-
+	Transienten:	-
+	Output:			int klick : gibt an, ob Mouse während der Wartezeit betätigt wurde (klick = 1) oder nicht (klick = 0)
+	*/
+	int Screen(char indikator);
 
 	// Breite eines Kaestchens des dargestellten Spielfeldes
 	int Kaestchengroesse; 
@@ -60,12 +70,11 @@ private:
 	Transienten:	-
 	Output:			Position EckpunktSpielfeld : linke obere Ecke des Spielfeldes  
 	*/
-
 	Position SpielfeldErstellen(int index);
 
 	/*
 	Funktion:		Ausgabe einer Legende mit den wichtigen Informationen zum Spieler ( Verteidigungsstartegie, Angriffsstrategie, Schüsse, versenkte Schiffe etc.)
-	Input:			Position EckpunktSpielfeld: linke obere Ecke des Spielfeldes des jeweiligen Spielers
+	Input:			Position EckpunktSpielfeld : linke obere Ecke des Spielfeldes des jeweiligen Spielers
 					int index : Nummer des Spielers, Spieler 1 = 1 und Spieler 2 = 2
 					Player Spieler1 : Objekt der Klasse Player, beinhaltet Informationen zu den Schiffen etc. des 1.Spielers
 					Player Spieler2 : Objekt der Klasse Player, beinhaltet Informationen zu den Schiffen etc. des 2.Spielers
