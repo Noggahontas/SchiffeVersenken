@@ -44,9 +44,9 @@ bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 	
 	if ((!FastPlayThrough))											// Nur wenn Modus = langsam sollen Wartezeit und Ausgabe eingebaut werden
 	{ 
-		Sleep(WaitTime); 											
+		//Sleep(WaitTime); 											
 		Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Graphische Ausgabe 
-	
+		//Sleep(WaitTime);
 
 		if (Result[i].Hit == 1)										// Ausgabe Resultat des Schusses von P[0]
 		{
@@ -85,7 +85,7 @@ bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			
 			if (!FastPlayThrough)											// Nur wenn Modus = langsam sollen Wartezeit und Ausgabe eingebaut werden
 			{
-				Sleep(WaitTime); 											
+				//Sleep(WaitTime); 											
 				Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
 			}
 		}
@@ -103,7 +103,7 @@ bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 			Sleep(WaitTime);											
 										
 		// Angriff von Spieler i
-			cout << "Spieler " << i + 1 << " an der Reihe: Angriff \n";
+			cout << "Spieler " << i + 1 << " an der Reihe: Angriff";
 		}
 		AttackShot = P[i].FindAttackShot(Result[i]);					// Durch ausgewählte Strategie des Spielers werden Koordinaten ausgewählt, auf die geschossen werden soll
 																		// Übergabe von Ergebnissen (Treffer?, Versenkt?) des letzten eigenen Schusses
@@ -111,21 +111,21 @@ bool OneGame(PlayerHistory (&GameResult)[2], int ModeSetShips, DisplayOutput &Gr
 
 		if (!FastPlayThrough)											// Nur wenn Modus = langsam sollen Wartezeit und Ausgabe eingebaut werden
 		{
-			Sleep(WaitTime); 											
+			//Sleep(WaitTime); 											
 			Graphics.Ausgabe(P[0], P[1], FarbeSchiffe, FarbeSchiffe);	// Ausgabe Graphics
-		
+			//Sleep(WaitTime);
 
 			if (Result[i].Hit == 1)
 			{
-				cout << "Treffer \n";
+				cout << " -> Treffer \n";
 				if (Result[i].Sunk == 1)
 				{
-					cout << "Schiff wurde versenkt \n";
+					cout << " -> Schiff wurde versenkt \n";
 				}
 			}
 			else
 			{
-				cout << "Kein Treffer \n";
+				cout << " -> Kein Treffer \n";
 			}
 
 			Sleep(WaitTime); 											

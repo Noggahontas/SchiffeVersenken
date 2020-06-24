@@ -94,7 +94,7 @@ void NGames(DisplayOutput &Graphics)
 
 	// Ausgabe der Statistiken
 	cout << "\n_____________________________________________________________\n";
-	cout << "Ergebnis aus " << NumberOfGames << " Spielen. Statisken fuer jede Angriffsstrategie:\n\n";
+	cout << "Ergebnis aus " << NumberOfGames << " Spielen. Statistiken fuer jede Angriffsstrategie:\n\n";
 
 	for (int i = 0; i < 4; i++)
 	{
