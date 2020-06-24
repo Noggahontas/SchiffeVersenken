@@ -23,7 +23,7 @@ void DisplayOutput::Grafikfenster()
 	
 }
 
-int DisplayOutput::Screen(char indikator)
+void DisplayOutput::Screen(char indikator)
 {
 	clrscr();
 	int breite, hoehe, x, y, klick = 0;
@@ -35,15 +35,12 @@ int DisplayOutput::Screen(char indikator)
 	if (indikator == 'S')
 	{
 		text(Text.x, Text.y, 50, SCHWARZ, WEISS, "S T A R T", CENTER_ALIGN);
+		text(Text.x + 10, Text.y + 50, 20, SCHWARZ, WEISS, "press start to play", CENTER_ALIGN);
 	}
 	else if (indikator == 'E')
 	{
 		text(Text.x, Text.y, 50, SCHWARZ, WEISS, "E N D E", CENTER_ALIGN);
 	}
-
-	
-	klick = mouseclick(&x, &y);
-	return klick;
 }
 
 Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle(x,y) auf dem Bildschirm

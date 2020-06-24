@@ -39,9 +39,9 @@ public:
 	Input:			char indikator: S = Start, E = Ende
 	Globals:		-
 	Transienten:	-
-	Output:			int klick : gibt an, ob Mouse während der Wartezeit betätigt wurde (klick = 1) oder nicht (klick = 0)
+	Output:			-
 	*/
-	int Screen(char indikator);
+	void Screen(char indikator);
 
 	// Breite eines Kaestchens des dargestellten Spielfeldes
 	int Kaestchengroesse; 
