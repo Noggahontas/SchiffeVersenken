@@ -23,7 +23,9 @@ void NGames(DisplayOutput &Graphics)
 		Graphics.Screen('S');
 		klick = mouseclick(&x, &y);
 	}
-
+	clrscr();
+	text(200, 200, 20, SCHWARZ, WEISS, "Bitte Daten in die Konsole eingeben:", CENTER_ALIGN);
+	updatescr();
 
 	int NumberOfGames;										// Nutzereingabe: Anzahl der Spiele, die gespielt werden sollen
 	cout << "Wie viele Spiele sollen gespielt werden?\t";
