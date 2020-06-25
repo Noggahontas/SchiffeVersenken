@@ -1096,11 +1096,20 @@ Position Player::AttackStrategy4(bool* LastShotHit, bool* sunk)
 				Pos = ShootSouth(&first_hit);					// südlich der ersten Koordinaten schießen
 				return Pos;
 			}
-			else												// Wäre der nächste Schuss ausserhalb des Spielfeldes
+			else
 			{													// -> südlicher Spielfeldrand erreicht
-				Direction = AttackDirection::E;					// die neue Angriffsrichtung ist Osten
-				Pos = ShootEast(&first_hit);					// östlich der ersten Koordinaten schiessen
-				return Pos;
+				if (Pos.x < 9)
+				{
+					Direction = AttackDirection::E;					// die neue Angriffsrichtung ist Osten
+					Pos = ShootEast(&first_hit);					// östlich der ersten Koordinaten schiessen
+					return Pos;
+				}
+				else if (Pos.x == 9)
+				{
+					Direction = AttackDirection::W;					// die neue Angriffsrichtung ist Osten
+					Pos = ShootWest(&first_hit);					// östlich der ersten Koordinaten schiessen
+					return Pos;
+				}
 			}
 		}
 		// Wenn die Angriffsrichtung bisher Süden war oder die nächsten Koordinaten ausserhalb des südlichen Randes (y>9) landen,
@@ -1315,7 +1324,7 @@ Position Player::AttackStrategy4(bool* LastShotHit, bool* sunk)
 
 void Player::DefenseStrategy1(int* ShipNumber, DefendAction* Action, MoveDirection* MoveDir)
 {
-	int rndAction = (rand() % 3);							// DefendAction (Nothing, Move, Turn) soll zufällig gewählt werden
+	int rndAction = 0 ;// (rand() % 3);							// DefendAction (Nothing, Move, Turn) soll zufällig gewählt werden
 	int rndMoveDir = 0;										// Zufällige Bewegungsrichtung wählen
 
 	switch (rndAction)

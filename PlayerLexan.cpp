@@ -102,7 +102,7 @@ int	CParser::yyparse(Player *iptat)								// Bekommt als Parameter den Pointer 
 	while ((tok = yylex()) != 0) {
 		if (tok == ERROR1)
 		{
-			printf("\nFehler beim Eingabeformat der Datei. Auf Gross- und Kleinschreibung sowie die richtige Wortwahl achten! \n"); return -1;
+			printf("\nFehler beim Eingabeformat der Datei. Auf Gross- und Kleinschreibung sowie die richtige Wortwahl achten! \n\n\n"); return -1;
 
 		}
 		else
