@@ -26,7 +26,7 @@ void DisplayOutput::Grafikfenster()
 void DisplayOutput::Screen(char indikator)
 {
 	clrscr();
-	int breite, hoehe, x, y, klick = 0;
+	int breite, hoehe, klick = 0;
 	get_drawarea(&breite, &hoehe);
 	Position Text;
 	Text.x = (breite - 2 * 50) / 2;
