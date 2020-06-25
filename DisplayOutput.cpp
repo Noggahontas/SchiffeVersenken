@@ -23,6 +23,26 @@ void DisplayOutput::Grafikfenster()
 	
 }
 
+void DisplayOutput::Screen(char indikator)
+{
+	clrscr();
+	int breite, hoehe, x, y, klick = 0;
+	get_drawarea(&breite, &hoehe);
+	Position Text;
+	Text.x = (breite - 2 * 50) / 2;
+	Text.y = (hoehe - 50) / 2;
+
+	if (indikator == 'S')
+	{
+		text(Text.x, Text.y, 50, SCHWARZ, WEISS, "S T A R T", CENTER_ALIGN);
+		text(Text.x + 10, Text.y + 50, 20, SCHWARZ, WEISS, "press start to play", CENTER_ALIGN);
+	}
+	else if (indikator == 'E')
+	{
+		text(Text.x, Text.y, 50, SCHWARZ, WEISS, "E N D E", CENTER_ALIGN);
+	}
+}
+
 Position DisplayOutput::SpielfeldErstellen(int index) // Spielfeld an der Stelle(x,y) auf dem Bildschirm
 {
 	int const N = 4;				 // Definition einer festen Array-Groesse

@@ -5,6 +5,7 @@
 #include "DisplayOutput.h"
 #include "Statistic.h"
 #include <iomanip>
+#include "graphics\graphicfunctions.h"
 
 
 void NGames(DisplayOutput &Graphics)
@@ -15,6 +16,12 @@ void NGames(DisplayOutput &Graphics)
 	// Speichern der Ergebnisse von jedem Spiel für beide Spieler
 	// Nachdem alle Spiele gespielt wurden, wird eine Statistik für jede Angriffsstrategie erstellt Übergabe der DisplayOutput Klassen-Variable Graphics als Referenz, notwendig für die Ausgabe
 
+	int x, y, klick = 0;
+	while (klick == 0)
+	{
+		Graphics.Screen('S');
+		klick = mouseclick(&x, &y);
+	}
 
 	int NumberOfGames;										// Nutzereingabe: Anzahl der Spiele, die gespielt werden sollen
 	cout << "Wie viele Spiele sollen gespielt werden?\t";
@@ -107,6 +114,6 @@ void NGames(DisplayOutput &Graphics)
 		cout << "Anzahl der Spiele, in der genutzt wurde: " << AttackStrategy[i].NumberOfGamesUsed << "\n\n";
 	}
 
-
+	Graphics.Screen('E'); // danach: Wartezeit
 }
 
