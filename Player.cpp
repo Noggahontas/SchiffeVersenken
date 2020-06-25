@@ -1324,7 +1324,7 @@ Position Player::AttackStrategy4(bool* LastShotHit, bool* sunk)
 
 void Player::DefenseStrategy1(int* ShipNumber, DefendAction* Action, MoveDirection* MoveDir)
 {
-	int rndAction = 0 ;// (rand() % 3);							// DefendAction (Nothing, Move, Turn) soll zufällig gewählt werden
+	int rndAction = (rand() % 3);							// DefendAction (Nothing, Move, Turn) soll zufällig gewählt werden
 	int rndMoveDir = 0;										// Zufällige Bewegungsrichtung wählen
 
 	switch (rndAction)

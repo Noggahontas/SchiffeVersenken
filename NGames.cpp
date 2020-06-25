@@ -27,6 +27,7 @@ void NGames(DisplayOutput &Graphics)
 	text(200, 200, 20, SCHWARZ, WEISS, "Bitte Daten in die Konsole eingeben:", CENTER_ALIGN);
 	updatescr();
 
+
 	int NumberOfGames;										// Nutzereingabe: Anzahl der Spiele, die gespielt werden sollen
 	cout << "Wie viele Spiele sollen gespielt werden?\t";
 	cin >> NumberOfGames;
@@ -119,6 +120,6 @@ void NGames(DisplayOutput &Graphics)
 	}
 
 	Graphics.Screen('E'); // Ausgabe Ende
-	Sleep(3000);
+	Sleep(4000);
 }
 
