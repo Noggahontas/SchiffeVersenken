@@ -82,7 +82,7 @@ private:
 	Transienten:	-
 	Output:			-
 	*/
-	void DisplayOutput::Legende(Position EckpunktSpielfeld, int index, Player Spieler1, Player Spieler2);
+	void Legende(Position EckpunktSpielfeld, int index, Player Spieler1, Player Spieler2);
 
 	/*
 	Funktion:		Darstellung eines Schiffes im Spielfeld einschlieﬂlich bereits getroffener Stellen
