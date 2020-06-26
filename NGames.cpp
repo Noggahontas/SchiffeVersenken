@@ -120,6 +120,6 @@ void NGames(DisplayOutput &Graphics)
 	}
 
 	Graphics.Screen('E'); // Ausgabe Ende
-	Sleep(4000);
+	//Sleep(4000);
 }
 

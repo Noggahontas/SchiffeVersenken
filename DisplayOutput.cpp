@@ -40,6 +40,8 @@ void DisplayOutput::Screen(char indikator)
 	else if (indikator == 'E')
 	{
 		text(Text.x, Text.y, 50, SCHWARZ, WEISS, "E N D E", CENTER_ALIGN);
+		updatescr();
+		Sleep(4000);
 	}
 }
 
